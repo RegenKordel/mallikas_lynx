@@ -39,15 +39,21 @@ public class MallikasController {
 			notes = "Import a list of issues as IssueObjects")
 	@RequestMapping(value = "/mallikas", method = RequestMethod.POST)
 	public String importIssuesFromMilla(@RequestBody List<IssueObject> issues) {
+		System.out.println("Received issues from Milla");
 		List<IssueObject> allIssues = issues;
 		List<IssueObject> savedIssues = new ArrayList<>();
 		for(IssueObject issue : allIssues) {
 			if(issueRepository.findByKey(issue.getKey())==null) {
 				savedIssues.add(issue);
 			}
+			else {
+				System.out.println("Found a duplicate " + issue.getKey());
+			}
 		}
 		issueRepository.save(savedIssues);
 		System.out.println("Issues saved " + issueRepository.count());
+		allIssues.clear();
+		savedIssues.clear();
 		return "saved";
 	}
 
