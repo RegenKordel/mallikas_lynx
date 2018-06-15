@@ -449,3 +449,669 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:/Users/ejket
 	at org.h2.mvstore.FileStore.open(FileStore.java:173)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:347)
 	... 69 more
+2018-06-12 11:28:12 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-12 11:31:27 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-12 11:31:40 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-12 11:35:40 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-12 11:36:13 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-12 13:18:02 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-12 13:20:14 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-12 15:52:01 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-12 16:18:37 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 08:54:09 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 08:54:52 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 08:56:40 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 08:59:05 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 08:59:43 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 09:14:12 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 09:17:05 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 09:31:07 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 09:33:59 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 09:44:35 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 09:45:06 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 09:46:58 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 09:55:41 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 09:59:38 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 10:05:27 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 10:13:20 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 10:17:12 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 10:19:57 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 10:20:31 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 10:31:26 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 10:41:32 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 10:43:13 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 11:05:31 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 11:57:21 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 13:23:50 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 13:29:37 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 13:31:18 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 14:57:34 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 15:06:38 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 15:09:42 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (DEPENDENCY_TYPE INTEGER NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (DEPENDENCY_TYPE)) "; expected "identifier"; SQL statement:
+create table dependency (dependency_type integer not null, created_at bigint not null, dependency_score float not null, from binary(255), status integer, to binary(255), primary key (dependency_type)) [42001-196]
+2018-06-13 15:12:21 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 15:12:43 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 15:22:58 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 15:23:56 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 15:25:53 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 15:36:08 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 15:37:10 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 15:38:29 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 15:49:40 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 15:50:15 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 15:51:21 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 15:53:02 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 15:53:58 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 15:55:43 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 15:56:30 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 15:56:57 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 16:15:33 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 16:16:19 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 16:16:52 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-13 16:17:26 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 09:41:12 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 09:50:24 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 09:51:17 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 09:53:45 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 09:54:27 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 09:55:51 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 09:57:56 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 09:58:27 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 09:59:21 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 10:02:10 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 10:06:36 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 10:07:17 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 10:09:23 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 10:10:54 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 10:11:44 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 10:12:12 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 10:12:23 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 10:13:43 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 10:15:13 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 10:26:57 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 10:41:37 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 10:45:15 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 12:17:49 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 12:18:29 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 12:23:21 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 12:23:53 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 12:28:11 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 12:30:15 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 13:10:29 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 13:13:19 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 13:14:15 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 13:14:35 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 13:16:11 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 13:17:00 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 13:19:00 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 13:19:34 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 13:20:53 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 13:21:46 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 13:25:51 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 13:27:17 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 14:14:39 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 14:14:43 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "TEXT VARCHAR(255)": "STRINGDECODE('Do you mean the link above? Can you add links to the docs that you''ve seen, so that we can figure out whether you... (311)"; SQL statement:
+insert into comment (created_at, modified_at, text, id) values (?, ?, ?, ?) [22001-196]
+2018-06-14 14:16:03 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 14:16:13 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 14:20:27 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 14:35:44 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 14:40:14 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 14:49:45 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 14:50:55 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 15:00:21 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 15:02:20 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 15:04:51 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 15:06:49 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 15:07:49 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 15:08:18 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 15:22:33 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 15:23:29 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 15:24:40 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 15:25:16 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 15:31:08 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 15:31:29 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 15:56:18 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 15:58:29 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 15:58:39 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:03:34 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:08:51 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:10:07 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:10:46 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:11:53 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:12:29 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:12:49 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:14:54 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:15:29 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:16:12 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:16:57 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:18:14 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:19:17 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:20:10 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:21:25 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-14 16:25:31 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 08:47:17 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 09:01:10 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 09:01:38 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 09:02:51 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 09:03:47 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 09:30:37 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 09:30:59 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 09:31:15 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 09:31:35 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 09:32:24 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 09:44:50 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 09:47:24 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 09:47:51 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 09:54:12 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 09:56:14 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 09:56:33 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "DEPENDENCY" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 09:56:33 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "DEPENDENCY" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 10:01:03 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:01:31 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "DEPENDENCY" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 10:01:31 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "DEPENDENCY" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 10:08:51 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:09:13 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "DEPENDENCY" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 10:09:13 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "DEPENDENCY" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 10:10:07 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:11:41 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:11:47 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "DEPENDENCY" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 10:11:47 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "DEPENDENCY" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 10:14:35 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from[*] binary(255), status integer, to binary(255), primary key (id))"; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:14:49 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "dependency" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 10:14:49 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "dependency" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 10:14:56 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "dependency" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 10:14:56 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "dependency" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 10:24:26 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:24:42 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "DEPENDENCY" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 10:24:42 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Table "DEPENDENCY" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 10:25:16 jdbc[22]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:41:40 jdbc[32]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:42:20 jdbc[32]: exception
+org.h2.jdbc.JdbcSQLException: Table "DEPENDENCY" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 10:42:20 jdbc[32]: exception
+org.h2.jdbc.JdbcSQLException: Table "DEPENDENCY" not found; SQL statement:
+insert into dependency (id, created_at, dependency_score, dependency_type, from, status, to) values (null, ?, ?, ?, ?, ?, ?) [42102-196]
+2018-06-15 10:44:05 jdbc[42]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:49:31 jdbc[52]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:50:11 jdbc[62]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:52:47 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:53:47 jdbc[22]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:56:09 jdbc[32]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:56:45 jdbc[42]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:56:51 jdbc[52]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 10:57:26 jdbc[62]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 11:20:08 jdbc[72]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 11:21:39 jdbc[82]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 11:25:23 jdbc[92]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 11:26:18 jdbc[102]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 11:26:42 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 11:28:23 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT DEPENDENCY0_.ID AS ID1_2_, DEPENDENCY0_.CREATED_AT AS CREATED_2_2_, DEPENDENCY0_.DEPENDENCY_SCORE AS DEPENDEN3_2_, DEPENDENCY0_.DEPENDENCY_TYPE AS DEPENDEN4_2_, DEPENDENCY0_.FROM[*] AS FROM5_2_, DEPENDENCY0_.STATUS AS STATUS6_2_, DEPENDENCY0_.TO AS TO7_2_ FROM DEPENDENCY DEPENDENCY0_ WHERE DEPENDENCY0_.ID=? "; expected "identifier"; SQL statement:
+select dependency0_.id as id1_2_, dependency0_.created_at as created_2_2_, dependency0_.dependency_score as dependen3_2_, dependency0_.dependency_type as dependen4_2_, dependency0_.from as from5_2_, dependency0_.status as status6_2_, dependency0_.to as to7_2_ from dependency dependency0_ where dependency0_.id=? [42001-196]
+2018-06-15 11:29:19 jdbc[22]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 11:29:33 jdbc[22]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT DEPENDENCY0_.ID AS ID1_2_, DEPENDENCY0_.CREATED_AT AS CREATED_2_2_, DEPENDENCY0_.DEPENDENCY_SCORE AS DEPENDEN3_2_, DEPENDENCY0_.DEPENDENCY_TYPE AS DEPENDEN4_2_, DEPENDENCY0_.FROM[*] AS FROM5_2_, DEPENDENCY0_.STATUS AS STATUS6_2_, DEPENDENCY0_.TO AS TO7_2_ FROM DEPENDENCY DEPENDENCY0_ WHERE DEPENDENCY0_.ID=? "; expected "identifier"; SQL statement:
+select dependency0_.id as id1_2_, dependency0_.created_at as created_2_2_, dependency0_.dependency_score as dependen3_2_, dependency0_.dependency_type as dependen4_2_, dependency0_.from as from5_2_, dependency0_.status as status6_2_, dependency0_.to as to7_2_ from dependency dependency0_ where dependency0_.id=? [42001-196]
+2018-06-15 11:32:51 jdbc[32]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 11:33:09 jdbc[32]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT DEPENDENCY0_.ID AS ID1_2_, DEPENDENCY0_.CREATED_AT AS CREATED_2_2_, DEPENDENCY0_.DEPENDENCY_SCORE AS DEPENDEN3_2_, DEPENDENCY0_.DEPENDENCY_TYPE AS DEPENDEN4_2_, DEPENDENCY0_.FROM[*] AS FROM5_2_, DEPENDENCY0_.STATUS AS STATUS6_2_, DEPENDENCY0_.TO AS TO7_2_ FROM DEPENDENCY DEPENDENCY0_ WHERE DEPENDENCY0_.ID=? "; expected "identifier"; SQL statement:
+select dependency0_.id as id1_2_, dependency0_.created_at as created_2_2_, dependency0_.dependency_score as dependen3_2_, dependency0_.dependency_type as dependen4_2_, dependency0_.from as from5_2_, dependency0_.status as status6_2_, dependency0_.to as to7_2_ from dependency dependency0_ where dependency0_.id=? [42001-196]
+2018-06-15 11:36:17 jdbc[42]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 11:45:50 jdbc[52]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] BINARY(255), STATUS INTEGER, TO BINARY(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from binary(255), status integer, to binary(255), primary key (id)) [42001-196]
+2018-06-15 12:19:14 jdbc[22]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 12:20:13 jdbc[22]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT DEPENDENCY0_.ID AS ID1_2_, DEPENDENCY0_.CREATED_AT AS CREATED_2_2_, DEPENDENCY0_.DEPENDENCY_SCORE AS DEPENDEN3_2_, DEPENDENCY0_.DEPENDENCY_TYPE AS DEPENDEN4_2_, DEPENDENCY0_.FROM[*] AS FROM5_2_, DEPENDENCY0_.STATUS AS STATUS6_2_, DEPENDENCY0_.TO AS TO7_2_ FROM DEPENDENCY DEPENDENCY0_ WHERE DEPENDENCY0_.ID=? "; expected "identifier"; SQL statement:
+select dependency0_.id as id1_2_, dependency0_.created_at as created_2_2_, dependency0_.dependency_score as dependen3_2_, dependency0_.dependency_type as dependen4_2_, dependency0_.from as from5_2_, dependency0_.status as status6_2_, dependency0_.to as to7_2_ from dependency dependency0_ where dependency0_.id=? [42001-196]
+2018-06-15 12:22:04 jdbc[22]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT DEPENDENCY0_.ID AS ID1_2_, DEPENDENCY0_.CREATED_AT AS CREATED_2_2_, DEPENDENCY0_.DEPENDENCY_SCORE AS DEPENDEN3_2_, DEPENDENCY0_.DEPENDENCY_TYPE AS DEPENDEN4_2_, DEPENDENCY0_.FROM[*] AS FROM5_2_, DEPENDENCY0_.STATUS AS STATUS6_2_, DEPENDENCY0_.TO AS TO7_2_ FROM DEPENDENCY DEPENDENCY0_ WHERE DEPENDENCY0_.ID=? "; expected "identifier"; SQL statement:
+select dependency0_.id as id1_2_, dependency0_.created_at as created_2_2_, dependency0_.dependency_score as dependen3_2_, dependency0_.dependency_type as dependen4_2_, dependency0_.from as from5_2_, dependency0_.status as status6_2_, dependency0_.to as to7_2_ from dependency dependency0_ where dependency0_.id=? [42001-196]
+2018-06-15 13:08:06 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 13:09:24 jdbc[32]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 13:10:25 jdbc[52]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 13:10:44 jdbc[62]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 13:11:03 jdbc[72]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 13:11:41 jdbc[82]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 13:13:58 jdbc[92]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 13:14:22 jdbc[102]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 13:35:25 jdbc[112]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID BIGINT GENERATED BY DEFAULT AS IDENTITY, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id bigint generated by default as identity, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 13:37:51 jdbc[122]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 13:55:39 jdbc[132]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 13:57:45 jdbc[142]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 13:58:04 jdbc[152]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 13:58:13 jdbc[162]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 13:58:46 jdbc[172]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 14:07:15 jdbc[182]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 14:10:18 jdbc[192]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 14:12:27 jdbc[202]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 14:13:07 jdbc[212]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
+2018-06-15 14:13:32 jdbc[222]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE DEPENDENCY_ONE (ID VARCHAR(255) NOT NULL, CREATED_AT BIGINT NOT NULL, DEPENDENCY_SCORE FLOAT NOT NULL, DEPENDENCY_TYPE INTEGER, FROM[*] VARCHAR(255), STATUS INTEGER, TO VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table dependency_one (id varchar(255) not null, created_at bigint not null, dependency_score float not null, dependency_type integer, from varchar(255), status integer, to varchar(255), primary key (id)) [42001-196]
