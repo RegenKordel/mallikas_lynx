@@ -30,6 +30,7 @@ import io.swagger.annotations.ApiOperation;
 
 @SpringBootApplication
 @Controller
+//@RequestMapping("uh/mallikas/")
 public class MallikasController {
 
 	@Autowired
@@ -242,7 +243,6 @@ public class MallikasController {
 		System.out.println("Requested req is " + req.getId());
 
 		List<Dependency> dependenciesFrom = dependencyRepository.findByFromId(id);
-	//	List<Dependency> dependenciesTo = dependencyRepository.findByToId(id); //This would be for getting also those requirements the asked requirement is dependent of. 
 
 		Set<String> reqIDs = new HashSet<>();
 		if (!dependenciesFrom.isEmpty()) {
@@ -254,16 +254,6 @@ public class MallikasController {
 				}
 			}
 		}
-		
-//		if (!dependenciesTo.isEmpty()) {
-//			for (Dependency dependency : dependenciesTo) {
-//				String reqId = dependency.getFromId();
-//				System.out.println("From id " +reqId);
-//				if (!reqIDs.contains(reqId)) {
-//					reqIDs.add(reqId);
-//				}
-//			}
-//		}
 
 		List<Requirement> dependentReqs = reqRepository.findByIdIn(reqIDs);
 
@@ -273,7 +263,6 @@ public class MallikasController {
 				String reqString = mapper.writeValueAsString(req);
 				String reqsString = mapper.writeValueAsString(dependentReqs);
 				String dependencyFromString = mapper.writeValueAsString(dependenciesFrom);
-				//String dependencyToString = mapper.writeValueAsString(dependenciesTo);
 				String all = reqString + "{ \"requirements\":" + reqsString + "} { \"dependencies\":"+ dependencyFromString + "}";
 				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
@@ -282,113 +271,5 @@ public class MallikasController {
 		}
 		return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
-
-	// Older methods
-
-	// /**
-	// * Receives a Collection of Requirement ids (String) from Milla and sends back
-	// to Milla a List of selected Requirements.
-	// * @param ids Collection<String> received from Milla, ids of the selected
-	// Requirements
-	// * @return selected Requirements (List<Requirement> as a ResponseEntity), if
-	// the List is not empty, else returns a new ResponseEntity Not Found
-	// */
-	// @RequestMapping(value = "/mallikas/reqs/{ids}")
-	// public ResponseEntity<List<Requirement>>
-	// sendSelectedRequirementsToMilla(@PathVariable("ids") Collection<String> ids)
-	// {
-	// System.out.println("Milla asked for selected requirements again");
-	// System.out.println("ids is " +ids +" ids size is " + ids.size());
-	// List<Requirement> requestedReqs = reqRepository.findByIdIn(ids);
-	// System.out.println("requestedReqs " + requestedReqs.size());
-	// if(!requestedReqs.isEmpty()) {
-	// return new ResponseEntity<List<Requirement>>(requestedReqs, HttpStatus.OK);
-	// }
-	// return new ResponseEntity(HttpStatus.NOT_FOUND);
-	// }
-
-	// /**
-	// * Receives a key of a Requirement (String) from Milla, and sends the
-	// Requirement object back to Milla, if it is in the database.
-	// * @param key String received from Milla, key (identifier) of a Requirement
-	// * @return Requirement as a ResponseEntity, if it was found, else returns a
-	// new ResponseEntity Not Found
-	// */
-	// @RequestMapping(value = "/mallikas/{key}")
-	// public ResponseEntity<Requirement>
-	// sendOneRequirementToMilla(@PathVariable("key") String key) {
-	// System.out.println("Milla asked for a requirement");
-	// Requirement req = reqRepository.findById(key);
-	// System.out.println("Requested req is " + req.getId());
-	// if(req!=null) {
-	// return new ResponseEntity<Requirement>(req, HttpStatus.OK);
-	// }
-	// return new ResponseEntity(HttpStatus.NOT_FOUND);
-	// }
-
-	// /**
-	// * Sends all Requirements in the database as a List to Milla
-	// * @return all Requirements (List<Requirement> as a ResponseEntity), if the
-	// List is not empty, else returns a new ResponseEntity Not Found
-	// */
-	// @RequestMapping(value = "/mallikas/all")
-	// public ResponseEntity<List<Requirement>> sendAllRequirementsToMilla() {
-	// System.out.println("Milla asked for all requirements");
-	// List<Requirement> allReqs = reqRepository.findAll();
-	// List<Dependency> dependencies =dependencyRepository.findAll();
-	// if(!allReqs.isEmpty()) {
-	// try {
-	// ObjectMapper mapper = new ObjectMapper();
-	// String reqString = mapper.writeValueAsString(allReqs);
-	// String dependencyString = mapper.writeValueAsString(dependencies);
-	// }
-	// catch (Exception e) {
-	// // TODO: handle exception
-	// }
-	// return new ResponseEntity<List<Requirement>>(allReqs, HttpStatus.OK);
-	// }
-	// return new ResponseEntity(HttpStatus.NOT_FOUND);
-	// }
-
-	// /**
-	// * Sends all Requirements with a selected Classifier as a List to Milla.
-	// * @param id String received from Milla, contains the id of a Classifier
-	// * @return Requirements that have the selected Classifier (List<Requirement>
-	// as a ResponseEntity), if the List is not empty, else returns a new
-	// ResponseEntity Not Found
-	// */
-	// @RequestMapping(value = "/mallikas/classifiers", method = RequestMethod.POST)
-	// public ResponseEntity<List<Requirement>>
-	// sendRequirementsWithClassifierToMilla(@RequestBody String id) {
-	// System.out.println("Milla asked for all requirements in a
-	// component/classifier");
-	// System.out.println("ClassifierId is " + id);
-	// List<Requirement> reqs = reqRepository.findByClassifier(id);
-	// if(!reqs.isEmpty()) {
-	// return new ResponseEntity<List<Requirement>>(reqs, HttpStatus.OK);
-	// }
-	// return new ResponseEntity(HttpStatus.NOT_FOUND);
-	// }
-
-	// /**
-	// * Receives a Collection of Requirement ids (String) from Milla and sends back
-	// to Milla a List of selected Requirements.
-	// * @param ids Collection<String> received from Milla, ids of the selected
-	// Requirements
-	// * @return selected Requirements (List<Requirement> as a ResponseEntity), if
-	// the List is not empty, else returns a new ResponseEntity Not Found
-	// */
-	// @RequestMapping(value = "/mallikas/reqs", method = RequestMethod.POST )
-	// public ResponseEntity<List<Requirement>>
-	// sendSelectedRequirementsToMilla(@RequestBody Collection<String> ids) {
-	// System.out.println("Milla asked for selected requirements again");
-	// System.out.println("ids is " +ids +" ids size is " + ids.size());
-	// List<Requirement> requestedReqs = reqRepository.findByIdIn(ids);
-	// System.out.println("requestedReqs " + requestedReqs.size());
-	// if(!requestedReqs.isEmpty()) {
-	// return new ResponseEntity<List<Requirement>>(requestedReqs, HttpStatus.OK);
-	// }
-	// return new ResponseEntity(HttpStatus.NOT_FOUND);
-	// }
 
 }
