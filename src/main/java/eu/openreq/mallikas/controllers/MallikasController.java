@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiOperation;
 
 @SpringBootApplication
 @Controller
-//@RequestMapping("uh/mallikas/")
+@RequestMapping("uh/mallikas/")
 public class MallikasController {
 
 	@Autowired
