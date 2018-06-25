@@ -134,7 +134,7 @@ public class MallikasController {
 				ObjectMapper mapper = new ObjectMapper();
 				String reqString = mapper.writeValueAsString(req);
 				String dependencyString = mapper.writeValueAsString(dependencies);
-				String all = "{ \"requirements\":" + reqString + "} { \"dependencies\":"+ dependencyString + "}";
+				String all = "{ \"requirements\":" + reqString + ", \"dependencies\":"+ dependencyString + "}";
 				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -158,7 +158,7 @@ public class MallikasController {
 				ObjectMapper mapper = new ObjectMapper();
 				String reqString = mapper.writeValueAsString(allReqs);
 				String dependencyString = mapper.writeValueAsString(dependencies);
-				String all = "{ \"requirements\":" + reqString + "} { \"dependencies\":"+ dependencyString + "}";
+				String all = "{ \"requirements\":" + reqString + ", \"dependencies\":"+ dependencyString + "}";
 				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -190,7 +190,7 @@ public class MallikasController {
 				ObjectMapper mapper = new ObjectMapper();
 				String reqString = mapper.writeValueAsString(selectedReqs);
 				String dependencyString = mapper.writeValueAsString(allDependencies);
-				String all = "{ \"requirements\":" + reqString + "} { \"dependencies\":"+ dependencyString + "}";
+				String all = "{ \"requirements\":" + reqString + ", \"dependencies\":"+ dependencyString + "}";
 				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -217,7 +217,7 @@ public class MallikasController {
 				ObjectMapper mapper = new ObjectMapper();
 				String reqString = mapper.writeValueAsString(selectedReqs);
 				String dependencyString = mapper.writeValueAsString(dependencies);
-				String all = "{ \"requirements\":" + reqString + "} { \"dependencies\":"+ dependencyString + "}";
+				String all = "{ \"requirements\":" + reqString + ", \"dependencies\":"+ dependencyString + "}";
 				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -263,7 +263,7 @@ public class MallikasController {
 				String reqString = mapper.writeValueAsString(req);
 				String reqsString = mapper.writeValueAsString(dependentReqs);
 				String dependencyFromString = mapper.writeValueAsString(dependenciesFrom);
-				String all = reqString + "{ \"requirements\":" + reqsString + "} { \"dependencies\":"+ dependencyFromString + "}";
+				String all = reqString + "{ \"requirements\":" + reqsString + ", \"dependencies\":"+ dependencyFromString + "}";
 				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
