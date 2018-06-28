@@ -6247,3 +6247,6 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:/Users/ejket
 	at org.h2.mvstore.FileStore.open(FileStore.java:173)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:347)
 	... 69 more
+2018-06-28 15:23:44 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "TEXT VARCHAR(255)": "'h1. The documentation supported by the ppapi plugins is too simple. and does Qt5.9 have the complete process or step documentat... (521)"; SQL statement:
+insert into requirement (created_at, modified_at, name, priority, requirement_type, status, text, id) values (?, ?, ?, ?, ?, ?, ?, ?) [22001-196]
