@@ -32,6 +32,7 @@ import io.swagger.annotations.ApiOperation;
 
 @SpringBootApplication
 @Controller
+@RequestMapping("/")
 // @RequestMapping("uh/mallikas/")
 public class MallikasController {
 
