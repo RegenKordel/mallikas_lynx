@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -46,6 +47,7 @@ public class Requirement implements Serializable {
 	* The textual description of the requirement
 	* 
 	*/
+	@Lob
 	@SerializedName("text")
 	@Expose
 	private String text;
@@ -107,7 +109,6 @@ public class Requirement implements Serializable {
 	* The keywords or tags from the classification of a requirement
 	* 
 	*/
-
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@SerializedName("classifierResults")
 	@Expose
