@@ -14,4 +14,5 @@ public interface DependencyRepository extends JpaRepository<Dependency, String> 
 	List<Dependency> findByToId(String toId);
 	
 	List<Dependency> findByFromIdIn(Collection<String> ids);
+	List<Dependency> findByIdIn(Collection<String> ids);
 }

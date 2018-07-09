@@ -115,6 +115,33 @@ public class MallikasController {
 		System.out.println("Project saved " + projectRepository.count());
 		return "saved";
 	}
+	
+	/**
+	 * Update selected Dependencies
+	 * 
+	 * @param dependencies
+	 *            Collection of Dependencies received from Milla
+	 * @return String "updated" if the update operation is successful
+	 */
+	@ApiOperation(value = "Update selected dependencies", notes = "Update and save dependencies to database")
+	@PostMapping(value = "updateDependencies")
+	public ResponseEntity<?> updateDependencies(@RequestBody Collection<Dependency> dependencies) {
+		System.out.println("Received dependencies to update");
+		List<Dependency> savedDependencies = new ArrayList<>();
+		for (Dependency dependency : dependencies) {
+			if (dependencyRepository.findById(dependency.getId()) == null) {
+				savedDependencies.add(dependency);
+			} else {
+				System.out.println("Update necessary");
+				updateDependency(dependency);
+				System.out.println("Updated dependency's status is " + dependencyRepository.findById(dependency.getId()).getStatus());
+			}
+		}
+		dependencyRepository.save(savedDependencies);
+		System.out.println("Dependencies saved " + dependencyRepository.count());
+		savedDependencies.clear();
+		return new ResponseEntity<>(HttpStatus.OK); //To be modified
+	}
 
 	/**
 	 * Receives an id of a Requirement (String) from Milla, and sends the
@@ -251,7 +278,10 @@ public class MallikasController {
 		System.out.println("Requested req is " + requirement.getId());
 
 		List<Dependency> dependenciesFrom = dependencyRepository.findByFromId(id);
+		List<Dependency> dependenciesTo= dependencyRepository.findByToId(id);
+		dependenciesFrom.addAll(dependenciesTo);
 		Set<String> requirementIDs = collectRequirementIDs(dependenciesFrom);
+		requirementIDs.remove(requirement.getId());
 		List<Requirement> dependentReqs = reqRepository.findByIdIn(requirementIDs);
 
 		if (requirement != null) {
@@ -273,9 +303,13 @@ public class MallikasController {
 		Set<String> reqIDs = new HashSet<>();
 		if (!dependencies.isEmpty()) {
 			for (Dependency dependency : dependencies) {
-				String reqId = dependency.getToId();
-				if (!reqIDs.contains(reqId)) {
-					reqIDs.add(reqId);
+				String reqToId = dependency.getToId();
+				if (!reqIDs.contains(reqToId)) {
+					reqIDs.add(reqToId);
+				}
+				String reqFromId = dependency.getFromId();
+				if (!reqIDs.contains(reqFromId)) {
+					reqIDs.add(reqFromId);
 				}
 			}
 		}
@@ -298,12 +332,27 @@ public class MallikasController {
 		String jsonString;
 		if (requirement != null) {
 			String reqString = mapper.writeValueAsString(requirement);
-			jsonString = "{\" requirement\":" + reqString + ", \"dependent_requirements\":" + reqsString
+			jsonString = "{\"requirement\":" + reqString + ", \"dependent_requirements\":" + reqsString
 					+ ", \"dependencies\":" + dependencyString + "}";
 		} else {
 			jsonString = "{ \"requirements\":" + reqsString + ", \"dependencies\":" + dependencyString + "}";
 		}
 		return jsonString;
+	}
+	
+	/**
+	 * Update a dependency with the information (mainly status) of the dependency received as a parameter
+	 * @param dependency
+	 */
+	private void updateDependency(Dependency dependency) {
+		Dependency updatedDependency = dependencyRepository.findById(dependency.getId());
+		updatedDependency.setCreated_at(dependency.getCreated_at());
+		updatedDependency.setDependency_score(dependency.getDependency_score());
+		updatedDependency.setDependency_type(dependency.getDependency_type());
+		updatedDependency.setFromId(dependency.getFromId());
+		updatedDependency.setToId(dependency.getToId());
+		updatedDependency.setStatus(dependency.getStatus());
+		dependencyRepository.save(updatedDependency);
 	}
 
 }
