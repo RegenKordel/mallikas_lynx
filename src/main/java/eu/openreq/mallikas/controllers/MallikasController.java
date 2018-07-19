@@ -106,7 +106,7 @@ public class MallikasController {
 	@ApiOperation(value = "Import a project", notes = "Import an OpenReq Project")
 	@PostMapping(value = "project")
 	public String importProjectFromMilla(@RequestBody Project project) {
-		System.out.println("Received a project from Milla " + project);
+		System.out.println("Received a project from Milla " + project.getId());
 		if (projectRepository.findOne(project.getId()) == null) {
 			projectRepository.save(project);
 		} else {
@@ -121,26 +121,65 @@ public class MallikasController {
 	 * 
 	 * @param dependencies
 	 *            Collection of Dependencies received from Milla
-	 * @return String "updated" if the update operation is successful
+	 * @return String "Dependencies updated" if the update operation is successful
 	 */
 	@ApiOperation(value = "Update selected dependencies", notes = "Update and save dependencies to database")
 	@PostMapping(value = "updateDependencies")
 	public ResponseEntity<?> updateDependencies(@RequestBody Collection<Dependency> dependencies) {
 		System.out.println("Received dependencies to update");
 		List<Dependency> savedDependencies = new ArrayList<>();
-		for (Dependency dependency : dependencies) {
-			if (dependencyRepository.findById(dependency.getId()) == null) {
-				savedDependencies.add(dependency);
-			} else {
-				System.out.println("Update necessary");
-				updateDependency(dependency);
-				System.out.println("Updated dependency's status is " + dependencyRepository.findById(dependency.getId()).getStatus());
+		try {
+			for (Dependency dependency : dependencies) {
+				if (dependencyRepository.findById(dependency.getId()) == null) {
+					savedDependencies.add(dependency);
+				} else {
+					System.out.println("Update necessary");
+					updateDependency(dependency);
+					System.out.println("Updated dependency's status is " + dependencyRepository.findById(dependency.getId()).getStatus());
+				}
 			}
+			dependencyRepository.save(savedDependencies);
+			savedDependencies.clear();
+			System.out.println("Dependencies saved " + dependencyRepository.count());
+			return new ResponseEntity<String>("Dependencies updated", HttpStatus.OK);
 		}
-		dependencyRepository.save(savedDependencies);
-		System.out.println("Dependencies saved " + dependencyRepository.count());
-		savedDependencies.clear();
-		return new ResponseEntity<>(HttpStatus.OK); //To be modified
+		catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
+		}
+	}
+		
+	/**
+	 * Update selected Requirements
+	 * 
+	 * @param requirements
+	 *            Collection of Requirements received from Milla
+	 * @return String "Requirements updated" if the update operation is successful
+	 */
+	@ApiOperation(value = "Update selected requirements", notes = "Update and save requirements to database")
+	@PostMapping(value = "updateRequirements")
+	public ResponseEntity<?>updateRequirements(@RequestBody Collection<Requirement> requirements) {
+		System.out.println("Received requirements to update");
+		List<Requirement> savedRequirements = new ArrayList<>();
+
+		try {
+			for (Requirement requirement : requirements) {
+				if (reqRepository.findById(requirement.getId()) == null) {
+					savedRequirements.add(requirement);
+				} else {
+					System.out.println("Update necessary");
+					updateRequirement(requirement);
+				}
+			}
+			reqRepository.save(savedRequirements);
+			System.out.println("Requirements saved " + reqRepository.count());
+			savedRequirements.clear();
+			return new ResponseEntity<>("Requirements updated", HttpStatus.OK);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -246,6 +285,11 @@ public class MallikasController {
 		return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 	
+	/**
+	 * Receives a projectId from Milla and sends back all requirements and their dependencies in that project
+	 * @param projectId
+	 * @return
+	 */
 	@PostMapping(value = "projectRequirements")
 	public ResponseEntity<String> sendRequirementsInProjectToMilla(@RequestBody String projectId) {
 		Project project = projectRepository.findById(projectId);
@@ -353,6 +397,21 @@ public class MallikasController {
 		updatedDependency.setToId(dependency.getToId());
 		updatedDependency.setStatus(dependency.getStatus());
 		dependencyRepository.save(updatedDependency);
+	}
+	
+	private void updateRequirement(Requirement requirement) {
+		Requirement updatedReq = reqRepository.findById(requirement.getId());
+		updatedReq.setCreated_at(requirement.getCreated_at());
+		updatedReq.setModified_at(requirement.getModified_at());
+		updatedReq.setName(requirement.getName());
+		updatedReq.setPriority(requirement.getPriority());
+		updatedReq.setRequirement_type(requirement.getRequirement_type());
+		updatedReq.setStatus(requirement.getStatus());
+		updatedReq.setChildren(requirement.getChildren());
+		updatedReq.setClassifierResults(requirement.getClassifierResults());
+		updatedReq.setComments(requirement.getComments());
+		updatedReq.setText(requirement.getText());
+		reqRepository.save(updatedReq);
 	}
 
 }
