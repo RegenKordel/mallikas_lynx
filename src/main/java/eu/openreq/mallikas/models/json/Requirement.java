@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -88,6 +90,7 @@ public class Requirement implements Serializable {
 	*/
 	@SerializedName("requirement_type")
 	@Expose
+	@Enumerated(EnumType.STRING)
 	private Requirement_type requirement_type;
 	/**
 	* The current status of a requirement
@@ -96,6 +99,7 @@ public class Requirement implements Serializable {
 	*/
 	@SerializedName("status")
 	@Expose
+	@Enumerated(EnumType.STRING)
 	private Requirement_status status;
 	/**
 	* The requirements belonging to this requirement
