@@ -112,6 +112,7 @@ public class MallikasController {
 		if (projectRepository.findOne(project.getId()) == null) {
 			projectRepository.save(project);
 		} else {
+			updateProject(project);
 			System.out.println("Found a duplicate " + project.getId());
 		}
 		System.out.println("Project saved " + projectRepository.count());
@@ -144,7 +145,7 @@ public class MallikasController {
 			dependencyRepository.save(savedDependencies);
 			savedDependencies.clear();
 			System.out.println("Dependencies saved " + dependencyRepository.count());
-			return new ResponseEntity<String>("Dependencies updated", HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
@@ -169,14 +170,16 @@ public class MallikasController {
 				if (reqRepository.findById(requirement.getId()) == null) {
 					savedRequirements.add(requirement);
 				} else {
-					System.out.println("Update necessary");
-					updateRequirement(requirement);
+					if(requirement.getModified_at()>reqRepository.findById(requirement.getId()).getModified_at()) {
+						System.out.println("Update necessary");
+						updateRequirement(requirement);
+					}
 				}
 			}
 			reqRepository.save(savedRequirements);
 			System.out.println("Requirements saved " + reqRepository.count());
 			savedRequirements.clear();
-			return new ResponseEntity<>("Requirements updated", HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
@@ -256,7 +259,7 @@ public class MallikasController {
 				}
 			}
 			try {
-				return new ResponseEntity<String>(createJsonString(null, selectedReqs, allDependencies), HttpStatus.OK);
+				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, allDependencies), HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -278,7 +281,7 @@ public class MallikasController {
 		List<Dependency> dependencies = dependencyRepository.findByFromIdIn(ids);
 		if (!selectedReqs.isEmpty()) {
 			try {
-				return new ResponseEntity<String>(createJsonString(null, selectedReqs, dependencies), HttpStatus.OK);
+				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies), HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -299,10 +302,10 @@ public class MallikasController {
 
 		List<String> requirementIds = project.getSpecifiedRequirements();
 		List<Requirement> requirements = reqRepository.findByIdIn(requirementIds);
-		List<Dependency> dependencies = dependencyRepository.findByFromIdIn(requirementIds);
+		List<Dependency> dependencies = dependencyRepository.findByFromIdIn(requirementIds);	
 		if (!requirementIds.isEmpty()) {
 			try {
-				return new ResponseEntity<String>(createJsonString(null, requirements, dependencies), HttpStatus.OK);
+				return new ResponseEntity<String>(createJsonString(project, null, requirements, dependencies), HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -333,7 +336,7 @@ public class MallikasController {
 
 		if (requirement != null) {
 			try {
-				return new ResponseEntity<String>(createJsonString(requirement, dependentReqs, dependenciesFrom),
+				return new ResponseEntity<String>(createJsonString(null, requirement, dependentReqs, dependenciesFrom),
 						HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -389,7 +392,7 @@ public class MallikasController {
 					List<Dependency> dependencies = dependencyRepository.findByFromIdIn(reqIds);
 					List<Dependency> dependenciesTo = dependencyRepository.findByToIdIn(reqIds);
 					dependencies.addAll(dependenciesTo);
-					return new ResponseEntity<String>(createJsonString(null, selectedReqs, dependencies),
+					return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
 							HttpStatus.OK);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -458,7 +461,7 @@ public class MallikasController {
 	 * @return
 	 * @throws JsonProcessingException
 	 */
-	private String createJsonString(Requirement requirement, List<Requirement> requirements,
+	private String createJsonString(Project project, Requirement requirement, List<Requirement> requirements,
 			List<Dependency> dependencies) throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
 		String dependencyString = mapper.writeValueAsString(dependencies);
@@ -468,7 +471,11 @@ public class MallikasController {
 			String reqString = mapper.writeValueAsString(requirement);
 			jsonString = "{\"requirement\":" + reqString + ", \"dependent_requirements\":" + reqsString
 					+ ", \"dependencies\":" + dependencyString + "}";
-		} else {
+		} else if(project!=null){
+			String projectString = mapper.writeValueAsString(project);
+			jsonString = "{ \"project\":" + projectString + ", \"requirements\":" + reqsString + ", \"dependencies\":" + dependencyString + "}";
+		}
+		else {
 			jsonString = "{ \"requirements\":" + reqsString + ", \"dependencies\":" + dependencyString + "}";
 		}
 		return jsonString;
@@ -505,6 +512,15 @@ public class MallikasController {
 		updatedReq.setRequirementParts(requirement.getRequirementParts());
 		updatedReq.setText(requirement.getText());
 		reqRepository.save(updatedReq);
+	}
+	
+	private void updateProject(Project project) {
+		Project updatedProject = projectRepository.findById(project.getId());
+		updatedProject.setCreated_at(project.getCreated_at());
+		updatedProject.setModified_at(project.getModified_at()); //Should this be new Date.getTime()?
+		updatedProject.setName(project.getName());
+		updatedProject.setSpecifiedRequirements(project.getSpecifiedRequirements());
+		projectRepository.save(updatedProject);
 	}
 
 }
