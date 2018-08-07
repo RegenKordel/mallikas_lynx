@@ -502,6 +502,7 @@ public class MallikasController {
 		updatedReq.setChildren(requirement.getChildren());
 		updatedReq.setClassifierResults(requirement.getClassifierResults());
 		updatedReq.setComments(requirement.getComments());
+		updatedReq.setRequirementParts(requirement.getRequirementParts());
 		updatedReq.setText(requirement.getText());
 		reqRepository.save(updatedReq);
 	}

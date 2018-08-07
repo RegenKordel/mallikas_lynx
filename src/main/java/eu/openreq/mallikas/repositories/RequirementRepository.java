@@ -27,4 +27,7 @@ public interface RequirementRepository extends JpaRepository<Requirement, String
 	
 	@Query("SELECT DISTINCT req FROM Requirement req WHERE req.requirement_type = ?1 AND req.status = ?2")
 	List<Requirement> findByTypeAndStatus(Requirement_type type, Requirement_status status);
+	
+	@Query("SELECT DISTINCT req FROM Requirement req, IN (req.requirementParts) AS reqPart WHERE reqPart.text = ?1")
+	List<Requirement> findByRequirementPart(String resolutionValue);
 }

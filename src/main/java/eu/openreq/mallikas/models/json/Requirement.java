@@ -118,6 +118,15 @@ public class Requirement implements Serializable {
 	@Expose
 	private List<Classifier> classifierResults = null;
 	
+	/**
+	* RequirementParts of a requirement
+	* 
+	*/
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@SerializedName("requirementParts")
+	@Expose
+	private List<RequirementPart> requirementParts = null;
+	
 	
 	public String getId() {
 		return id;
@@ -205,5 +214,13 @@ public class Requirement implements Serializable {
 	
 	public void setClassifierResults(List<Classifier> classifierResults) {
 		this.classifierResults = classifierResults;
+	}
+	
+	public List<RequirementPart> getRequirementParts() {
+		return requirementParts;
+	}
+
+	public void setRequirementParts(List<RequirementPart> requirementParts) {
+		this.requirementParts = requirementParts;
 	}
 }
