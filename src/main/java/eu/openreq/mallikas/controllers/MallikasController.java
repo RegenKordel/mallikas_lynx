@@ -129,17 +129,14 @@ public class MallikasController {
 	@ApiOperation(value = "Update selected dependencies", notes = "Update and save dependencies to database")
 	@PostMapping(value = "updateDependencies")
 	public ResponseEntity<?> updateDependencies(@RequestBody Collection<Dependency> dependencies) {
-		System.out.println("Received dependencies to update");
+		//System.out.println("Received dependencies to update");
 		List<Dependency> savedDependencies = new ArrayList<>();
 		try {
 			for (Dependency dependency : dependencies) {
 				if (dependencyRepository.findById(dependency.getId()) == null) {
 					savedDependencies.add(dependency);
 				} else {
-					System.out.println("Update necessary");
 					updateDependency(dependency);
-					System.out.println("Updated dependency's status is "
-							+ dependencyRepository.findById(dependency.getId()).getStatus());
 				}
 			}
 			dependencyRepository.save(savedDependencies);
@@ -170,7 +167,7 @@ public class MallikasController {
 				if (reqRepository.findById(requirement.getId()) == null) {
 					savedRequirements.add(requirement);
 				} else {
-					if(requirement.getModified_at()>reqRepository.findById(requirement.getId()).getModified_at()) {
+					if (requirement.getModified_at() > reqRepository.findById(requirement.getId()).getModified_at()) {
 						System.out.println("Update necessary");
 						updateRequirement(requirement);
 					}
@@ -182,30 +179,56 @@ public class MallikasController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
 		}
+		return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
 	}
 
+// Probably unnecessary
+//	/**
+//	 * Receives an id of a Requirement (String) from Milla, and sends the
+//	 * Requirement object back to Milla, if it is in the database.
+//	 * 
+//	 * @param id
+//	 *            String received from Milla, id of a Requirement
+//	 * @return Requirement as a ResponseEntity, if it was found, else returns a new
+//	 *         ResponseEntity Not Found
+//	 */
+//	@PostMapping(value = "one")
+//	public ResponseEntity<?> sendOneRequirementToMilla(@RequestBody String id) {
+//		Requirement req = reqRepository.findById(id);
+//	//	System.out.println("Requested req is " + req.getId());
+//		if (req != null) {
+//		List<Dependency> dependencies = dependencyRepository.findByFromId(id);
+//			try {
+//				ObjectMapper mapper = new ObjectMapper();
+//				String reqString = mapper.writeValueAsString(req);
+//				String dependencyString = mapper.writeValueAsString(dependencies);
+//				String all = "{ \"requirement\":" + reqString + ", \"dependencies\":" + dependencyString + "}";
+//				return new ResponseEntity<String>(all, HttpStatus.OK);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		return new ResponseEntity(HttpStatus.NOT_FOUND);
+//	}
+
+	// Should work (but the returned String might be too large to show in Swagger
+	//
 	/**
-	 * Receives an id of a Requirement (String) from Milla, and sends the
-	 * Requirement object back to Milla, if it is in the database.
-	 * 
-	 * @param id
-	 *            String received from Milla, id of a Requirement
-	 * @return Requirement as a ResponseEntity, if it was found, else returns a new
-	 *         ResponseEntity Not Found
+	 * Sends all Requirements in the database as a String to Milla
+	 *
+	 * @return all Requirements and their Dependencies as a String
 	 */
-	@PostMapping(value = "one")
-	public ResponseEntity<?> sendOneRequirementToMilla(@RequestBody String id) {
-		Requirement req = reqRepository.findById(id);
-		System.out.println("Requested req is " + req.getId());
-		List<Dependency> dependencies = dependencyRepository.findByFromId(id);
-		if (req != null) {
+	@RequestMapping(value = "mallikas/all", method = RequestMethod.GET)
+	public ResponseEntity<String> sendAllRequirementsToMilla() {
+		List<Requirement> allReqs = reqRepository.findAll();
+		List<Dependency> dependencies = dependencyRepository.findAll();
+		if (!allReqs.isEmpty()) {
 			try {
 				ObjectMapper mapper = new ObjectMapper();
-				String reqString = mapper.writeValueAsString(req);
+				String reqString = mapper.writeValueAsString(allReqs);
 				String dependencyString = mapper.writeValueAsString(dependencies);
-				String all = "{ \"requirement\":" + reqString + ", \"dependencies\":" + dependencyString + "}";
+				String all = "{ \"requirements\":" + reqString + ", \"dependencies\":" + dependencyString + "}";
 				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -213,32 +236,6 @@ public class MallikasController {
 		}
 		return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
-
-	// Connection with Milla not working properly with this method at the moment
-	//
-	// /**
-	// * Sends all Requirements in the database as a String to Milla
-	// *
-	// * @return all Requirements and their Dependencies as a String
-	// */
-	// @RequestMapping(value = "mallikas/all", method = RequestMethod.GET)
-	// public ResponseEntity<String> sendAllRequirementsToMilla() {
-	// List<Requirement> allReqs = reqRepository.findAll();
-	// List<Dependency> dependencies = dependencyRepository.findAll();
-	// if (!allReqs.isEmpty()) {
-	// try {
-	// ObjectMapper mapper = new ObjectMapper();
-	// String reqString = mapper.writeValueAsString(allReqs);
-	// String dependencyString = mapper.writeValueAsString(dependencies);
-	// String all = "{ \"requirements\":" + reqString + ", \"dependencies\":"+
-	// dependencyString + "}";
-	// return new ResponseEntity<String>(all, HttpStatus.OK);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// return new ResponseEntity(HttpStatus.NOT_FOUND);
-	// }
 
 	/**
 	 * Receives an id (String) of a Classifier (Component) from Milla and sends back
@@ -250,16 +247,19 @@ public class MallikasController {
 	@PostMapping(value = "classifiers")
 	public ResponseEntity<String> sendRequirementsWithClassifierToMilla(@RequestBody String id) {
 		List<Requirement> selectedReqs = reqRepository.findByClassifier(id);
-		List<Dependency> allDependencies = new ArrayList();
-		if (!selectedReqs.isEmpty()) {
+		List<Dependency> allDependencies = new ArrayList<Dependency>();
+		if (!selectedReqs.isEmpty() && selectedReqs != null) {
 			for (Requirement req : selectedReqs) {
 				List<Dependency> dependencies = dependencyRepository.findByFromId(req.getId());
-				if (!dependencies.isEmpty()) {
-					allDependencies.addAll(dependencies);
-				}
+				List<Dependency> dependenciesTo = dependencyRepository.findByToId(req.getId());
+				// if (!dependencies.isEmpty()) {
+				allDependencies.addAll(dependencies);
+				allDependencies.addAll(dependenciesTo);
+				// }
 			}
 			try {
-				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, allDependencies), HttpStatus.OK);
+				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, allDependencies),
+						HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -278,10 +278,13 @@ public class MallikasController {
 	@PostMapping(value = "selectedReqs")
 	public ResponseEntity<String> sendSelectedRequirementsToMilla(@RequestBody Collection<String> ids) {
 		List<Requirement> selectedReqs = reqRepository.findByIdIn(ids);
-		List<Dependency> dependencies = dependencyRepository.findByFromIdIn(ids);
-		if (!selectedReqs.isEmpty()) {
+		if (!selectedReqs.isEmpty() && selectedReqs != null) {
+			List<Dependency> dependencies = dependencyRepository.findByFromIdIn(ids);
+			List<Dependency> dependenciesTo = dependencyRepository.findByToIdIn(ids);
+			dependencies.addAll(dependenciesTo);
 			try {
-				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies), HttpStatus.OK);
+				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
+						HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -299,15 +302,20 @@ public class MallikasController {
 	@PostMapping(value = "projectRequirements")
 	public ResponseEntity<String> sendRequirementsInProjectToMilla(@RequestBody String projectId) {
 		Project project = projectRepository.findById(projectId);
-
-		List<String> requirementIds = project.getSpecifiedRequirements();
-		List<Requirement> requirements = reqRepository.findByIdIn(requirementIds);
-		List<Dependency> dependencies = dependencyRepository.findByFromIdIn(requirementIds);	
-		if (!requirementIds.isEmpty()) {
-			try {
-				return new ResponseEntity<String>(createJsonString(project, null, requirements, dependencies), HttpStatus.OK);
-			} catch (Exception e) {
-				e.printStackTrace();
+		if (project != null) {
+			// System.out.println("Sending projects to Milla");
+			List<String> requirementIds = project.getSpecifiedRequirements();
+			List<Requirement> requirements = reqRepository.findByIdIn(requirementIds);
+			List<Dependency> dependencies = dependencyRepository.findByFromIdIn(requirementIds);
+			List<Dependency> dependenciesTo = dependencyRepository.findByToIdIn(requirementIds);
+			dependencies.addAll(dependenciesTo);
+			if (!requirementIds.isEmpty()) {
+				try {
+					return new ResponseEntity<String>(createJsonString(project, null, requirements, dependencies),
+							HttpStatus.OK);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -325,16 +333,16 @@ public class MallikasController {
 	@PostMapping(value = "dependents")
 	public ResponseEntity<?> sendRequirementAndDependentReqsToMilla(@RequestBody String id) {
 		Requirement requirement = reqRepository.findById(id);
-		System.out.println("Requested req is " + requirement.getId());
-
-		List<Dependency> dependenciesFrom = dependencyRepository.findByFromId(id);
-		List<Dependency> dependenciesTo = dependencyRepository.findByToId(id);
-		dependenciesFrom.addAll(dependenciesTo);
-		Set<String> requirementIDs = collectRequirementIDs(dependenciesFrom);
-		requirementIDs.remove(requirement.getId());
-		List<Requirement> dependentReqs = reqRepository.findByIdIn(requirementIDs);
-
+		// System.out.println("Requested req is " + requirement.getId());
 		if (requirement != null) {
+
+			List<Dependency> dependenciesFrom = dependencyRepository.findByFromId(id);
+			List<Dependency> dependenciesTo = dependencyRepository.findByToId(id);
+			dependenciesFrom.addAll(dependenciesTo);
+			Set<String> requirementIDs = collectRequirementIDs(dependenciesFrom);
+			requirementIDs.remove(requirement.getId());
+			List<Requirement> dependentReqs = reqRepository.findByIdIn(requirementIDs);
+
 			try {
 				return new ResponseEntity<String>(createJsonString(null, requirement, dependentReqs, dependenciesFrom),
 						HttpStatus.OK);
@@ -345,30 +353,39 @@ public class MallikasController {
 		return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 
-	// @PostMapping(value = "reqsWithType")
-	// public ResponseEntity<String> sendRequirementsWithTypeToMilla(@RequestBody
-	// Requirement_type type) {
-	// List<Requirement> selectedReqs = reqRepository.findByType(type);
-	// List<String> reqIds = new ArrayList<>();
-	// for(Requirement req: selectedReqs) {
-	// reqIds.add(req.getId());
-	// }
-	// List<Dependency> dependencies = dependencyRepository.findByFromIdIn(reqIds);
-	// List<Dependency> dependenciesTo = dependencyRepository.findByToIdIn(reqIds);
-	// dependencies.addAll(dependenciesTo);
-	// if (!selectedReqs.isEmpty()) {
-	// try {
-	// return new ResponseEntity<String>(createJsonString(null, selectedReqs,
-	// dependencies), HttpStatus.OK);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// return new ResponseEntity(HttpStatus.NOT_FOUND);
-	// }
+	/**
+	 * Sends a list of requirements (and dependencies) that have the same
+	 * requirement resolution to Milla
+	 * 
+	 * @param resolutionValue
+	 * @return
+	 */
+	@PostMapping(value = "reqsWithResolution")
+	public ResponseEntity<String> sendRequirementsWithResolutionToMilla(@RequestBody String resolutionValue) {
+		List<Requirement> selectedReqs = reqRepository.findByRequirementPart(resolutionValue);
+		if (!selectedReqs.isEmpty() && selectedReqs != null) {
+			List<String> reqIds = new ArrayList<>();
+			for (Requirement req : selectedReqs) {
+				reqIds.add(req.getId());
+			}
+			List<Dependency> dependencies = dependencyRepository.findByFromIdIn(reqIds);
+			List<Dependency> dependenciesTo = dependencyRepository.findByToIdIn(reqIds);
+			dependencies.addAll(dependenciesTo);
+
+			try {
+				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
+						HttpStatus.OK);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return new ResponseEntity(HttpStatus.NOT_FOUND);
+	}
 
 	/**
-	 * Sends a list of requirements (and dependencies) that have the same requirement type and/or status to Milla
+	 * Sends a list of requirements (and dependencies) that have the same
+	 * requirement type and/or status to Milla
+	 * 
 	 * @param whole
 	 * @return
 	 */
@@ -406,7 +423,9 @@ public class MallikasController {
 	}
 
 	/**
-	 * Creates a list of requirements based on the values in a String array (array contains values of Requirement_type and Requirement_status)
+	 * Creates a list of requirements based on the values in a String array (array
+	 * contains values of Requirement_type and Requirement_status)
+	 * 
 	 * @param parts
 	 * @return
 	 */
@@ -430,7 +449,7 @@ public class MallikasController {
 
 	/**
 	 * Create a List containing Requirement IDs (String) that are extracted from a
-	 * List of Dependencies (ToIds)
+	 * List of Dependencies
 	 * 
 	 * @param dependencies
 	 * @return
@@ -453,8 +472,10 @@ public class MallikasController {
 	}
 
 	/**
-	 * Create a String containing Requirements and Dependencies in JSON format
+	 * Create a String containing (possibly) Project, Requirements and Dependencies
+	 * in JSON format
 	 * 
+	 * @param project
 	 * @param requirement
 	 * @param requirements
 	 * @param dependencies
@@ -469,13 +490,13 @@ public class MallikasController {
 		String jsonString;
 		if (requirement != null) {
 			String reqString = mapper.writeValueAsString(requirement);
-			jsonString = "{\"requirement\":" + reqString + ", \"dependent_requirements\":" + reqsString
-					+ ", \"dependencies\":" + dependencyString + "}";
-		} else if(project!=null){
+			jsonString = "{\"requirement\":" + reqString + ", \"requirements\":" + reqsString + ", \"dependencies\":"
+					+ dependencyString + "}";
+		} else if (project != null) {
 			String projectString = mapper.writeValueAsString(project);
-			jsonString = "{ \"project\":" + projectString + ", \"requirements\":" + reqsString + ", \"dependencies\":" + dependencyString + "}";
-		}
-		else {
+			jsonString = "{ \"project\":" + projectString + ", \"requirements\":" + reqsString + ", \"dependencies\":"
+					+ dependencyString + "}";
+		} else {
 			jsonString = "{ \"requirements\":" + reqsString + ", \"dependencies\":" + dependencyString + "}";
 		}
 		return jsonString;
@@ -513,11 +534,11 @@ public class MallikasController {
 		updatedReq.setText(requirement.getText());
 		reqRepository.save(updatedReq);
 	}
-	
+
 	private void updateProject(Project project) {
 		Project updatedProject = projectRepository.findById(project.getId());
 		updatedProject.setCreated_at(project.getCreated_at());
-		updatedProject.setModified_at(project.getModified_at()); //Should this be new Date.getTime()?
+		updatedProject.setModified_at(project.getModified_at()); // Should this be new Date.getTime()?
 		updatedProject.setName(project.getName());
 		updatedProject.setSpecifiedRequirements(project.getSpecifiedRequirements());
 		projectRepository.save(updatedProject);
