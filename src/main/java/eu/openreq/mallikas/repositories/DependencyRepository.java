@@ -10,10 +10,10 @@ import eu.openreq.mallikas.models.json.Dependency;
 public interface DependencyRepository extends JpaRepository<Dependency, String> {
 
 	Dependency findById(String id);
-	List<Dependency> findByFromId(String fromId);
-	List<Dependency> findByToId(String toId);
+	List<Dependency> findByFromid(String fromId);
+	List<Dependency> findByToid(String toId);
 	
-	List<Dependency> findByFromIdIn(Collection<String> ids);
-	List<Dependency> findByToIdIn(Collection<String> ids);
+	List<Dependency> findByFromidIn(Collection<String> ids);
+	List<Dependency> findByToidIn(Collection<String> ids);
 	List<Dependency> findByIdIn(Collection<String> ids);
 }

@@ -250,8 +250,8 @@ public class MallikasController {
 		List<Dependency> allDependencies = new ArrayList<Dependency>();
 		if (!selectedReqs.isEmpty() && selectedReqs != null) {
 			for (Requirement req : selectedReqs) {
-				List<Dependency> dependencies = dependencyRepository.findByFromId(req.getId());
-				List<Dependency> dependenciesTo = dependencyRepository.findByToId(req.getId());
+				List<Dependency> dependencies = dependencyRepository.findByFromid(req.getId());
+				List<Dependency> dependenciesTo = dependencyRepository.findByToid(req.getId());
 				// if (!dependencies.isEmpty()) {
 				allDependencies.addAll(dependencies);
 				allDependencies.addAll(dependenciesTo);
@@ -279,8 +279,8 @@ public class MallikasController {
 	public ResponseEntity<String> sendSelectedRequirementsToMilla(@RequestBody Collection<String> ids) {
 		List<Requirement> selectedReqs = reqRepository.findByIdIn(ids);
 		if (!selectedReqs.isEmpty() && selectedReqs != null) {
-			List<Dependency> dependencies = dependencyRepository.findByFromIdIn(ids);
-			List<Dependency> dependenciesTo = dependencyRepository.findByToIdIn(ids);
+			List<Dependency> dependencies = dependencyRepository.findByFromidIn(ids);
+			List<Dependency> dependenciesTo = dependencyRepository.findByToidIn(ids);
 			dependencies.addAll(dependenciesTo);
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
@@ -306,8 +306,8 @@ public class MallikasController {
 			// System.out.println("Sending projects to Milla");
 			List<String> requirementIds = project.getSpecifiedRequirements();
 			List<Requirement> requirements = reqRepository.findByIdIn(requirementIds);
-			List<Dependency> dependencies = dependencyRepository.findByFromIdIn(requirementIds);
-			List<Dependency> dependenciesTo = dependencyRepository.findByToIdIn(requirementIds);
+			List<Dependency> dependencies = dependencyRepository.findByFromidIn(requirementIds);
+			List<Dependency> dependenciesTo = dependencyRepository.findByToidIn(requirementIds);
 			dependencies.addAll(dependenciesTo);
 			if (!requirementIds.isEmpty()) {
 				try {
@@ -336,8 +336,8 @@ public class MallikasController {
 		// System.out.println("Requested req is " + requirement.getId());
 		if (requirement != null) {
 
-			List<Dependency> dependenciesFrom = dependencyRepository.findByFromId(id);
-			List<Dependency> dependenciesTo = dependencyRepository.findByToId(id);
+			List<Dependency> dependenciesFrom = dependencyRepository.findByFromid(id);
+			List<Dependency> dependenciesTo = dependencyRepository.findByToid(id);
 			dependenciesFrom.addAll(dependenciesTo);
 			Set<String> requirementIDs = collectRequirementIDs(dependenciesFrom);
 			requirementIDs.remove(requirement.getId());
@@ -368,8 +368,8 @@ public class MallikasController {
 			for (Requirement req : selectedReqs) {
 				reqIds.add(req.getId());
 			}
-			List<Dependency> dependencies = dependencyRepository.findByFromIdIn(reqIds);
-			List<Dependency> dependenciesTo = dependencyRepository.findByToIdIn(reqIds);
+			List<Dependency> dependencies = dependencyRepository.findByFromidIn(reqIds);
+			List<Dependency> dependenciesTo = dependencyRepository.findByToidIn(reqIds);
 			dependencies.addAll(dependenciesTo);
 
 			try {
@@ -406,8 +406,8 @@ public class MallikasController {
 					for (Requirement req : selectedReqs) {
 						reqIds.add(req.getId());
 					}
-					List<Dependency> dependencies = dependencyRepository.findByFromIdIn(reqIds);
-					List<Dependency> dependenciesTo = dependencyRepository.findByToIdIn(reqIds);
+					List<Dependency> dependencies = dependencyRepository.findByFromidIn(reqIds);
+					List<Dependency> dependenciesTo = dependencyRepository.findByToidIn(reqIds);
 					dependencies.addAll(dependenciesTo);
 					return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
 							HttpStatus.OK);
@@ -458,11 +458,11 @@ public class MallikasController {
 		Set<String> reqIDs = new HashSet<>();
 		if (!dependencies.isEmpty()) {
 			for (Dependency dependency : dependencies) {
-				String reqToId = dependency.getToId();
+				String reqToId = dependency.getToid();
 				if (!reqIDs.contains(reqToId)) {
 					reqIDs.add(reqToId);
 				}
-				String reqFromId = dependency.getFromId();
+				String reqFromId = dependency.getFromid();
 				if (!reqIDs.contains(reqFromId)) {
 					reqIDs.add(reqFromId);
 				}
@@ -501,6 +501,28 @@ public class MallikasController {
 		}
 		return jsonString;
 	}
+	
+	
+	/**
+	 * Create a String containing Projects, Requirements and Dependencies
+	 * in JSON format for UPC
+	 * 
+	 * @param projects
+	 * @param requirements
+	 * @param dependencies
+	 * @return
+	 * @throws JsonProcessingException
+	 */
+	private String createUPCJsonString(List<Project> projects, List<Requirement> requirements,
+			List<Dependency> dependencies) throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		String dependencyString = mapper.writeValueAsString(dependencies);
+		String reqsString = mapper.writeValueAsString(requirements);
+		String projectsString = mapper.writeValueAsString(projects);
+		String jsonString = "{ \"projects\":" + projectsString + ", \"requirements\":" + reqsString + ", \"dependencies\":"
+					+ dependencyString + "}";
+		return jsonString;
+	}
 
 	/**
 	 * Update a dependency with the information (mainly status) of the dependency
@@ -513,8 +535,8 @@ public class MallikasController {
 		updatedDependency.setCreated_at(dependency.getCreated_at());
 		updatedDependency.setDependency_score(dependency.getDependency_score());
 		updatedDependency.setDependency_type(dependency.getDependency_type());
-		updatedDependency.setFromId(dependency.getFromId());
-		updatedDependency.setToId(dependency.getToId());
+		updatedDependency.setFromid(dependency.getFromid());
+		updatedDependency.setToid(dependency.getToid());
 		updatedDependency.setStatus(dependency.getStatus());
 		dependencyRepository.save(updatedDependency);
 	}

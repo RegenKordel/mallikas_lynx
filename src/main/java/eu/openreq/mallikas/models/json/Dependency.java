@@ -65,18 +65,18 @@ public class Dependency implements Serializable {
 	* (Required)
 	* 
 	*/
-	@SerializedName("fromId")
+	@SerializedName("fromid")
 	@Expose
-	private String fromId;
+	private String fromid;
 	
 	/**
 	* The requirement dependent on another
 	* (Required)
 	* 
 	*/
-	@SerializedName("toId")
+	@SerializedName("toid")
 	@Expose
-	private String toId;
+	private String toid;
 	
 	/**
 	* Creation timestamp
@@ -119,20 +119,20 @@ public class Dependency implements Serializable {
 		this.status = status;
 	}
 	
-	public String getFromId() {
-		return fromId;
+	public String getFromid() {
+		return fromid;
 	}
 	
-	public void setFromId(String fromId) {
-		this.fromId = fromId;
+	public void setFromid(String fromid) {
+		this.fromid = fromid;
 	}
 	
-	public String getToId() {
-		return toId;
+	public String getToid() {
+		return toid;
 	}
 	
-	public void setToId(String toId) {
-		this.toId = toId;
+	public void setToid(String toid) {
+		this.toid = toid;
 	}
 	
 	public long getCreated_at() {
