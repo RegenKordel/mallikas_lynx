@@ -292,9 +292,38 @@ public class MallikasController {
 		return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 
+//	/**
+//	 * Receives a projectId from Milla and sends back all requirements and their
+//	 * dependencies in that project (single project version)
+//	 * 
+//	 * @param projectId
+//	 * @return
+//	 */
+//	@PostMapping(value = "projectRequirements")
+//	public ResponseEntity<String> sendRequirementsInProjectToMilla(@RequestBody String projectId) {
+//		Project project = projectRepository.findById(projectId);
+//		if (project != null) {
+//			// System.out.println("Sending projects to Milla");
+//			List<String> requirementIds = project.getSpecifiedRequirements();
+//			List<Requirement> requirements = reqRepository.findByIdIn(requirementIds);
+//			List<Dependency> dependencies = dependencyRepository.findByFromidIn(requirementIds);
+//			List<Dependency> dependenciesTo = dependencyRepository.findByToidIn(requirementIds);
+//			dependencies.addAll(dependenciesTo);
+//			if (!requirementIds.isEmpty()) {
+//				try {
+//					return new ResponseEntity<String>(createJsonString(project, null, requirements, dependencies),
+//							HttpStatus.OK);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		return new ResponseEntity(HttpStatus.NOT_FOUND);
+//	}
+	
 	/**
 	 * Receives a projectId from Milla and sends back all requirements and their
-	 * dependencies in that project
+	 * dependencies in that project (projects list version)
 	 * 
 	 * @param projectId
 	 * @return
@@ -304,6 +333,8 @@ public class MallikasController {
 		Project project = projectRepository.findById(projectId);
 		if (project != null) {
 			// System.out.println("Sending projects to Milla");
+			List<Project> projects = new ArrayList<>();
+			projects.add(project);
 			List<String> requirementIds = project.getSpecifiedRequirements();
 			List<Requirement> requirements = reqRepository.findByIdIn(requirementIds);
 			List<Dependency> dependencies = dependencyRepository.findByFromidIn(requirementIds);
@@ -311,7 +342,7 @@ public class MallikasController {
 			dependencies.addAll(dependenciesTo);
 			if (!requirementIds.isEmpty()) {
 				try {
-					return new ResponseEntity<String>(createJsonString(project, null, requirements, dependencies),
+					return new ResponseEntity<String>(createUPCJsonString(projects, requirements, dependencies),
 							HttpStatus.OK);
 				} catch (Exception e) {
 					e.printStackTrace();
