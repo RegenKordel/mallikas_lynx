@@ -23,6 +23,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import eu.openreq.mallikas.models.json.Dependency;
+import eu.openreq.mallikas.models.json.Dependency_type;
 import eu.openreq.mallikas.models.json.Project;
 import eu.openreq.mallikas.models.json.Requirement;
 import eu.openreq.mallikas.models.json.Requirement_status;
@@ -452,6 +453,48 @@ public class MallikasController {
 
 		return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
+	
+	/**
+	 * Sends a list of requirements (and dependencies) that have the same
+	 * dependency type to Milla
+	 * 
+	 * @param type Dependency_type as a String
+	 * @return
+	 */
+	@PostMapping(value = "reqsWithDependencyType")
+	public ResponseEntity<String> sendRequirementsWithDependencyTypeToMilla(@RequestBody String type) {
+		List<Requirement> selectedReqs = null;
+		try {
+			List<Dependency> dependencies = dependencyRepository.findByType(Dependency_type.valueOf(type));
+			Set<String> reqIds = new HashSet<>();
+			for(Dependency dependency : dependencies) {
+				if(!reqIds.contains(dependency.getFromid())) {
+					reqIds.add(dependency.getFromid());
+				}
+				if(!reqIds.contains(dependency.getToid())) {
+					reqIds.add(dependency.getToid());
+				}
+			}
+			
+			selectedReqs = reqRepository.findByIdIn(reqIds);
+			
+			if (selectedReqs == null) {
+				return new ResponseEntity("Search failed", HttpStatus.NOT_FOUND);
+			}
+			if (!selectedReqs.isEmpty()) {
+				try {
+					return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
+							HttpStatus.OK);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (IllegalArgumentException e) {
+			new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity(HttpStatus.NOT_FOUND);
+	}
 
 	/**
 	 * Creates a list of requirements based on the values in a String array (array
@@ -462,6 +505,8 @@ public class MallikasController {
 	 */
 	private List<Requirement> createRequirements(String[] parts) {
 		List<Requirement> selectedReqs = null;
+		System.out.println("Parts 0 " +parts[0]);
+		System.out.println("Parts 1 " +parts[1]);
 		if (!parts[0].equals("null") && !parts[1].equals("null")) {
 			selectedReqs = reqRepository.findByTypeAndStatus(Requirement_type.valueOf(parts[0]),
 					Requirement_status.valueOf(parts[1]));
