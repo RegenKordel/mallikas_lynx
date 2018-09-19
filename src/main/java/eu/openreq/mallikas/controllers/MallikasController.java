@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,6 +48,25 @@ public class MallikasController {
 	@Autowired
 	ProjectRepository projectRepository;
 
+	/**
+	 * Check which projects are already saved in the database
+	 * @return
+	 */
+	@ApiOperation(value = "Get a list of projects", notes = "Returns a list of ids of all projects saved in the database")
+	@GetMapping(value = "listAllProjects")
+	public ResponseEntity<?> getAListOfProjects() {
+		List<Project> projects = projectRepository.findAll();
+		List<String> projectIds = new ArrayList<String>();
+		if(projects.isEmpty() || projects==null) {
+			return new ResponseEntity<>("No projects in the database", HttpStatus.NOT_FOUND);
+		}
+		
+		for(Project project : projects) {
+			projectIds.add(project.getId());
+		}
+		return new ResponseEntity<>(projectIds, HttpStatus.FOUND);
+	}
+	
 	/**
 	 * Import a Collection of Requirements from Milla and save to the
 	 * RequirementRepository if the Requirement is not already in the database.
@@ -332,6 +352,7 @@ public class MallikasController {
 	@PostMapping(value = "projectRequirements")
 	public ResponseEntity<String> sendRequirementsInProjectToMilla(@RequestBody String projectId) {
 		Project project = projectRepository.findById(projectId);
+		
 		if (project != null) {
 			// System.out.println("Sending projects to Milla");
 			List<Project> projects = new ArrayList<>();
