@@ -205,33 +205,33 @@ public class MallikasController {
 	}
 
 // Probably unnecessary
-//	/**
-//	 * Receives an id of a Requirement (String) from Milla, and sends the
-//	 * Requirement object back to Milla, if it is in the database.
-//	 * 
-//	 * @param id
-//	 *            String received from Milla, id of a Requirement
-//	 * @return Requirement as a ResponseEntity, if it was found, else returns a new
-//	 *         ResponseEntity Not Found
-//	 */
-//	@PostMapping(value = "one")
-//	public ResponseEntity<?> sendOneRequirementToMilla(@RequestBody String id) {
-//		Requirement req = reqRepository.findById(id);
-//	//	System.out.println("Requested req is " + req.getId());
-//		if (req != null) {
-//		List<Dependency> dependencies = dependencyRepository.findByFromId(id);
-//			try {
-//				ObjectMapper mapper = new ObjectMapper();
-//				String reqString = mapper.writeValueAsString(req);
-//				String dependencyString = mapper.writeValueAsString(dependencies);
-//				String all = "{ \"requirement\":" + reqString + ", \"dependencies\":" + dependencyString + "}";
-//				return new ResponseEntity<String>(all, HttpStatus.OK);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		return new ResponseEntity(HttpStatus.NOT_FOUND);
-//	}
+	/**
+	 * Receives an id of a Requirement (String) from Milla, and sends the
+	 * Requirement object back to Milla, if it is in the database.
+	 * 
+	 * @param id
+	 *            String received from Milla, id of a Requirement
+	 * @return Requirement as a ResponseEntity, if it was found, else returns a new
+	 *         ResponseEntity Not Found
+	 */
+	@PostMapping(value = "one")
+	public ResponseEntity<?> sendOneRequirementToMilla(@RequestBody String id) {
+		Requirement req = reqRepository.findById(id);
+		List<Requirement> requirements = new ArrayList<>();
+		
+		if (req != null) {
+			requirements.add(req);
+			try {
+				ObjectMapper mapper = new ObjectMapper();
+				String reqString = mapper.writeValueAsString(requirements);
+				String all = "{ \"requirements\":" + reqString + "}";
+				return new ResponseEntity<String>(all, HttpStatus.OK);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return new ResponseEntity(HttpStatus.NOT_FOUND);
+	}
 
 	// Should work (but the returned String might be too large to show in Swagger
 	//
