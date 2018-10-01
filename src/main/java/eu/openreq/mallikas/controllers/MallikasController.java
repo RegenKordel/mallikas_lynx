@@ -240,7 +240,7 @@ public class MallikasController {
 	 *
 	 * @return all Requirements and their Dependencies as a String
 	 */
-	@RequestMapping(value = "mallikas/all", method = RequestMethod.GET)
+	@RequestMapping(value = "allRequirements", method = RequestMethod.GET)
 	public ResponseEntity<String> sendAllRequirementsToMilla() {
 		List<Requirement> allReqs = reqRepository.findAll();
 		List<Dependency> dependencies = dependencyRepository.findAll();
@@ -250,6 +250,29 @@ public class MallikasController {
 				String reqString = mapper.writeValueAsString(allReqs);
 				String dependencyString = mapper.writeValueAsString(dependencies);
 				String all = "{ \"requirements\":" + reqString + ", \"dependencies\":" + dependencyString + "}";
+				return new ResponseEntity<String>(all, HttpStatus.OK);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return new ResponseEntity(HttpStatus.NOT_FOUND);
+	}
+	
+	// Should work (but the returned String might be too large to show in Swagger
+	//
+	/**
+	 * Get all dependencies from the database as a JSON String
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "allDependencies", method = RequestMethod.GET)
+	public ResponseEntity<String> getAllDependencies() {
+		List<Dependency> dependencies = dependencyRepository.findAll();
+		if (!dependencies.isEmpty()) {
+			try {
+				ObjectMapper mapper = new ObjectMapper();
+				String dependencyString = mapper.writeValueAsString(dependencies);
+				String all = "{\"dependencies\":" + dependencyString + "}";
 				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
