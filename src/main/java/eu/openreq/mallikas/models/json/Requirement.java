@@ -109,14 +109,6 @@ public class Requirement implements Serializable {
 	@SerializedName("children")
 	@Expose
 	private List<Requirement> children = null;
-	/**
-	* The keywords or tags from the classification of a requirement
-	* 
-	*/
-	@ManyToMany(cascade = { CascadeType.ALL })
-	@SerializedName("classifierResults")
-	@Expose
-	private List<Classifier> classifierResults = null;
 	
 	/**
 	* RequirementParts of a requirement
@@ -206,14 +198,6 @@ public class Requirement implements Serializable {
 	
 	public void setChildren(List<Requirement> children) {
 		this.children = children;
-	}
-	
-	public List<Classifier> getClassifierResults() {
-		return classifierResults;
-	}
-	
-	public void setClassifierResults(List<Classifier> classifierResults) {
-		this.classifierResults = classifierResults;
 	}
 	
 	public List<RequirementPart> getRequirementParts() {

@@ -40,6 +40,10 @@ public class Comment implements Serializable{
 	@SerializedName("text")
 	@Expose
 	private String text;
+
+	@SerializedName("commentDoneBy")
+	@Expose
+	private Person commentDoneBy;
 	/**
 	* Creation timestamp
 	* (Required)
@@ -86,5 +90,13 @@ public class Comment implements Serializable{
 	
 	public void setModified_at(long modified_at) {
 		this.modified_at = modified_at;
+	}
+
+	public Person getCommentDoneBy() {
+		return commentDoneBy;
+	}
+
+	public void setCommentDoneBy(Person commentDoneBy) {
+		this.commentDoneBy = commentDoneBy;
 	}
 }

@@ -180,7 +180,7 @@ public class MallikasController {
 	@ApiOperation(value = "Update selected requirements", notes = "Update and save requirements to database")
 	@PostMapping(value = "updateRequirements")
 	public ResponseEntity<?> updateRequirements(@RequestBody Collection<Requirement> requirements) {
-		System.out.println("Received requirements to update");
+//		System.out.println("Received requirements to update " + requirements.size());
 		List<Requirement> savedRequirements = new ArrayList<>();
 
 		try {
@@ -281,35 +281,35 @@ public class MallikasController {
 		return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 
-	/**
-	 * Receives an id (String) of a Classifier (Component) from Milla and sends back
-	 * to Milla Requirements belonging to that component
-	 * 
-	 * @return Requirements and Dependencies associated with them as a String, if
-	 *         the List is not empty, else returns a new ResponseEntity Not Found
-	 */
-	@PostMapping(value = "classifiers")
-	public ResponseEntity<String> sendRequirementsWithClassifierToMilla(@RequestBody String id) {
-		List<Requirement> selectedReqs = reqRepository.findByClassifier(id);
-		List<Dependency> allDependencies = new ArrayList<Dependency>();
-		if (!selectedReqs.isEmpty() && selectedReqs != null) {
-			for (Requirement req : selectedReqs) {
-				List<Dependency> dependencies = dependencyRepository.findByFromid(req.getId());
-				List<Dependency> dependenciesTo = dependencyRepository.findByToid(req.getId());
-				// if (!dependencies.isEmpty()) {
-				allDependencies.addAll(dependencies);
-				allDependencies.addAll(dependenciesTo);
-				// }
-			}
-			try {
-				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, allDependencies),
-						HttpStatus.OK);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
-	}
+//	/**
+//	 * Receives an id (String) of a Classifier (Component) from Milla and sends back
+//	 * to Milla Requirements belonging to that component
+//	 * 
+//	 * @return Requirements and Dependencies associated with them as a String, if
+//	 *         the List is not empty, else returns a new ResponseEntity Not Found
+//	 */
+//	@PostMapping(value = "classifiers")
+//	public ResponseEntity<String> sendRequirementsWithClassifierToMilla(@RequestBody String id) {
+//		List<Requirement> selectedReqs = reqRepository.findByClassifier(id);
+//		List<Dependency> allDependencies = new ArrayList<Dependency>();
+//		if (!selectedReqs.isEmpty() && selectedReqs != null) {
+//			for (Requirement req : selectedReqs) {
+//				List<Dependency> dependencies = dependencyRepository.findByFromid(req.getId());
+//				List<Dependency> dependenciesTo = dependencyRepository.findByToid(req.getId());
+//				// if (!dependencies.isEmpty()) {
+//				allDependencies.addAll(dependencies);
+//				allDependencies.addAll(dependenciesTo);
+//				// }
+//			}
+//			try {
+//				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, allDependencies),
+//						HttpStatus.OK);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		return new ResponseEntity(HttpStatus.NOT_FOUND);
+//	}
 
 	/**
 	 * Receives a Collection of Requirement ids (String) from Milla and sends back
@@ -409,7 +409,7 @@ public class MallikasController {
 	@PostMapping(value = "dependents")
 	public ResponseEntity<?> sendRequirementAndDependentReqsToMilla(@RequestBody String id) {
 		Requirement requirement = reqRepository.findById(id);
-		// System.out.println("Requested req is " + requirement.getId());
+//		System.out.println("Requested req is " + requirement);
 		if (requirement != null) {
 
 			List<Dependency> dependenciesFrom = dependencyRepository.findByFromid(id);
@@ -670,7 +670,6 @@ public class MallikasController {
 		updatedReq.setRequirement_type(requirement.getRequirement_type());
 		updatedReq.setStatus(requirement.getStatus());
 		updatedReq.setChildren(requirement.getChildren());
-		updatedReq.setClassifierResults(requirement.getClassifierResults());
 		updatedReq.setComments(requirement.getComments());
 		updatedReq.setRequirementParts(requirement.getRequirementParts());
 		updatedReq.setText(requirement.getText());

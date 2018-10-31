@@ -13,9 +13,6 @@ import eu.openreq.mallikas.models.json.Requirement_type;
 public interface RequirementRepository extends JpaRepository<Requirement, String> {
 	
 	Requirement findById(String id);
-
-	@Query("SELECT DISTINCT req FROM Requirement req, IN (req.classifierResults) AS c WHERE c.id = ?1")
-	List<Requirement> findByClassifier(String id);
 	
 	List<Requirement> findByIdIn(Collection<String> ids);
 	
