@@ -375,7 +375,7 @@ public class MallikasController {
 	@PostMapping(value = "projectRequirements")
 	public ResponseEntity<String> sendRequirementsInProjectToMilla(@RequestBody String projectId) {
 		Project project = projectRepository.findById(projectId);
-		
+
 		if (project != null) {
 			// System.out.println("Sending projects to Milla");
 			List<Project> projects = new ArrayList<>();
@@ -658,6 +658,7 @@ public class MallikasController {
 		updatedDependency.setFromid(dependency.getFromid());
 		updatedDependency.setToid(dependency.getToid());
 		updatedDependency.setStatus(dependency.getStatus());
+		updatedDependency.setDescription(dependency.getDescription());
 		dependencyRepository.save(updatedDependency);
 	}
 

@@ -1,7 +1,9 @@
 package eu.openreq.mallikas.models.json;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 //import javax.persistence.ManyToOne;
@@ -78,6 +80,11 @@ public class Dependency implements Serializable {
 	@Expose
 	private String toid;
 	
+	@ElementCollection
+	@SerializedName("description")
+	@Expose
+	private List<String> description;
+	
 	/**
 	* Creation timestamp
 	* (Required)
@@ -135,6 +142,14 @@ public class Dependency implements Serializable {
 		this.toid = toid;
 	}
 	
+	public List<String> getDescription() {
+		return description;
+	}
+
+	public void setDescription(List<String> description) {
+		this.description = description;
+	}
+
 	public long getCreated_at() {
 		return created_at;
 	}

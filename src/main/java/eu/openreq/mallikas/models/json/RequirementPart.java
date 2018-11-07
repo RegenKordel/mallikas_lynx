@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -41,6 +42,7 @@ public class RequirementPart implements Serializable{
 	* The textual description of a RequirementPart
 	* 
 	*/
+	@Lob
 	@SerializedName("text")
 	@Expose
 	private String text;
