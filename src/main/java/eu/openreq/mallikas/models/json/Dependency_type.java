@@ -1,26 +1,65 @@
 package eu.openreq.mallikas.models.json;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
 public enum Dependency_type {
 
+	
+	@SerializedName(value="contributes", alternate= {"CONTRIBUTES"})
+	CONTRIBUTES,
+	@SerializedName(value="damages", alternate= {"DAMAGES"})
+	DAMAGES,
+	@SerializedName(value="refines", alternate= {"REFINES"})
+	REFINES,
+	@SerializedName(value="requires", alternate= {"REQUIRES"})
+	REQUIRES,
+	@SerializedName(value="incompatible", alternate= {"INCOMPATIBLE"})
+	INCOMPATIBLE,
+	@SerializedName(value="decomposition", alternate= {"DECOMPOSITION"})
+	DECOMPOSITION,
+	@SerializedName(value="similar", alternate= {"SIMILAR"})
+	SIMILAR,
+	@SerializedName(value="duplicates", alternate= {"DUPLICATES"})
+	DUPLICATES,
+	@SerializedName(value="replaces", alternate= {"REPLACES"})
+	REPLACES
 
 //	@SerializedName("contributes")
-	CONTRIBUTES,
+//	CONTRIBUTES,
 //	@SerializedName("damages")
-	DAMAGES,
+//	DAMAGES,
 //	@SerializedName("refines")
-	REFINES,
+//	REFINES,
 //	@SerializedName("requires")
-	REQUIRES,
+//	REQUIRES,
 //	@SerializedName("incompatible")
-	INCOMPATIBLE,
+//	INCOMPATIBLE,
 //	@SerializedName("decomposition")
-	DECOMPOSITION,
+//	DECOMPOSITION,
 //	@SerializedName("similar")
-	SIMILAR,
+//	SIMILAR,
 //	@SerializedName("duplicates")
-	DUPLICATES,
+//	DUPLICATES,
 //	@SerializedName("replaces")
-	REPLACES
+//	REPLACES
+	
+//	@JsonProperty("contributes")
+//	CONTRIBUTES,
+//	@JsonProperty("damages")
+//	DAMAGES,
+//	@JsonProperty("refines")
+//	REFINES,
+//	@JsonProperty("requires")
+//	REQUIRES,
+//	@JsonProperty("incompatible")
+//	INCOMPATIBLE,
+//	@JsonProperty("decomposition")
+//	DECOMPOSITION,
+//	@JsonProperty("similar")
+//	SIMILAR,
+//	@JsonProperty("duplicates")
+//	DUPLICATES,
+//	@JsonProperty("replaces")
+//	REPLACES
 }
