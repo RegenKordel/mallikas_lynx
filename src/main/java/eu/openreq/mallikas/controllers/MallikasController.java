@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 import eu.openreq.mallikas.models.json.Dependency;
 import eu.openreq.mallikas.models.json.Dependency_type;
@@ -604,16 +605,16 @@ public class MallikasController {
 	 */
 	private String createJsonString(Project project, Requirement requirement, List<Requirement> requirements,
 			List<Dependency> dependencies) throws JsonProcessingException {
-		ObjectMapper mapper = new ObjectMapper();
-		String dependencyString = mapper.writeValueAsString(dependencies);
-		String reqsString = mapper.writeValueAsString(requirements);
+		Gson gson = new Gson();
+		String dependencyString = gson.toJson(dependencies);
+		String reqsString = gson.toJson(requirements);
 		String jsonString;
 		if (requirement != null) {
-			String reqString = mapper.writeValueAsString(requirement);
+			String reqString = gson.toJson(requirement);
 			jsonString = "{\"requirement\":" + reqString + ", \"requirements\":" + reqsString + ", \"dependencies\":"
 					+ dependencyString + "}";
 		} else if (project != null) {
-			String projectString = mapper.writeValueAsString(project);
+			String projectString = gson.toJson(project);
 			jsonString = "{ \"project\":" + projectString + ", \"requirements\":" + reqsString + ", \"dependencies\":"
 					+ dependencyString + "}";
 		} else {
@@ -622,6 +623,36 @@ public class MallikasController {
 		return jsonString;
 	}
 	
+//	/**
+//	 * Create a String containing (possibly) Project, Requirements and Dependencies
+//	 * in JSON format
+//	 * 
+//	 * @param project
+//	 * @param requirement
+//	 * @param requirements
+//	 * @param dependencies
+//	 * @return
+//	 * @throws JsonProcessingException
+//	 */
+//	private String createJsonString(Project project, Requirement requirement, List<Requirement> requirements,
+//			List<Dependency> dependencies) throws JsonProcessingException {
+//		ObjectMapper mapper = new ObjectMapper();
+//		String dependencyString = mapper.writeValueAsString(dependencies);
+//		String reqsString = mapper.writeValueAsString(requirements);
+//		String jsonString;
+//		if (requirement != null) {
+//			String reqString = mapper.writeValueAsString(requirement);
+//			jsonString = "{\"requirement\":" + reqString + ", \"requirements\":" + reqsString + ", \"dependencies\":"
+//					+ dependencyString + "}";
+//		} else if (project != null) {
+//			String projectString = mapper.writeValueAsString(project);
+//			jsonString = "{ \"project\":" + projectString + ", \"requirements\":" + reqsString + ", \"dependencies\":"
+//					+ dependencyString + "}";
+//		} else {
+//			jsonString = "{ \"requirements\":" + reqsString + ", \"dependencies\":" + dependencyString + "}";
+//		}
+//		return jsonString;
+//	}
 	
 	/**
 	 * Create a String containing Projects, Requirements and Dependencies
@@ -635,15 +666,37 @@ public class MallikasController {
 	 */
 	private String createUPCJsonString(List<Project> projects, List<Requirement> requirements,
 			List<Dependency> dependencies) throws JsonProcessingException {
-		ObjectMapper mapper = new ObjectMapper();
-		String dependencyString = mapper.writeValueAsString(dependencies);
-		String reqsString = mapper.writeValueAsString(requirements);
-		String projectsString = mapper.writeValueAsString(projects);
+		Gson gson = new Gson();
+		//ObjectMapper mapper = new ObjectMapper();
+		String dependencyString = gson.toJson(dependencies);
+		String reqsString = gson.toJson(requirements);
+		String projectsString = gson.toJson(projects);
 		String jsonString = "{ \"projects\":" + projectsString + ", \"requirements\":" + reqsString + ", \"dependencies\":"
 					+ dependencyString + "}";
 		return jsonString;
 	}
 
+//	/**
+//	 * Create a String containing Projects, Requirements and Dependencies
+//	 * in JSON format for UPC
+//	 * 
+//	 * @param projects
+//	 * @param requirements
+//	 * @param dependencies
+//	 * @return
+//	 * @throws JsonProcessingException
+//	 */
+//	private String createUPCJsonString(List<Project> projects, List<Requirement> requirements,
+//			List<Dependency> dependencies) throws JsonProcessingException {
+//		ObjectMapper mapper = new ObjectMapper();
+//		String dependencyString = mapper.writeValueAsString(dependencies);
+//		String reqsString = mapper.writeValueAsString(requirements);
+//		String projectsString = mapper.writeValueAsString(projects);
+//		String jsonString = "{ \"projects\":" + projectsString + ", \"requirements\":" + reqsString + ", \"dependencies\":"
+//					+ dependencyString + "}";
+//		return jsonString;
+//	}
+	
 	/**
 	 * Update a dependency with the information (mainly status) of the dependency
 	 * received as a parameter
