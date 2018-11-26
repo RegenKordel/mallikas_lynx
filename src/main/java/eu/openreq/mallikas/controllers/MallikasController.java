@@ -667,7 +667,6 @@ public class MallikasController {
 	private String createUPCJsonString(List<Project> projects, List<Requirement> requirements,
 			List<Dependency> dependencies) throws JsonProcessingException {
 		Gson gson = new Gson();
-		//ObjectMapper mapper = new ObjectMapper();
 		String dependencyString = gson.toJson(dependencies);
 		String reqsString = gson.toJson(requirements);
 		String projectsString = gson.toJson(projects);
