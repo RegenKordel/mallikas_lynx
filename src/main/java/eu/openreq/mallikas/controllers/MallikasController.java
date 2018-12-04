@@ -2,6 +2,7 @@ package eu.openreq.mallikas.controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -704,6 +705,9 @@ public class MallikasController {
 	 */
 	private void updateDependency(Dependency dependency) {
 		Dependency updatedDependency = dependencyRepository.findById(dependency.getId());
+		if(dependency.getCreated_at()==0) {
+			dependency.setCreated_at(new Date().getTime());
+		}
 		updatedDependency.setCreated_at(dependency.getCreated_at());
 		updatedDependency.setDependency_score(dependency.getDependency_score());
 		updatedDependency.setDependency_type(dependency.getDependency_type());
