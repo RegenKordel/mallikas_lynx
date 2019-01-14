@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -275,6 +276,7 @@ public class MallikasController {
 			try {
 				ObjectMapper mapper = new ObjectMapper();
 				String dependencyString = mapper.writeValueAsString(dependencies);
+				dependencies.clear();
 				String all = "{\"dependencies\":" + dependencyString + "}";
 				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
@@ -334,6 +336,7 @@ public class MallikasController {
 			List<Dependency> dependencies = dependencyRepository.findByFromidIn(ids);
 			List<Dependency> dependenciesTo = dependencyRepository.findByToidIn(ids);
 			dependencies.addAll(dependenciesTo);
+			dependenciesTo.clear();
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
 						HttpStatus.OK);
@@ -553,13 +556,21 @@ public class MallikasController {
 		return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 
+	/**
+	 * Updates the speficiedRequirements list of a selected project with the ids of the latest updated requirements in that project.
+	 * @param reqIds
+	 * @return
+	 */
 	@PostMapping(value = "updateProjectSpecifiedRequirements/{projectId}")
-	public ResponseEntity<?> updateProjectSpecifiedRequirements(@RequestParam String projectId,
-			@RequestBody Collection<String> reqIds) {
+	public ResponseEntity<?> updateProjectSpecifiedRequirements(@RequestBody Map<String, Collection> reqIds) {
 		try {
+			String projectId = "";
+			for(String id : reqIds.keySet()) {
+				projectId = id;
+			}
 			Project project = projectRepository.findById(projectId);
-			project.getSpecifiedRequirements().addAll(reqIds);
-			return new ResponseEntity<String>("Project requirements updated", HttpStatus.OK);
+			project.getSpecifiedRequirements().addAll(reqIds.get(projectId));
+			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
