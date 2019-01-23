@@ -27,3 +27,7 @@ nbdist/
 .DS_Store
 **/.DS_Store
 bin/
+
+#database
+mallikas-db.mv.db
+mallikas-db.trace.db
