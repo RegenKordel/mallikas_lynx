@@ -587,8 +587,8 @@ public class MallikasController {
 	 */
 	private List<Requirement> createRequirements(String[] parts) {
 		List<Requirement> selectedReqs = null;
-		System.out.println("Parts 0 " + parts[0]);
-		System.out.println("Parts 1 " + parts[1]);
+//		System.out.println("Parts 0 " + parts[0]);
+//		System.out.println("Parts 1 " + parts[1]);
 		if (!parts[0].equals("null") && !parts[1].equals("null")) {
 			selectedReqs = reqRepository.findByTypeAndStatus(Requirement_type.valueOf(parts[0]),
 					Requirement_status.valueOf(parts[1]));
