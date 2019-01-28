@@ -41,7 +41,9 @@ Mallikas is used only from Milla to store (cache) requirements, see details from
 The endpoints can be used for testing purposes, see  [swagger documentation](http://217.172.12.199:9203/swagger-ui.html).
 
 
+
 # How to Contribute
+
 See the OpenReq Contribution Guidelines [here](https://github.com/OpenReqEU/OpenReq/blob/master/CONTRIBUTING.md).
 
 # License
