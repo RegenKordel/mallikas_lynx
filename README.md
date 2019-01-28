@@ -36,7 +36,7 @@ Mallikas uses port 9204 that needs to be open.
 
 ## How to Use This Microservice
 
-Mallikas is used only from Milla to store (cache) requirements, see details from [Milla](https://github.com/OpenReqEU/milla/
+Mallikas is used only from Milla to store (cache) requirements, see details from [Milla](https://github.com/OpenReqEU/milla/)
 
 The endpoints can be used for testing purposes, see  [swagger documentation](http://217.172.12.199:9203/swagger-ui.html).
 
