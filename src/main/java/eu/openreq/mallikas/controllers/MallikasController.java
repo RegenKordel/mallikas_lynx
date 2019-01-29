@@ -56,7 +56,7 @@ public class MallikasController {
 	 * 
 	 * @return
 	 */
-	@ApiOperation(value = "Get a list of projects", notes = "Returns a list of ids of all projects saved in the database")
+	@ApiOperation(value = "Get a list of projects", notes = "Get a list of ids of all projects saved in the database.")
 	@GetMapping(value = "listAllProjects")
 	public ResponseEntity<?> getAListOfProjects() {
 		List<Project> projects = projectRepository.findAll();
@@ -79,7 +79,7 @@ public class MallikasController {
 	 *            Collection of Requirements received from Milla
 	 * @return String "saved" if the import operation is successful
 	 */
-	@ApiOperation(value = "Import a list of requirements", notes = "Import a list of issues as OpenReq JSON Requirements")
+	@ApiOperation(value = "Import a list of requirements", notes = "Import a list of new OpenReq JSON Requirements to the database. If a requirement exists, it is not updated or changed.")
 	@PostMapping(value = "requirements")
 	public String importRequirementsFromMilla(@RequestBody Collection<Requirement> requirements) {
 		System.out.println("Received requirements from Milla");
@@ -105,7 +105,7 @@ public class MallikasController {
 	 *            Collection of Dependencies received from Milla
 	 * @return String "saved" if the import operation is successful
 	 */
-	@ApiOperation(value = "Import a list of dependencies", notes = "Import a list of Jira IssueLinks as OpenReq JSON Dependencies")
+	@ApiOperation(value = "Import a list of dependencies", notes = "Import a list of new OpenReq JSON Dependencies to the database. If a dependency exists, it is not updated or changed.")
 	@PostMapping(value = "dependencies")
 	public String importDependenciesFromMilla(@RequestBody Collection<Dependency> dependencies) {
 		System.out.println("Received dependencies from Milla");
@@ -130,7 +130,7 @@ public class MallikasController {
 	 *            Project received from Milla
 	 * @return String "saved" if the import operation is successful
 	 */
-	@ApiOperation(value = "Import a project", notes = "Import an OpenReq Project")
+	@ApiOperation(value = "Import a project", notes = "Import an OpenReq JSON project to the database. If a project exists, it is updated.")
 	@PostMapping(value = "project")
 	public String importProjectFromMilla(@RequestBody Project project) {
 		System.out.println("Received a project from Milla " + project.getId());
@@ -151,7 +151,7 @@ public class MallikasController {
 	 *            Collection of Dependencies received from Milla
 	 * @return String "Dependencies updated" if the update operation is successful
 	 */
-	@ApiOperation(value = "Update selected dependencies", notes = "Update and save dependencies to database")
+	@ApiOperation(value = "Update selected dependencies", notes = "Update existing and save new dependencies in the database.")
 	@PostMapping(value = "updateDependencies")
 	public ResponseEntity<?> updateDependencies(@RequestBody Collection<Dependency> dependencies) {
 		// System.out.println("Received dependencies to update");
@@ -181,7 +181,7 @@ public class MallikasController {
 	 *            Collection of Requirements received from Milla
 	 * @return String "Requirements updated" if the update operation is successful
 	 */
-	@ApiOperation(value = "Update selected requirements", notes = "Update and save requirements to database")
+	@ApiOperation(value = "Update selected requirements", notes = "Update existing and save new requirements to the database.")
 	@PostMapping(value = "updateRequirements")
 	public ResponseEntity<?> updateRequirements(@RequestBody Collection<Requirement> requirements) {
 		// System.out.println("Received requirements to update " + requirements.size());
@@ -218,6 +218,7 @@ public class MallikasController {
 	 * @return Requirement as a ResponseEntity, if it was found, else returns a new
 	 *         ResponseEntity Not Found
 	 */
+	@ApiOperation(value = "Get a requirement", notes = "Get a requirement saved in the database.")
 	@PostMapping(value = "one")
 	public ResponseEntity<?> sendOneRequirementToMilla(@RequestBody String id) {
 		Requirement req = reqRepository.findById(id);
@@ -244,6 +245,7 @@ public class MallikasController {
 	 *
 	 * @return all Requirements and their Dependencies as a String
 	 */
+	@ApiOperation(value = "Get a list of all requirements", notes = "Get a list of all requirements saved in the database.")
 	@RequestMapping(value = "allRequirements", method = RequestMethod.GET)
 	public ResponseEntity<String> sendAllRequirementsToMilla() {
 		List<Requirement> allReqs = reqRepository.findAll();
@@ -269,6 +271,7 @@ public class MallikasController {
 	 *
 	 * @return
 	 */
+	@ApiOperation(value = "Get a list of all dependencies", notes = "Get a list of all dependencies saved in the database.")
 	@RequestMapping(value = "allDependencies", method = RequestMethod.GET)
 	public ResponseEntity<String> getAllDependencies() {
 		List<Dependency> dependencies = dependencyRepository.findAll();
@@ -329,6 +332,7 @@ public class MallikasController {
 	 *         String, if the List is not empty, else returns a new ResponseEntity
 	 *         Not Found
 	 */
+	@ApiOperation(value = "Get a list of selected requirements", notes = "Get a list of selected requirements saved in the database.")
 	@PostMapping(value = "selectedReqs")
 	public ResponseEntity<String> sendSelectedRequirementsToMilla(@RequestBody Collection<String> ids) {
 		List<Requirement> selectedReqs = reqRepository.findByIdIn(ids);
@@ -387,6 +391,8 @@ public class MallikasController {
 	 * @param projectId
 	 * @return
 	 */
+	@ApiOperation(value = "Get the requirements including dependencies of a project",
+			notes = "Get the requirements including dependencies of a project saved in the database.")
 	@PostMapping(value = "projectRequirements")
 	public ResponseEntity<String> sendRequirementsInProjectToMilla(@RequestBody String projectId) {
 		Project project = projectRepository.findById(projectId);
@@ -421,6 +427,8 @@ public class MallikasController {
 	 * @return Requirements and Dependencies as a ResponseEntity, if it was found,
 	 *         else returns a new ResponseEntity Not Found
 	 */
+	@ApiOperation(value = "Get the dependent requirements including dependencies of a requirement",
+			notes = "Get the dependent requirements including dependencies of a requirement saved in the database.")
 	@PostMapping(value = "dependents")
 	public ResponseEntity<?> sendRequirementAndDependentReqsToMilla(@RequestBody String id) {
 		Requirement requirement = reqRepository.findById(id);
@@ -451,6 +459,8 @@ public class MallikasController {
 	 * @param resolutionValue
 	 * @return
 	 */
+	@ApiOperation(value = "Get a list of requirements including  dependencies with the resolution",
+			notes = "Get a list of requirements including  dependencies with the specific resolution saved in the database.")
 	@PostMapping(value = "reqsWithResolution")
 	public ResponseEntity<String> sendRequirementsWithResolutionToMilla(@RequestBody String resolutionValue) {
 		List<Requirement> selectedReqs = reqRepository.findByRequirementPart(resolutionValue);
@@ -480,6 +490,8 @@ public class MallikasController {
 	 * @param whole
 	 * @return
 	 */
+	@ApiOperation(value = "Get a list of requirements including  dependencies with the requirement type",
+			notes = "Get a list of requirements including  dependencies with the specific requirement type saved in the database.")
 	@PostMapping(value = "reqsWithType")
 	public ResponseEntity<String> sendRequirementsWithTypeToMilla(@RequestBody String whole) {
 		String[] parts = splitString(whole);
@@ -521,6 +533,8 @@ public class MallikasController {
 	 *            Dependency_type as a String
 	 * @return
 	 */
+	@ApiOperation(value = "Get a list of requirements including  dependencies with the dependency type",
+			notes = "Get a list of requirements including  dependencies with the specific dependency type saved in the database.")
 	@PostMapping(value = "reqsWithDependencyType")
 	public ResponseEntity<String> sendRequirementsWithDependencyTypeToMilla(@RequestBody String type) {
 		List<Requirement> selectedReqs = null;
@@ -561,6 +575,8 @@ public class MallikasController {
 	 * @param reqIds
 	 * @return
 	 */
+	@ApiOperation(value = "Update a list of requirements",
+			notes = "Update a list of requirements of the given project saved in the database.")
 	@PostMapping(value = "updateProjectSpecifiedRequirements/{projectId}")
 	public ResponseEntity<?> updateProjectSpecifiedRequirements(@RequestBody Map<String, Collection> reqIds) {
 		try {
