@@ -13,17 +13,17 @@ import org.springframework.context.annotation.Configuration;
 @SpringBootApplication
 public class MallikasApplication {
 
-    //MR ADD:
-//    @Configuration
-//    public class WebConfiguration {
-//        @Bean
-//        ServletRegistrationBean h2servletRegistration(){
-//            ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet());
-//            registrationBean.addUrlMappings("/h2/*");
-//            return registrationBean;
-//        }
-//    }
-    //MR ADD END
+
+//   @Configuration
+//   public class WebConfiguration {
+//       @Bean
+//       ServletRegistrationBean h2servletRegistration(){
+//           ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet());
+//           registrationBean.addUrlMappings("/h2/*");
+//           return registrationBean;
+//       }
+//   }
+//    //MR ADD END
     
 	public static void main(String[] args) {
 		System.setProperty("org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH", "true");

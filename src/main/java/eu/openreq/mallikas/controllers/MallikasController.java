@@ -29,6 +29,7 @@ import com.google.gson.Gson;
 import eu.openreq.mallikas.models.json.Dependency;
 import eu.openreq.mallikas.models.json.Dependency_type;
 import eu.openreq.mallikas.models.json.Project;
+import eu.openreq.mallikas.models.json.RequestParams;
 import eu.openreq.mallikas.models.json.Requirement;
 import eu.openreq.mallikas.models.json.Requirement_status;
 import eu.openreq.mallikas.models.json.Requirement_type;
@@ -329,10 +330,42 @@ public class MallikasController {
 	 *         String, if the List is not empty, else returns a new ResponseEntity
 	 *         Not Found
 	 */
-	@PostMapping(value = "selectedReqs")
+	@PostMapping(value = "selectedRequirements")
 	public ResponseEntity<String> sendSelectedRequirementsToMilla(@RequestBody Collection<String> ids) {
 		List<Requirement> selectedReqs = reqRepository.findByIdIn(ids);
 		if (!selectedReqs.isEmpty() && selectedReqs != null) {
+			List<Dependency> dependencies = dependencyRepository.findByFromidIn(ids);
+			List<Dependency> dependenciesTo = dependencyRepository.findByToidIn(ids);
+			dependencies.addAll(dependenciesTo);
+			dependenciesTo.clear();
+			try {
+				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
+						HttpStatus.OK);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return new ResponseEntity(HttpStatus.NOT_FOUND);
+	}
+	
+
+	/**
+	 * Receives a Collection of Requirement ids (String) from Milla and sends back
+	 * to Milla a List of selected Requirements.
+	 * 
+	 * @return selected Requirements and Dependencies associated with them as a
+	 *         String, if the List is not empty, else returns a new ResponseEntity
+	 *         Not Found
+	 */
+	@PostMapping(value = "reqsSinceDate")
+	public ResponseEntity<String> sendRequirementsSinceDateToMilla(@RequestBody Long created_at) {
+		List<Requirement> selectedReqs = reqRepository.findCreatedSinceDate(created_at);
+		System.out.print(selectedReqs);
+		if (!selectedReqs.isEmpty() && selectedReqs != null) {
+			List<String> ids = new ArrayList<String>();
+			for (Requirement req : selectedReqs) {
+				ids.add(req.getId());
+			}
 			List<Dependency> dependencies = dependencyRepository.findByFromidIn(ids);
 			List<Dependency> dependenciesTo = dependencyRepository.findByToidIn(ids);
 			dependencies.addAll(dependenciesTo);
@@ -380,6 +413,74 @@ public class MallikasController {
 	// return new ResponseEntity(HttpStatus.NOT_FOUND);
 	// }
 
+	/**
+	 * Sends requirements to Milla based on the parameters given (multiple parameters can be used simultaneously)
+	 * @param params
+	 * @return
+	 */
+	@PostMapping(value = "requirementsByParams")
+	public ResponseEntity<String> sendRequirementsByParamsToMilla(@RequestBody RequestParams params) {
+		
+		List<String> reqIds = params.getRequirementIds();
+		
+		if (params.getProjectId() != null && projectRepository.findById(params.getProjectId())!=null) {
+			Project project = projectRepository.findById(params.getProjectId());
+			List<String> projectReqIds = project.getSpecifiedRequirements();
+			if (reqIds==null) {
+				reqIds = projectReqIds;
+			} else {
+				reqIds.retainAll(projectReqIds);
+			}
+		}
+		
+		Long created = null;
+		Long modified = null;
+		Requirement_type type = null;
+		Requirement_status status = null;
+		
+		if (params.getCreated_at()!=null) {
+			created = params.getCreated_at().getTime();
+		}
+		if (params.getModified_at()!=null) {
+			modified = params.getModified_at().getTime();
+		}
+		if (params.getType()!=null) {
+			type = Requirement_type.valueOf(params.getType());
+		}
+		if (params.getStatus()!=null) {
+			status = Requirement_status.valueOf(params.getStatus());
+		}
+		
+		List<Requirement> selectedReqs = reqRepository.findByParams(reqIds, created, modified, type, status); 
+		
+		if (params.getResolution()!=null) {
+			List<Requirement> resolutionReqs = reqRepository.findByRequirementPart(params.getResolution());
+			if (selectedReqs!=null) {
+				selectedReqs.retainAll(resolutionReqs);
+			} else {			
+				selectedReqs = resolutionReqs;
+			}
+		}
+		
+		if (!selectedReqs.isEmpty() && selectedReqs != null) {
+			List<String> ids = new ArrayList<String>();
+			for (Requirement req : selectedReqs) {
+				ids.add(req.getId());
+			}
+			List<Dependency> dependencies = dependencyRepository.findByFromidIn(ids);
+			List<Dependency> dependenciesTo = dependencyRepository.findByToidIn(ids);
+			dependencies.addAll(dependenciesTo);
+			dependenciesTo.clear();
+			try {
+				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
+						HttpStatus.OK);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return new ResponseEntity(HttpStatus.NOT_FOUND);
+	}
+	
 	/**
 	 * Receives a projectId from Milla and sends back all requirements and their
 	 * dependencies in that project (projects list version)
