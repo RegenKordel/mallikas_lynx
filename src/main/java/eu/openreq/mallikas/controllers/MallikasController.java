@@ -477,7 +477,7 @@ public class MallikasController {
 			
 			Pageable pageLimit = new PageRequest(0, Integer.MAX_VALUE);
 			
-			if (params.getMaxDependencies()!=null && params.getMaxDependencies()>-1) {
+			if (params.getMaxDependencies()!=null && params.getMaxDependencies()>0) {
 				pageLimit = new PageRequest(0, params.getMaxDependencies());
 			}
 			
