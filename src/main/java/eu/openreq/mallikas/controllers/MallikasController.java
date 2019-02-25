@@ -10,6 +10,8 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -471,10 +473,17 @@ public class MallikasController {
 			for (Requirement req : selectedReqs) {
 				ids.add(req.getId());
 			}
-			List<Dependency> dependencies = dependencyRepository.findByFromidIn(ids);
-			List<Dependency> dependenciesTo = dependencyRepository.findByToidIn(ids);
-			dependencies.addAll(dependenciesTo);
-			dependenciesTo.clear();
+			List<Dependency> dependencies = new ArrayList<Dependency>();
+			
+			Pageable pageLimit = new PageRequest(0, Integer.MAX_VALUE);
+			
+			if (params.getMaxDependencies()!=null && params.getMaxDependencies()>-1) {
+				pageLimit = new PageRequest(0, params.getMaxDependencies());
+			}
+			
+			dependencies = dependencyRepository.findByIdsWithParams(ids, params.getTreshold(),
+					params.getIncludeProposed(), pageLimit);
+	
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
 						HttpStatus.OK);

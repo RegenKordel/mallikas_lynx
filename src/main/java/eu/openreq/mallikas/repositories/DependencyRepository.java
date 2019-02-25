@@ -3,6 +3,7 @@ package eu.openreq.mallikas.repositories;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -21,4 +22,11 @@ public interface DependencyRepository extends JpaRepository<Dependency, String> 
 	
 	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE dep.dependency_type = ?1")
 	List<Dependency> findByType(Dependency_type type);
+	
+	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN (?1)) OR (dep.toid IN (?1))) "
+			+ "AND (?2 is null OR dep.dependency_score >= ?2) "
+			+ "AND ((?3 is null OR ?3 is TRUE) OR (?3 is FALSE AND dep.status != 0))")
+	List<Dependency> findByIdsWithParams(Collection<String> ids, Double treshold, Boolean includeProposed, Pageable pageable);
+	
 }
+
