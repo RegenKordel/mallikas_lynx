@@ -427,10 +427,13 @@ public class MallikasController {
 	@PostMapping(value = "requirementsByParams")
 	public ResponseEntity<String> sendRequirementsByParamsToMilla(@RequestBody RequestParams params) {
 		
+		List<Project> projects = null;
 		List<String> reqIds = params.getRequirementIds();
 		
 		if (params.getProjectId() != null && projectRepository.findById(params.getProjectId())!=null) {
 			Project project = projectRepository.findById(params.getProjectId());
+			projects = new ArrayList<Project>();
+			projects.add(project);
 			List<String> projectReqIds = project.getSpecifiedRequirements();
 			if (reqIds==null) {
 				reqIds = projectReqIds;
@@ -457,7 +460,7 @@ public class MallikasController {
 			status = Requirement_status.valueOf(params.getStatus());
 		}
 		
-		List<Requirement> selectedReqs = reqRepository.findByParams(reqIds, created, modified, type, status); 
+		List<Requirement> selectedReqs = reqRepository.findByParams(reqIds, created, modified, type, status);
 		
 		if (params.getResolution()!=null) {
 			List<Requirement> resolutionReqs = reqRepository.findByRequirementPart(params.getResolution());
@@ -477,16 +480,20 @@ public class MallikasController {
 			
 			Pageable pageLimit = new PageRequest(0, Integer.MAX_VALUE);
 			
-			if (params.getMaxDependencies()!=null && params.getMaxDependencies()>0) {
+			if (params.getMaxDependencies()>0) {
 				pageLimit = new PageRequest(0, params.getMaxDependencies());
 			}
 			
 			dependencies = dependencyRepository.findByIdsWithParams(ids, params.getTreshold(),
-					params.getIncludeProposed(), pageLimit);
-	
+					params.getIncludeProposed(), params.getProposedOnly(), pageLimit);
 			try {
-				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
+				if (projects==null) {
+					return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
+							HttpStatus.OK); 
+				}
+				return new ResponseEntity<String>(createUPCJsonString(projects, selectedReqs, dependencies),
 						HttpStatus.OK);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

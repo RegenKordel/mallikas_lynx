@@ -12,10 +12,10 @@ public class RequestParams {
 	    private String type;
 	    private String status;
 	    private String resolution;
-		private Integer maxDependencies;
+		private int maxDependencies;
 		private Double treshold;
 	    private Boolean includeProposed;
-	    
+	    private Boolean proposedOnly;
 	    
 		public String getProjectId() {
 			return projectId;
@@ -59,10 +59,10 @@ public class RequestParams {
 		public void setResolution(String resolution) {
 			this.resolution = resolution;
 		}
-		public Integer getMaxDependencies() {
+		public int getMaxDependencies() {
 			return maxDependencies;
 		}
-		public void setMaxDependencies(Integer maxDependencies) {
+		public void setMaxDependencies(int maxDependencies) {
 			this.maxDependencies = maxDependencies;
 		}
 		public Double getTreshold() {
@@ -76,6 +76,12 @@ public class RequestParams {
 		}
 		public void setIncludeProposed(Boolean includeProposed) {
 			this.includeProposed = includeProposed;
+		}
+		public Boolean getProposedOnly() {
+			return proposedOnly;
+		}
+		public void setProposedOnly(Boolean proposedOnly) {
+			this.proposedOnly = proposedOnly;
 		}
 	    
 	    
