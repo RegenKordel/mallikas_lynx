@@ -471,7 +471,7 @@ public class MallikasController {
 			}
 		}
 		
-		if (!selectedReqs.isEmpty() && selectedReqs != null) {
+		if (!selectedReqs.isEmpty() && selectedReqs!=null) {
 			List<String> ids = new ArrayList<String>();
 			for (Requirement req : selectedReqs) {
 				ids.add(req.getId());
@@ -480,7 +480,7 @@ public class MallikasController {
 			
 			Pageable pageLimit = new PageRequest(0, Integer.MAX_VALUE);
 			
-			if (params.getMaxDependencies()>0) {
+			if (params.getMaxDependencies()!=null && params.getMaxDependencies()>0) {
 				pageLimit = new PageRequest(0, params.getMaxDependencies());
 			}
 			

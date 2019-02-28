@@ -12,7 +12,7 @@ public class RequestParams {
 	    private String type;
 	    private String status;
 	    private String resolution;
-		private int maxDependencies;
+		private Integer maxDependencies;
 		private Double treshold;
 	    private Boolean includeProposed;
 	    private Boolean proposedOnly;
@@ -59,10 +59,10 @@ public class RequestParams {
 		public void setResolution(String resolution) {
 			this.resolution = resolution;
 		}
-		public int getMaxDependencies() {
+		public Integer getMaxDependencies() {
 			return maxDependencies;
 		}
-		public void setMaxDependencies(int maxDependencies) {
+		public void setMaxDependencies(Integer maxDependencies) {
 			this.maxDependencies = maxDependencies;
 		}
 		public Double getTreshold() {
