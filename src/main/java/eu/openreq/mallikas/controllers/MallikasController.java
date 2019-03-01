@@ -418,6 +418,42 @@ public class MallikasController {
 	// }
 	// return new ResponseEntity(HttpStatus.NOT_FOUND);
 	// }
+	
+	@PostMapping(value = "onlyDependenciesByParams") 
+	public ResponseEntity<String> sendOnlyDependenciesByParamsToMilla(@RequestBody RequestParams params) {
+		List<String> reqIds = params.getRequirementIds();
+		
+		List<Requirement> selectedReqs = reqRepository.findByParams(params.getRequirementIds(), null, null, null, null);
+		
+		if (!selectedReqs.isEmpty() && selectedReqs!=null) {
+			List<String> ids = new ArrayList<String>();
+			for (Requirement req : selectedReqs) {
+				ids.add(req.getId());
+			}
+			
+			Pageable pageLimit = new PageRequest(0, Integer.MAX_VALUE);
+			
+			if (params.getMaxDependencies()!=null && params.getMaxDependencies()>0) {
+				pageLimit = new PageRequest(0, params.getMaxDependencies());
+			}
+			
+			List<Dependency> dependencies = dependencyRepository.findByIdsWithParams(reqIds, params.getTreshold(), 
+					params.getIncludeProposed(), params.getProposedOnly(), pageLimit);
+		
+			try {
+				ObjectMapper mapper = new ObjectMapper();
+				String dependencyString = mapper.writeValueAsString(dependencies);
+				dependencies.clear();
+				return new ResponseEntity<String>(dependencyString, HttpStatus.OK);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+		}
+		
+		return new ResponseEntity(HttpStatus.NOT_FOUND);
+	}
 
 	/**
 	 * Sends requirements to Milla based on the parameters given (multiple parameters can be used simultaneously)
