@@ -336,14 +336,11 @@ public class MallikasController {
 	 *         Not Found
 	 */
 	@ApiOperation(value = "Get a list of selected requirements", notes = "Get a list of selected requirements saved in the database.")
-	@PostMapping(value = "selectedRequirements")
+	@PostMapping(value = "selectedReqs")
 	public ResponseEntity<String> sendSelectedRequirementsToMilla(@RequestBody Collection<String> ids) {
 		List<Requirement> selectedReqs = reqRepository.findByIdIn(ids);
 		if (!selectedReqs.isEmpty() && selectedReqs != null) {
-			List<Dependency> dependencies = dependencyRepository.findByFromidIn(ids);
-			List<Dependency> dependenciesTo = dependencyRepository.findByToidIn(ids);
-			dependencies.addAll(dependenciesTo);
-			dependenciesTo.clear();
+			List<Dependency> dependencies = dependencyRepository.findByIdIn(ids);
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
 						HttpStatus.OK);
@@ -372,10 +369,7 @@ public class MallikasController {
 			for (Requirement req : selectedReqs) {
 				ids.add(req.getId());
 			}
-			List<Dependency> dependencies = dependencyRepository.findByFromidIn(ids);
-			List<Dependency> dependenciesTo = dependencyRepository.findByToidIn(ids);
-			dependencies.addAll(dependenciesTo);
-			dependenciesTo.clear();
+			List<Dependency> dependencies = dependencyRepository.findByIdIn(ids);;
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
 						HttpStatus.OK);
@@ -437,7 +431,7 @@ public class MallikasController {
 				pageLimit = new PageRequest(0, params.getMaxDependencies());
 			}
 			
-			List<Dependency> dependencies = dependencyRepository.findByIdsWithParams(reqIds, params.getTreshold(), 
+			List<Dependency> dependencies = dependencyRepository.findByIdWithParams(reqIds, params.getTreshold(), 
 					params.getIncludeProposed(), params.getProposedOnly(), pageLimit);
 		
 			try {
@@ -520,7 +514,7 @@ public class MallikasController {
 				pageLimit = new PageRequest(0, params.getMaxDependencies());
 			}
 			
-			dependencies = dependencyRepository.findByIdsWithParams(ids, params.getTreshold(),
+			dependencies = dependencyRepository.findByIdWithParams(ids, params.getTreshold(),
 					params.getIncludeProposed(), params.getProposedOnly(), pageLimit);
 			try {
 				if (projects==null) {
@@ -556,9 +550,7 @@ public class MallikasController {
 			projects.add(project);
 			List<String> requirementIds = project.getSpecifiedRequirements();
 			List<Requirement> requirements = reqRepository.findByIdIn(requirementIds);
-			List<Dependency> dependencies = dependencyRepository.findByFromidIn(requirementIds);
-			List<Dependency> dependenciesTo = dependencyRepository.findByToidIn(requirementIds);
-			dependencies.addAll(dependenciesTo);
+			List<Dependency> dependencies = dependencyRepository.findByIdIn(requirementIds);
 			if (!requirementIds.isEmpty()) {
 				try {
 					return new ResponseEntity<String>(createUPCJsonString(projects, requirements, dependencies),
@@ -622,10 +614,7 @@ public class MallikasController {
 			for (Requirement req : selectedReqs) {
 				reqIds.add(req.getId());
 			}
-			List<Dependency> dependencies = dependencyRepository.findByFromidIn(reqIds);
-			List<Dependency> dependenciesTo = dependencyRepository.findByToidIn(reqIds);
-			dependencies.addAll(dependenciesTo);
-
+			List<Dependency> dependencies = dependencyRepository.findByIdIn(reqIds);
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
 						HttpStatus.OK);
@@ -662,9 +651,7 @@ public class MallikasController {
 					for (Requirement req : selectedReqs) {
 						reqIds.add(req.getId());
 					}
-					List<Dependency> dependencies = dependencyRepository.findByFromidIn(reqIds);
-					List<Dependency> dependenciesTo = dependencyRepository.findByToidIn(reqIds);
-					dependencies.addAll(dependenciesTo);
+					List<Dependency> dependencies = dependencyRepository.findByIdIn(reqIds);
 					return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
 							HttpStatus.OK);
 				} catch (Exception e) {
