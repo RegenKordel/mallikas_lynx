@@ -24,7 +24,7 @@ Mallikas should not be accessed directly but it is used only through Milla. Mall
 
 The API is documented by using Swagger2:
 
-http://217.172.12.199:9205/swagger-ui.html
+http://217.172.12.199:9204/swagger-ui.html
 
 
 ## How to Install
