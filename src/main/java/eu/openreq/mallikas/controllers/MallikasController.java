@@ -39,6 +39,7 @@ import eu.openreq.mallikas.repositories.DependencyRepository;
 import eu.openreq.mallikas.repositories.ProjectRepository;
 import eu.openreq.mallikas.repositories.RequirementRepository;
 import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
 
 @SpringBootApplication
 @Controller
@@ -851,6 +852,22 @@ public class MallikasController {
 	// }
 	// return jsonString;
 	// }
+	
+	/**
+	 * Empties the database except for dependencies with the "rejected" status
+	 * @param reqIds
+	 * @return
+	 */
+	@ApiIgnore
+	@GetMapping(value = "deleteEverythingButRejectedDependencies")
+	public ResponseEntity<?> deleteEverythingButRejectedDependencies() {
+		
+		projectRepository.deleteAll();
+		reqRepository.deleteAll();
+		dependencyRepository.deleteAllNotRejected();
+
+		return new ResponseEntity("Delete successful", HttpStatus.OK);
+	}
 
 	/**
 	 * Create a String containing Projects, Requirements and Dependencies in JSON

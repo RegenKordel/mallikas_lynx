@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import eu.openreq.mallikas.models.json.Dependency;
@@ -32,6 +33,10 @@ public interface DependencyRepository extends JpaRepository<Dependency, String> 
 			+ "ORDER BY dep.dependency_score DESC")
 	List<Dependency> findByIdWithParams(Collection<String> ids, Double treshold, Boolean includeProposed, Boolean proposedOnly, 
 			Pageable pageable);
+	
+	@Modifying
+	@Query("DELETE FROM Dependency WHERE status != 2")
+	void deleteAllNotRejected();
 	
 }
 
