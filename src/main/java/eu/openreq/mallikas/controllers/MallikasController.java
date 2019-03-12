@@ -138,12 +138,11 @@ public class MallikasController {
 	@PostMapping(value = "project")
 	public String importProjectFromMilla(@RequestBody Project project) {
 		System.out.println("Received a project from Milla " + project.getId());
-		if (projectRepository.findOne(project.getId()) == null) {
-			projectRepository.save(project);
-		} else {
-			updateProject(project);
+		if (projectRepository.findOne(project.getId()) != null) {
 			System.out.println("Found a duplicate " + project.getId());
-		}
+		} 
+		projectRepository.save(project);	
+		
 		System.out.println("Project saved " + projectRepository.count());
 		return "saved";
 	}
@@ -157,19 +156,16 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Update selected dependencies", notes = "Update existing and save new dependencies in the database.")
 	@PostMapping(value = "updateDependencies")
-	public ResponseEntity<?> updateDependencies(@RequestBody Collection<Dependency> dependencies) {
-		// System.out.println("Received dependencies to update");
-		List<Dependency> savedDependencies = new ArrayList<>();
+	public ResponseEntity<?> updateDependencies(@RequestBody Collection<Dependency> dependencies, @RequestParam(required = false) boolean userInput) {
 		try {
-			for (Dependency dependency : dependencies) {
-				if (dependencyRepository.findById(dependency.getId()) == null) {
-					savedDependencies.add(dependency);
-				} else {
-					updateDependency(dependency);
+			if (userInput==true) {
+				for (Dependency dependency : dependencies) {
+					updateDependencyWithUserInput(dependency);
 				}
+			} else {
+				dependencyRepository.save(dependencies);
 			}
-			dependencyRepository.save(savedDependencies);
-			savedDependencies.clear();
+
 			System.out.println("Dependencies saved " + dependencyRepository.count());
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
@@ -195,11 +191,8 @@ public class MallikasController {
 			for (Requirement requirement : requirements) {
 				if (reqRepository.findById(requirement.getId()) == null) {
 					savedRequirements.add(requirement);
-				} else {
-					if (requirement.getModified_at() > reqRepository.findById(requirement.getId()).getModified_at()) {
-						System.out.println("Update necessary");
-						updateRequirement(requirement);
-					}
+				} else if (requirement.getModified_at() > reqRepository.findById(requirement.getId()).getModified_at()) {
+					savedRequirements.add(requirement);
 				}
 			}
 			reqRepository.save(savedRequirements);
@@ -432,9 +425,9 @@ public class MallikasController {
 				pageLimit = new PageRequest(0, params.getMaxDependencies());
 			}
 			
-			List<Dependency> dependencies = dependencyRepository.findByIdWithParams(reqIds, params.getTreshold(), 
+			List<Dependency> dependencies = dependencyRepository.findByIdWithParams(reqIds, params.getScoreTreshold(), 
 					params.getIncludeProposed(), params.getProposedOnly(), pageLimit);
-		
+
 			try {
 				ObjectMapper mapper = new ObjectMapper();
 				String dependencyString = mapper.writeValueAsString(dependencies);
@@ -515,7 +508,7 @@ public class MallikasController {
 				pageLimit = new PageRequest(0, params.getMaxDependencies());
 			}
 			
-			dependencies = dependencyRepository.findByIdWithParams(ids, params.getTreshold(),
+			dependencies = dependencyRepository.findByIdWithParams(ids, params.getScoreTreshold(),
 					params.getIncludeProposed(), params.getProposedOnly(), pageLimit);
 			try {
 				if (projects==null) {
@@ -914,48 +907,15 @@ public class MallikasController {
 	// }
 
 	/**
-	 * Update a dependency with the information (mainly status) of the dependency
-	 * received as a parameter
+	 * Updates dependency status and type as determined by user input
 	 * 
 	 * @param dependency
 	 */
-	private void updateDependency(Dependency dependency) {
-		Dependency updatedDependency = dependencyRepository.findById(dependency.getId());
-		if (dependency.getCreated_at() == 0) {
-			dependency.setCreated_at(new Date().getTime());
-		}
-		updatedDependency.setCreated_at(dependency.getCreated_at());
-		updatedDependency.setDependency_score(dependency.getDependency_score());
-		updatedDependency.setDependency_type(dependency.getDependency_type());
-		updatedDependency.setFromid(dependency.getFromid());
-		updatedDependency.setToid(dependency.getToid());
-		updatedDependency.setStatus(dependency.getStatus());
-		updatedDependency.setDescription(dependency.getDescription());
-		dependencyRepository.save(updatedDependency);
-	}
-
-	private void updateRequirement(Requirement requirement) {
-		Requirement updatedReq = reqRepository.findById(requirement.getId());
-		updatedReq.setCreated_at(requirement.getCreated_at());
-		updatedReq.setModified_at(requirement.getModified_at());
-		updatedReq.setName(requirement.getName());
-		updatedReq.setPriority(requirement.getPriority());
-		updatedReq.setRequirement_type(requirement.getRequirement_type());
-		updatedReq.setStatus(requirement.getStatus());
-		updatedReq.setChildren(requirement.getChildren());
-		updatedReq.setComments(requirement.getComments());
-		updatedReq.setRequirementParts(requirement.getRequirementParts());
-		updatedReq.setText(requirement.getText());
-		reqRepository.save(updatedReq);
-	}
-
-	private void updateProject(Project project) {
-		Project updatedProject = projectRepository.findById(project.getId());
-		updatedProject.setCreated_at(project.getCreated_at());
-		updatedProject.setModified_at(project.getModified_at()); // Should this be new Date.getTime()?
-		updatedProject.setName(project.getName());
-		updatedProject.setSpecifiedRequirements(project.getSpecifiedRequirements());
-		projectRepository.save(updatedProject);
+	private void updateDependencyWithUserInput(Dependency dependency) {
+		Dependency originalDependency = dependencyRepository.findById(dependency.getId());
+		originalDependency.setStatus(dependency.getStatus());
+		originalDependency.setDependency_type(dependency.getDependency_type());
+		dependencyRepository.save(originalDependency);
 	}
 
 }
