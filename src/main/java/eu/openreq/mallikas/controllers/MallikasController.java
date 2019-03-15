@@ -411,11 +411,6 @@ public class MallikasController {
 		List<Requirement> selectedReqs = reqRepository.findByIdIn(reqIds);
 		
 		if (!selectedReqs.isEmpty() && selectedReqs!=null) {
-			List<String> ids = new ArrayList<String>();
-			for (Requirement req : selectedReqs) {
-				ids.add(req.getId());
-			}
-			
 			Pageable pageLimit = new PageRequest(0, Integer.MAX_VALUE);
 			
 			if (params.getMaxDependencies()!=null && params.getMaxDependencies()>0) {
@@ -425,17 +420,21 @@ public class MallikasController {
 			List<Dependency> dependencies = dependencyRepository.findByIdWithParams(reqIds, params.getScoreThreshold(), 
 					params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit);
 			
+			List<String> dependentReqIds = new ArrayList<String>();
+			
 			for (Dependency dep : dependencies) {
 				if (!reqIds.contains(dep.getFromid())) {
-					reqIds.add(dep.getFromid());
+					dependentReqIds.add(dep.getFromid());
 				}
 				if (!reqIds.contains(dep.getToid())) {
-					reqIds.add(dep.getToid());
+					dependentReqIds.add(dep.getToid());
 				}
 			}
+			
+			selectedReqs.addAll(reqRepository.findByIdIn(dependentReqIds));
 
 			try {
-				return new ResponseEntity<String>(createJsonStringReqIdsOnly(reqIds, dependencies), HttpStatus.OK);
+				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies), HttpStatus.OK);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -813,15 +812,15 @@ public class MallikasController {
 	}
 	
 
-	private String createJsonStringReqIdsOnly(List<String> requirementIds, List<Dependency> dependencies)
-		throws JsonProcessingException {
-		Gson gson = new Gson();
-		String reqIdsString = gson.toJson(requirementIds);
-		String dependencyString = gson.toJson(dependencies);
-		String jsonString = "{\"requirementIds\":" + reqIdsString + ", \"dependencies\":" + dependencyString + "}";
-		
-		return jsonString;
-	}
+//	private String createJsonStringReqIdsOnly(List<String> requirementIds, List<Dependency> dependencies)
+//		throws JsonProcessingException {
+//		Gson gson = new Gson();
+//		String reqIdsString = gson.toJson(requirementIds);
+//		String dependencyString = gson.toJson(dependencies);
+//		String jsonString = "{\"requirementIds\":" + reqIdsString + ", \"dependencies\":" + dependencyString + "}";
+//		
+//		return jsonString;
+//	}
 
 	// /**
 	// * Create a String containing (possibly) Project, Requirements and
