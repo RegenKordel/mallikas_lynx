@@ -2,7 +2,6 @@ package eu.openreq.mallikas.controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -16,13 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -425,8 +422,8 @@ public class MallikasController {
 				pageLimit = new PageRequest(0, params.getMaxDependencies());
 			}
 			
-			List<Dependency> dependencies = dependencyRepository.findByIdWithParams(reqIds, params.getScoreTreshold(), 
-					params.getIncludeProposed(), params.getProposedOnly(), pageLimit);
+			List<Dependency> dependencies = dependencyRepository.findByIdWithParams(reqIds, params.getScoreThreshold(), 
+					params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit);
 			
 			for (Dependency dep : dependencies) {
 				if (!reqIds.contains(dep.getFromid())) {
@@ -514,8 +511,8 @@ public class MallikasController {
 				pageLimit = new PageRequest(0, params.getMaxDependencies());
 			}
 			
-			dependencies = dependencyRepository.findByIdWithParams(ids, params.getScoreTreshold(),
-					params.getIncludeProposed(), params.getProposedOnly(), pageLimit);
+			dependencies = dependencyRepository.findByIdWithParams(ids, params.getScoreThreshold(),
+					params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit);
 			try {
 				if (projects==null) {
 					return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),

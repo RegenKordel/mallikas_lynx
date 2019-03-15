@@ -3,11 +3,9 @@ package eu.openreq.mallikas.models.json;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
