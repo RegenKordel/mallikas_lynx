@@ -11,15 +11,15 @@ import org.springframework.context.annotation.Configuration;
 public class MallikasApplication {
 
 // For enabling H2 console for testing purpose, uncomment the following
-   @Configuration
-   public class WebConfiguration {
-       @Bean
-       ServletRegistrationBean h2servletRegistration(){
-           ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet());
-           registrationBean.addUrlMappings("/h2/*");
-           return registrationBean;
-       }
-   }
+//   @Configuration
+//   public class WebConfiguration {
+//       @Bean
+//       ServletRegistrationBean h2servletRegistration(){
+//           ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet());
+//           registrationBean.addUrlMappings("/h2/*");
+//           return registrationBean;
+//       }
+//   }
 
 	public static void main(String[] args) {
 		System.setProperty("org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH", "true");
