@@ -153,12 +153,13 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Update selected dependencies", notes = "Update existing and save new dependencies in the database.")
 	@PostMapping(value = "updateDependencies")
-	public ResponseEntity<?> updateDependencies(@RequestBody Collection<Dependency> dependencies, @RequestParam(required = false) boolean userInput) {
+	public ResponseEntity<?> updateDependencies(@RequestBody Collection<Dependency> dependencies, 
+			@RequestParam(required = false) boolean userInput, @RequestParam(required = false) boolean isProposed) {
 		try {
-			if (userInput==true) {
-				for (Dependency dependency : dependencies) {
-					updateDependencyWithUserInput(dependency);
-				}
+			if (userInput) {
+				updateDependenciesWithUserInput(dependencies);
+			} else if (isProposed) {
+				saveProposedDependencies(dependencies);
 			} else {
 				dependencyRepository.save(dependencies);
 			}
@@ -721,7 +722,9 @@ public class MallikasController {
 				projectId = id;
 			}
 			Project project = projectRepository.findById(projectId);
+			
 			project.getSpecifiedRequirements().addAll(reqIds.get(projectId));
+			
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -921,13 +924,34 @@ public class MallikasController {
 	/**
 	 * Updates dependency status and type as determined by user input
 	 * 
-	 * @param dependency
+	 * @param dependencies
 	 */
-	private void updateDependencyWithUserInput(Dependency dependency) {
-		Dependency originalDependency = dependencyRepository.findById(dependency.getId());
-		originalDependency.setStatus(dependency.getStatus());
-		originalDependency.setDependency_type(dependency.getDependency_type());
-		dependencyRepository.save(originalDependency);
+	private void updateDependenciesWithUserInput(Collection<Dependency> dependencies) {
+		for (Dependency dep : dependencies) {
+			Dependency originalDependency = dependencyRepository.findById(dep.getId());
+			originalDependency.setStatus(dep.getStatus());
+			originalDependency.setDependency_type(dep.getDependency_type());
+			dependencyRepository.save(originalDependency);
+		}
 	}
-
+	
+	/**
+	 * Save proposed dependencies received from similarity detection services and such
+	 * 
+	 * @param dependencies
+	 */
+	private void saveProposedDependencies(Collection<Dependency> dependencies) {
+		for (Dependency dep : dependencies) {
+			Dependency originalDependency = dependencyRepository.findById(dep.getId());
+			if (originalDependency!=null) {
+				List<String> descriptions = originalDependency.getDescription();
+				descriptions.addAll(dep.getDescription());
+				originalDependency.setDescription(descriptions);
+				dependencyRepository.save(originalDependency);
+			} else {
+				dependencyRepository.save(dep);
+			}
+		}
+		
+	}
 }
