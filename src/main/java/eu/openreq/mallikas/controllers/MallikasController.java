@@ -2,7 +2,6 @@ package eu.openreq.mallikas.controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -16,13 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -156,12 +153,13 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Update selected dependencies", notes = "Update existing and save new dependencies in the database.")
 	@PostMapping(value = "updateDependencies")
-	public ResponseEntity<?> updateDependencies(@RequestBody Collection<Dependency> dependencies, @RequestParam(required = false) boolean userInput) {
+	public ResponseEntity<?> updateDependencies(@RequestBody Collection<Dependency> dependencies, 
+			@RequestParam(required = false) boolean userInput, @RequestParam(required = false) boolean isProposed) {
 		try {
-			if (userInput==true) {
-				for (Dependency dependency : dependencies) {
-					updateDependencyWithUserInput(dependency);
-				}
+			if (userInput) {
+				updateDependenciesWithUserInput(dependencies);
+			} else if (isProposed) {
+				saveProposedDependencies(dependencies);
 			} else {
 				dependencyRepository.save(dependencies);
 			}
@@ -414,31 +412,30 @@ public class MallikasController {
 		List<Requirement> selectedReqs = reqRepository.findByIdIn(reqIds);
 		
 		if (!selectedReqs.isEmpty() && selectedReqs!=null) {
-			List<String> ids = new ArrayList<String>();
-			for (Requirement req : selectedReqs) {
-				ids.add(req.getId());
-			}
-			
 			Pageable pageLimit = new PageRequest(0, Integer.MAX_VALUE);
 			
 			if (params.getMaxDependencies()!=null && params.getMaxDependencies()>0) {
 				pageLimit = new PageRequest(0, params.getMaxDependencies());
 			}
 			
-			List<Dependency> dependencies = dependencyRepository.findByIdWithParams(reqIds, params.getScoreTreshold(), 
-					params.getIncludeProposed(), params.getProposedOnly(), pageLimit);
+			List<Dependency> dependencies = dependencyRepository.findByIdWithParams(reqIds, params.getScoreThreshold(), 
+					params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit);
+			
+			List<String> dependentReqIds = new ArrayList<String>();
 			
 			for (Dependency dep : dependencies) {
 				if (!reqIds.contains(dep.getFromid())) {
-					reqIds.add(dep.getFromid());
+					dependentReqIds.add(dep.getFromid());
 				}
 				if (!reqIds.contains(dep.getToid())) {
-					reqIds.add(dep.getToid());
+					dependentReqIds.add(dep.getToid());
 				}
 			}
+			
+			selectedReqs.addAll(reqRepository.findByIdIn(dependentReqIds));
 
 			try {
-				return new ResponseEntity<String>(createJsonStringReqIdsOnly(reqIds, dependencies), HttpStatus.OK);
+				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies), HttpStatus.OK);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -514,8 +511,8 @@ public class MallikasController {
 				pageLimit = new PageRequest(0, params.getMaxDependencies());
 			}
 			
-			dependencies = dependencyRepository.findByIdWithParams(ids, params.getScoreTreshold(),
-					params.getIncludeProposed(), params.getProposedOnly(), pageLimit);
+			dependencies = dependencyRepository.findByIdWithParams(ids, params.getScoreThreshold(),
+					params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit);
 			try {
 				if (projects==null) {
 					return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
@@ -725,7 +722,9 @@ public class MallikasController {
 				projectId = id;
 			}
 			Project project = projectRepository.findById(projectId);
+			
 			project.getSpecifiedRequirements().addAll(reqIds.get(projectId));
+			
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -816,15 +815,15 @@ public class MallikasController {
 	}
 	
 
-	private String createJsonStringReqIdsOnly(List<String> requirementIds, List<Dependency> dependencies)
-		throws JsonProcessingException {
-		Gson gson = new Gson();
-		String reqIdsString = gson.toJson(requirementIds);
-		String dependencyString = gson.toJson(dependencies);
-		String jsonString = "{\"requirementIds\":" + reqIdsString + ", \"dependencies\":" + dependencyString + "}";
-		
-		return jsonString;
-	}
+//	private String createJsonStringReqIdsOnly(List<String> requirementIds, List<Dependency> dependencies)
+//		throws JsonProcessingException {
+//		Gson gson = new Gson();
+//		String reqIdsString = gson.toJson(requirementIds);
+//		String dependencyString = gson.toJson(dependencies);
+//		String jsonString = "{\"requirementIds\":" + reqIdsString + ", \"dependencies\":" + dependencyString + "}";
+//		
+//		return jsonString;
+//	}
 
 	// /**
 	// * Create a String containing (possibly) Project, Requirements and
@@ -925,13 +924,34 @@ public class MallikasController {
 	/**
 	 * Updates dependency status and type as determined by user input
 	 * 
-	 * @param dependency
+	 * @param dependencies
 	 */
-	private void updateDependencyWithUserInput(Dependency dependency) {
-		Dependency originalDependency = dependencyRepository.findById(dependency.getId());
-		originalDependency.setStatus(dependency.getStatus());
-		originalDependency.setDependency_type(dependency.getDependency_type());
-		dependencyRepository.save(originalDependency);
+	private void updateDependenciesWithUserInput(Collection<Dependency> dependencies) {
+		for (Dependency dep : dependencies) {
+			Dependency originalDependency = dependencyRepository.findById(dep.getId());
+			originalDependency.setStatus(dep.getStatus());
+			originalDependency.setDependency_type(dep.getDependency_type());
+			dependencyRepository.save(originalDependency);
+		}
 	}
-
+	
+	/**
+	 * Save proposed dependencies received from similarity detection services and such
+	 * 
+	 * @param dependencies
+	 */
+	private void saveProposedDependencies(Collection<Dependency> dependencies) {
+		for (Dependency dep : dependencies) {
+			Dependency originalDependency = dependencyRepository.findById(dep.getId());
+			if (originalDependency!=null) {
+				List<String> descriptions = originalDependency.getDescription();
+				descriptions.addAll(dep.getDescription());
+				originalDependency.setDescription(descriptions);
+				dependencyRepository.save(originalDependency);
+			} else {
+				dependencyRepository.save(dep);
+			}
+		}
+		
+	}
 }

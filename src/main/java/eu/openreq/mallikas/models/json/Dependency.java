@@ -6,10 +6,6 @@ import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-//import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

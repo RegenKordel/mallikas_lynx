@@ -1,6 +1,5 @@
 package eu.openreq.mallikas.models.json;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
 public enum Requirement_type {

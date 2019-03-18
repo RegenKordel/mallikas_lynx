@@ -40,7 +40,13 @@ Mallikas is used only from Milla to store (cache) requirements, see details from
 
 The endpoints can be used for testing purposes, see  [swagger documentation](http://217.172.12.199:9203/swagger-ui.html).
 
+# Notes for Developers
 
+None at the moment.
+
+# Sources
+
+None
 
 # How to Contribute
 
