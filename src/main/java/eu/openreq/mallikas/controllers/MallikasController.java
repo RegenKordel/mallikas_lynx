@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -714,13 +715,9 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Update a list of requirements",
 			notes = "Update a list of requirements of the given project saved in the database.")
-	@PostMapping(value = "updateProjectSpecifiedRequirements/{projectId}")
-	public ResponseEntity<?> updateProjectSpecifiedRequirements(@RequestBody Map<String, Collection> reqIds) {
+	@PostMapping(value = "updateProjectSpecifiedRequirements/")
+	public ResponseEntity<?> updateProjectSpecifiedRequirements(@RequestBody Map<String, Collection> reqIds, @RequestParam String projectId) {
 		try {
-			String projectId = "";
-			for(String id : reqIds.keySet()) {
-				projectId = id;
-			}
 			Project project = projectRepository.findById(projectId);
 			
 			project.getSpecifiedRequirements().addAll(reqIds.get(projectId));
@@ -867,7 +864,7 @@ public class MallikasController {
 	 * @return
 	 */
 	@ApiIgnore
-	@GetMapping(value = "deleteEverythingButRejectedDependencies")
+	@DeleteMapping(value = "deleteEverythingButRejectedDependencies")
 	public ResponseEntity<?> deleteEverythingButRejectedDependencies() {
 		
 		projectRepository.deleteAll();
