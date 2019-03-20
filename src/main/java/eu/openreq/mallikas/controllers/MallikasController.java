@@ -942,9 +942,12 @@ public class MallikasController {
 			Dependency originalDependency = dependencyRepository.findById(dep.getId());
 			if (originalDependency!=null) {
 				List<String> descriptions = originalDependency.getDescription();
-				descriptions.addAll(dep.getDescription());
-				originalDependency.setDescription(descriptions);
-				dependencyRepository.save(originalDependency);
+				String newDescription = dep.getDescription().get(0);
+				if (!descriptions.contains(newDescription)) {
+					descriptions.add(newDescription);
+					originalDependency.setDescription(descriptions);
+					dependencyRepository.save(originalDependency);
+				}
 			} else {
 				dependencyRepository.save(dep);
 			}
