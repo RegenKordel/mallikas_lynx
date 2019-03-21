@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -714,13 +715,9 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Update a list of requirements",
 			notes = "Update a list of requirements of the given project saved in the database.")
-	@PostMapping(value = "updateProjectSpecifiedRequirements/{projectId}")
-	public ResponseEntity<?> updateProjectSpecifiedRequirements(@RequestBody Map<String, Collection> reqIds) {
+	@PostMapping(value = "updateProjectSpecifiedRequirements/")
+	public ResponseEntity<?> updateProjectSpecifiedRequirements(@RequestBody Map<String, Collection> reqIds, @RequestParam String projectId) {
 		try {
-			String projectId = "";
-			for(String id : reqIds.keySet()) {
-				projectId = id;
-			}
 			Project project = projectRepository.findById(projectId);
 			
 			project.getSpecifiedRequirements().addAll(reqIds.get(projectId));
@@ -867,7 +864,7 @@ public class MallikasController {
 	 * @return
 	 */
 	@ApiIgnore
-	@GetMapping(value = "deleteEverythingButRejectedDependencies")
+	@DeleteMapping(value = "deleteEverythingButRejectedDependencies")
 	public ResponseEntity<?> deleteEverythingButRejectedDependencies() {
 		
 		projectRepository.deleteAll();
@@ -928,10 +925,13 @@ public class MallikasController {
 	 */
 	private void updateDependenciesWithUserInput(Collection<Dependency> dependencies) {
 		for (Dependency dep : dependencies) {
-			Dependency originalDependency = dependencyRepository.findById(dep.getId());
-			originalDependency.setStatus(dep.getStatus());
-			originalDependency.setDependency_type(dep.getDependency_type());
-			dependencyRepository.save(originalDependency);
+			String depId = dep.getFromid() + "_" + dep.getToid() + "_SIMILAR";
+			Dependency originalDependency = dependencyRepository.findById(depId);
+			if (originalDependency!=null) {
+				originalDependency.setStatus(dep.getStatus());
+				originalDependency.setDependency_type(dep.getDependency_type());
+				dependencyRepository.save(originalDependency);
+			}
 		}
 	}
 	
@@ -942,13 +942,21 @@ public class MallikasController {
 	 */
 	private void saveProposedDependencies(Collection<Dependency> dependencies) {
 		for (Dependency dep : dependencies) {
-			Dependency originalDependency = dependencyRepository.findById(dep.getId());
+			String depId = dep.getId();
+			if (depId==null) {
+				depId = dep.getFromid() + "_" + dep.getToid() + "_SIMILAR"; 
+			}
+			Dependency originalDependency = dependencyRepository.findById(depId);
 			if (originalDependency!=null) {
 				List<String> descriptions = originalDependency.getDescription();
-				descriptions.addAll(dep.getDescription());
-				originalDependency.setDescription(descriptions);
-				dependencyRepository.save(originalDependency);
+				String newDescription = dep.getDescription().get(0);
+				if (!descriptions.contains(newDescription)) {
+					descriptions.add(newDescription);
+					originalDependency.setDescription(descriptions);
+					dependencyRepository.save(originalDependency);
+				}
 			} else {
+				dep.setId(depId);
 				dependencyRepository.save(dep);
 			}
 		}
