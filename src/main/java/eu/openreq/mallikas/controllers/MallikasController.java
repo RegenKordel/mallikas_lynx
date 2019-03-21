@@ -956,6 +956,7 @@ public class MallikasController {
 					dependencyRepository.save(originalDependency);
 				}
 			} else {
+				dep.setId(depId);
 				dependencyRepository.save(dep);
 			}
 		}
