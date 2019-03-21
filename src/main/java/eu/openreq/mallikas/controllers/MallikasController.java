@@ -942,7 +942,11 @@ public class MallikasController {
 	 */
 	private void saveProposedDependencies(Collection<Dependency> dependencies) {
 		for (Dependency dep : dependencies) {
-			Dependency originalDependency = dependencyRepository.findById(dep.getId());
+			String depId = dep.getId();
+			if (depId==null) {
+				depId = dep.getFromid() + "_" + dep.getToid() + "_SIMILAR"; 
+			}
+			Dependency originalDependency = dependencyRepository.findById(depId);
 			if (originalDependency!=null) {
 				List<String> descriptions = originalDependency.getDescription();
 				String newDescription = dep.getDescription().get(0);
