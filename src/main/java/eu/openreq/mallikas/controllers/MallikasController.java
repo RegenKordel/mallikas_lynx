@@ -925,10 +925,13 @@ public class MallikasController {
 	 */
 	private void updateDependenciesWithUserInput(Collection<Dependency> dependencies) {
 		for (Dependency dep : dependencies) {
-			Dependency originalDependency = dependencyRepository.findById(dep.getId());
-			originalDependency.setStatus(dep.getStatus());
-			originalDependency.setDependency_type(dep.getDependency_type());
-			dependencyRepository.save(originalDependency);
+			String depId = dep.getFromid() + "_" + dep.getToid() + "_SIMILAR";
+			Dependency originalDependency = dependencyRepository.findById(depId);
+			if (originalDependency!=null) {
+				originalDependency.setStatus(dep.getStatus());
+				originalDependency.setDependency_type(dep.getDependency_type());
+				dependencyRepository.save(originalDependency);
+			}
 		}
 	}
 	
