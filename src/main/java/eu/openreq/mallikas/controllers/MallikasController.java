@@ -716,7 +716,7 @@ public class MallikasController {
 	@ApiOperation(value = "Update a list of requirements",
 			notes = "Update a list of requirements of the given project saved in the database.")
 	@PostMapping(value = "updateProjectSpecifiedRequirements/")
-	public ResponseEntity<?> updateProjectSpecifiedRequirements(@RequestBody Map<String, Collection> reqIds, @RequestParam String projectId) {
+	public ResponseEntity<?> updateProjectSpecifiedRequirements(@RequestBody Map<String, Collection<String>> reqIds, @RequestParam String projectId) {
 		try {
 			Project project = projectRepository.findById(projectId);
 			
