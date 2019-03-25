@@ -216,7 +216,7 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Get a requirement", notes = "Get a requirement saved in the database.")
 	@PostMapping(value = "one")
-	public ResponseEntity<?> sendOneRequirementToMilla(@RequestBody String id) {
+	public ResponseEntity<String> sendOneRequirementToMilla(@RequestBody String id) {
 		Requirement req = reqRepository.findById(id);
 		List<Requirement> requirements = new ArrayList<>();
 
@@ -231,7 +231,7 @@ public class MallikasController {
 				e.printStackTrace();
 			}
 		}
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	// Should work (but the returned String might be too large to show in Swagger
@@ -257,7 +257,7 @@ public class MallikasController {
 				e.printStackTrace();
 			}
 		}
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	// Should work (but the returned String might be too large to show in Swagger
@@ -282,7 +282,7 @@ public class MallikasController {
 				e.printStackTrace();
 			}
 		}
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	// /**
@@ -341,7 +341,7 @@ public class MallikasController {
 				e.printStackTrace();
 			}
 		}
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
 
@@ -370,7 +370,7 @@ public class MallikasController {
 				e.printStackTrace();
 			}
 		}
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	// /**
@@ -444,7 +444,7 @@ public class MallikasController {
 		
 		}
 		
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	/**
@@ -526,7 +526,7 @@ public class MallikasController {
 				e.printStackTrace();
 			}
 		}
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
 	/**
@@ -558,7 +558,7 @@ public class MallikasController {
 				}
 			}
 		}
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	/**
@@ -573,7 +573,7 @@ public class MallikasController {
 	@ApiOperation(value = "Get the dependent requirements including dependencies of a requirement",
 			notes = "Get the dependent requirements including dependencies of a requirement saved in the database.")
 	@PostMapping(value = "dependents")
-	public ResponseEntity<?> sendRequirementAndDependentReqsToMilla(@RequestBody String id) {
+	public ResponseEntity<String> sendRequirementAndDependentReqsToMilla(@RequestBody String id) {
 		Requirement requirement = reqRepository.findById(id);
 		// System.out.println("Requested req is " + requirement);
 		if (requirement != null) {
@@ -592,7 +592,7 @@ public class MallikasController {
 				e.printStackTrace();
 			}
 		}
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	/**
@@ -620,7 +620,7 @@ public class MallikasController {
 				e.printStackTrace();
 			}
 		}
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 	}
 
 	/**
@@ -641,7 +641,7 @@ public class MallikasController {
 			selectedReqs = createRequirements(parts);
 
 			if (selectedReqs == null) {
-				return new ResponseEntity("Search failed", HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>("Search failed", HttpStatus.NOT_FOUND);
 			}
 			if (!selectedReqs.isEmpty() || selectedReqs != null) {
 				try {
@@ -657,10 +657,10 @@ public class MallikasController {
 				}
 			}
 		} catch (IllegalArgumentException e) {
-			new ResponseEntity(HttpStatus.BAD_REQUEST);
+			new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	/**
@@ -691,7 +691,7 @@ public class MallikasController {
 			selectedReqs = reqRepository.findByIdIn(reqIds);
 
 			if (selectedReqs == null) {
-				return new ResponseEntity("Search failed", HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>("Search failed", HttpStatus.NOT_FOUND);
 			}
 			if (!selectedReqs.isEmpty()) {
 				try {
@@ -702,10 +702,10 @@ public class MallikasController {
 				}
 			}
 		} catch (IllegalArgumentException e) {
-			new ResponseEntity(HttpStatus.BAD_REQUEST);
+			new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	/**
@@ -716,7 +716,7 @@ public class MallikasController {
 	@ApiOperation(value = "Update a list of requirements",
 			notes = "Update a list of requirements of the given project saved in the database.")
 	@PostMapping(value = "updateProjectSpecifiedRequirements/")
-	public ResponseEntity<?> updateProjectSpecifiedRequirements(@RequestBody Map<String, Collection<String>> reqIds, @RequestParam String projectId) {
+	public ResponseEntity<String> updateProjectSpecifiedRequirements(@RequestBody Map<String, Collection<String>> reqIds, @RequestParam String projectId) {
 		try {
 			Project project = projectRepository.findById(projectId);
 			
@@ -727,7 +727,7 @@ public class MallikasController {
 			e.printStackTrace();
 		}
 
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	/**
@@ -865,13 +865,13 @@ public class MallikasController {
 	 */
 	@ApiIgnore
 	@DeleteMapping(value = "deleteEverythingButRejectedDependencies")
-	public ResponseEntity<?> deleteEverythingButRejectedDependencies() {
+	public ResponseEntity<String> deleteEverythingButRejectedDependencies() {
 		
 		projectRepository.deleteAll();
 		reqRepository.deleteAll();
 		dependencyRepository.deleteAllNotRejected();
 
-		return new ResponseEntity("Delete successful", HttpStatus.OK);
+		return new ResponseEntity<>("Delete successful", HttpStatus.OK);
 	}
 
 	/**
