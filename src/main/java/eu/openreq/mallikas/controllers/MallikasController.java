@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import eu.openreq.mallikas.models.json.Dependency;
+import eu.openreq.mallikas.models.json.Dependency_status;
 import eu.openreq.mallikas.models.json.Dependency_type;
 import eu.openreq.mallikas.models.json.Project;
 import eu.openreq.mallikas.models.json.RequestParams;
@@ -927,7 +928,10 @@ public class MallikasController {
 		for (Dependency dep : dependencies) {
 			String depId = dep.getFromid() + "_" + dep.getToid() + "_SIMILAR";
 			Dependency originalDependency = dependencyRepository.findById(depId);
-			if (originalDependency!=null) {
+			if (originalDependency!=null && ((dep.getStatus()==Dependency_status.ACCEPTED && 
+					dep.getDependency_type()!=Dependency_type.SIMILAR) || 
+					(dep.getStatus()!=Dependency_status.ACCEPTED))) {
+
 				originalDependency.setStatus(dep.getStatus());
 				originalDependency.setDependency_type(dep.getDependency_type());
 				dependencyRepository.save(originalDependency);
