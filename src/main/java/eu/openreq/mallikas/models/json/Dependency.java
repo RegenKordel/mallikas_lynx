@@ -18,7 +18,7 @@ import com.google.gson.annotations.SerializedName;
 @Entity
 //@Table(name = "Dependency")
 public class Dependency implements Serializable {
-
+	public final static long serialVersionUID = 1L;
 	/**
 	* The unique identifier of a dependency
 	* (Required)
