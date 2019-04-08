@@ -458,57 +458,6 @@ public class MallikasController {
 	}
 
 	/**
-	 * Creates a list of requirements based on the values in a String array (array
-	 * contains values of Requirement_type and Requirement_status)
-	 * 
-	 * @param parts
-	 * @return
-	 */
-	private List<Requirement> createRequirements(String[] parts) {
-		List<Requirement> selectedReqs = null;
-//		System.out.println("Parts 0 " + parts[0]);
-//		System.out.println("Parts 1 " + parts[1]);
-		if (!parts[0].equals("null") && !parts[1].equals("null")) {
-			selectedReqs = reqRepository.findByTypeAndStatus(Requirement_type.valueOf(parts[0]),
-					Requirement_status.valueOf(parts[1]));
-		} else if (!parts[0].equals("null") && parts[1].equals("null")) {
-			selectedReqs = reqRepository.findByType(Requirement_type.valueOf(parts[0]));
-		} else if (parts[0].equals("null") && !parts[1].equals("null")) {
-			selectedReqs = reqRepository.findByStatus(Requirement_status.valueOf(parts[1]));
-		}
-		return selectedReqs;
-	}
-
-	private String[] splitString(String word) {
-		String[] parts = word.split("\\+");
-		return parts;
-	}
-
-	/**
-	 * Create a List containing Requirement IDs (String) that are extracted from a
-	 * List of Dependencies
-	 * 
-	 * @param dependencies
-	 * @return
-	 */
-	private Set<String> collectRequirementIDs(List<Dependency> dependencies) {
-		Set<String> reqIDs = new HashSet<>();
-		if (!dependencies.isEmpty()) {
-			for (Dependency dependency : dependencies) {
-				String reqToId = dependency.getToid();
-				if (!reqIDs.contains(reqToId)) {
-					reqIDs.add(reqToId);
-				}
-				String reqFromId = dependency.getFromid();
-				if (!reqIDs.contains(reqFromId)) {
-					reqIDs.add(reqFromId);
-				}
-			}
-		}
-		return reqIDs;
-	}
-
-	/**
 	 * Create a String containing (possibly) Project, Requirements and Dependencies
 	 * in JSON format
 	 * 
