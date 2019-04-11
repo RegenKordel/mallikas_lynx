@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  description: 'Mallikas is a database service in the dependency engine of OpenReq infrastructure serving primarily the Milla service.Mallikas takes care of storing OpenReq relevant data in OpenReq specific format. While Mallikas has public endpoints, the endpoints of Mallikas should be accessed only through other services, such as Milla. The endpoints should be used directly mainly only for testing purposes.'
+  description: 'Mallikas is a database service in the dependency engine of OpenReq infrastructure serving primarily the Milla service. Mallikas takes care of storing OpenReq relevant data in OpenReq specific format. While Mallikas has public endpoints, the endpoints of Mallikas should be accessed only through other services, such as Milla. The endpoints should be used directly mainly only for testing purposes.'
   version: '1.10'
   title: Mallikas
 host: 'localhost:9204'
@@ -9,173 +9,13 @@ tags:
   - name: mallikas-controller
     description: Mallikas Controller
 paths:
-  /allDependencies:
-    get:
-      tags:
-        - mallikas-controller
-      summary: Get a list of all dependencies
-      description: Get a list of all dependencies saved in the database.
-      operationId: getAllDependenciesUsingGET
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: string
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-  /allRequirements:
-    get:
-      tags:
-        - mallikas-controller
-      summary: Get a list of all requirements
-      description: Get a list of all requirements saved in the database.
-      operationId: sendAllRequirementsToMillaUsingGET
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: string
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-  /dependencies:
+  /dependenciesByParams:
     post:
       tags:
         - mallikas-controller
-      summary: Import a list of dependencies
-      description: 'Import a list of new OpenReq JSON Dependencies to the database. If a dependency exists, it is not updated or changed.'
-      operationId: importDependenciesFromMillaUsingPOST
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      parameters:
-        - in: body
-          name: dependencies
-          description: dependencies
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Dependency'
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: string
-        '201':
-          description: Created
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-  /dependents:
-    post:
-      tags:
-        - mallikas-controller
-      summary: Get the dependent requirements including dependencies of a requirement
-      description: Get the dependent requirements including dependencies of a requirement saved in the database.
-      operationId: sendRequirementAndDependentReqsToMillaUsingPOST
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      parameters:
-        - in: body
-          name: id
-          description: id
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: object
-        '201':
-          description: Created
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-  /listAllProjects:
-    get:
-      tags:
-        - mallikas-controller
-      summary: Get a list of projects
-      description: Get a list of ids of all projects saved in the database.
-      operationId: getAListOfProjectsUsingGET
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: object
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-  /one:
-    post:
-      tags:
-        - mallikas-controller
-      summary: Get a requirement
-      description: Get a requirement saved in the database.
-      operationId: sendOneRequirementToMillaUsingPOST
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      parameters:
-        - in: body
-          name: id
-          description: id
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: object
-        '201':
-          description: Created
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-  /onlyDependenciesByParams:
-    post:
-      tags:
-        - mallikas-controller
-      summary: sendOnlyDependenciesByParamsToMilla
-      operationId: sendOnlyDependenciesByParamsToMillaUsingPOST
+      summary: Get dependencies by params posted
+      description: Fetches dependencies and their dependent requirements by parameters provided.
+      operationId: getDependenciesByParamsUsingPOST
       consumes:
         - application/json
       produces:
@@ -200,13 +40,13 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
-  /project:
+  /importProject:
     post:
       tags:
         - mallikas-controller
       summary: Import a project
       description: 'Import an OpenReq JSON project to the database. If a project exists, it is updated.'
-      operationId: importProjectFromMillaUsingPOST
+      operationId: importProjectUsingPOST
       consumes:
         - application/json
       produces:
@@ -222,9 +62,31 @@ paths:
         '200':
           description: OK
           schema:
-            type: string
+            type: object
         '201':
           description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /listOfProjects:
+    get:
+      tags:
+        - mallikas-controller
+      summary: Get a list (map) of projects currently saved
+      description: Get a map with ids of all saved projects and their requirement counts.
+      operationId: getListOfProjectsUsingGET
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
         '401':
           description: Unauthorized
         '403':
@@ -232,187 +94,27 @@ paths:
         '404':
           description: Not Found
   /projectRequirements:
-    post:
+    get:
       tags:
         - mallikas-controller
-      summary: Get the requirements including dependencies of a project
-      description: Get the requirements including dependencies of a project saved in the database.
-      operationId: sendRequirementsInProjectToMillaUsingPOST
+      summary: Get all requirements and dependencies of a project
+      description: Get all requirements and dependencies of a project saved in the database.
+      operationId: sendRequirementsInProjectToMillaUsingGET
       consumes:
         - application/json
       produces:
         - '*/*'
       parameters:
-        - in: body
-          name: projectId
+        - name: projectId
+          in: query
           description: projectId
           required: true
-          schema:
-            type: string
+          type: string
       responses:
         '200':
           description: OK
           schema:
             type: string
-        '201':
-          description: Created
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-  /reqsSinceDate:
-    post:
-      tags:
-        - mallikas-controller
-      summary: sendRequirementsSinceDateToMilla
-      operationId: sendRequirementsSinceDateToMillaUsingPOST
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      parameters:
-        - in: body
-          name: created_at
-          description: created_at
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: string
-        '201':
-          description: Created
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-  /reqsWithDependencyType:
-    post:
-      tags:
-        - mallikas-controller
-      summary: Get a list of requirements including  dependencies with the dependency type
-      description: Get a list of requirements including  dependencies with the specific dependency type saved in the database.
-      operationId: sendRequirementsWithDependencyTypeToMillaUsingPOST
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      parameters:
-        - in: body
-          name: type
-          description: type
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: string
-        '201':
-          description: Created
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-  /reqsWithResolution:
-    post:
-      tags:
-        - mallikas-controller
-      summary: Get a list of requirements including  dependencies with the resolution
-      description: Get a list of requirements including  dependencies with the specific resolution saved in the database.
-      operationId: sendRequirementsWithResolutionToMillaUsingPOST
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      parameters:
-        - in: body
-          name: resolutionValue
-          description: resolutionValue
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: string
-        '201':
-          description: Created
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-  /reqsWithType:
-    post:
-      tags:
-        - mallikas-controller
-      summary: Get a list of requirements including  dependencies with the requirement type
-      description: Get a list of requirements including  dependencies with the specific requirement type saved in the database.
-      operationId: sendRequirementsWithTypeToMillaUsingPOST
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      parameters:
-        - in: body
-          name: whole
-          description: whole
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: string
-        '201':
-          description: Created
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-  /requirements:
-    post:
-      tags:
-        - mallikas-controller
-      summary: Import a list of requirements
-      description: 'Import a list of new OpenReq JSON Requirements to the database. If a requirement exists, it is not updated or changed.'
-      operationId: importRequirementsFromMillaUsingPOST
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      parameters:
-        - in: body
-          name: requirements
-          description: requirements
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Requirement'
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: string
-        '201':
-          description: Created
         '401':
           description: Unauthorized
         '403':
@@ -423,8 +125,9 @@ paths:
     post:
       tags:
         - mallikas-controller
-      summary: sendRequirementsByParamsToMilla
-      operationId: sendRequirementsByParamsToMillaUsingPOST
+      summary: Get requirements by params posted
+      description: Fetches requirements and their dependencies by parameters provided.
+      operationId: getRequirementsByParamsUsingPOST
       consumes:
         - application/json
       produces:
@@ -453,9 +156,9 @@ paths:
     post:
       tags:
         - mallikas-controller
-      summary: Get a list of selected requirements
-      description: Get a list of selected requirements saved in the database.
-      operationId: sendSelectedRequirementsToMillaUsingPOST
+      summary: Get requirements by ids posted
+      description: Fetches a list of requirements based on the ids provided.
+      operationId: getSelectedRequirementsUsingPOST
       consumes:
         - application/json
       produces:
@@ -486,7 +189,7 @@ paths:
     post:
       tags:
         - mallikas-controller
-      summary: Update selected dependencies
+      summary: Post dependencies to be updated
       description: Update existing and save new dependencies in the database.
       operationId: updateDependenciesUsingPOST
       consumes:
@@ -525,12 +228,12 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
-  /updateProjectSpecifiedRequirements/:
+  /updateProjectSpecifiedRequirements:
     post:
       tags:
         - mallikas-controller
-      summary: Update a list of requirements
-      description: Update a list of requirements of the given project saved in the database.
+      summary: Post project specified requirements to be updated
+      description: Update the specified requirements of a project in the database.
       operationId: updateProjectSpecifiedRequirementsUsingPOST
       consumes:
         - application/json
@@ -546,7 +249,7 @@ paths:
             additionalProperties:
               type: array
               items:
-                type: object
+                type: string
         - name: projectId
           in: query
           description: projectId
@@ -556,7 +259,7 @@ paths:
         '200':
           description: OK
           schema:
-            type: object
+            type: string
         '201':
           description: Created
         '401':
@@ -569,7 +272,7 @@ paths:
     post:
       tags:
         - mallikas-controller
-      summary: Update selected requirements
+      summary: Post requirements to be updated
       description: Update existing and save new requirements to the database.
       operationId: updateRequirementsUsingPOST
       consumes:
@@ -780,6 +483,4 @@ definitions:
         type: string
       text:
         type: string
-
-
 
