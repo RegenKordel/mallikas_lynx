@@ -16,7 +16,7 @@ public interface DependencyRepository extends JpaRepository<Dependency, String> 
 	Dependency findById(String id);
 	
 	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN (?1)) OR (dep.toid IN (?1)))"
-			+ "AND (((?2 is null OR ?2 is TRUE) AND (dep.status != 2)) OR (?3 is FALSE AND dep.status = 1))")
+			+ "AND (((?2 is null OR ?2 is TRUE) AND (dep.status != 2)) OR (?2 is FALSE AND dep.status = 1))")
 	List<Dependency> findByIdIn(Collection<String> ids, Boolean includeProposed);
 
 	
