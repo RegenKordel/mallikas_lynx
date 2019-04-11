@@ -98,8 +98,8 @@ paths:
       tags:
         - mallikas-controller
       summary: Get all requirements and dependencies of a project
-      description: Get all requirements and dependencies of a project saved in the database.
-      operationId: sendRequirementsInProjectToMillaUsingGET
+      description: 'Get all requirements and dependencies of a project saved in the database, excluding rejected dependencies. Has an option whether to include proposed dependencies, included by default.'
+      operationId: getRequirementsInProjectUsingGET
       consumes:
         - application/json
       produces:
@@ -110,6 +110,11 @@ paths:
           description: projectId
           required: true
           type: string
+        - name: includeProposed
+          in: query
+          description: includeProposed
+          required: false
+          type: boolean
       responses:
         '200':
           description: OK

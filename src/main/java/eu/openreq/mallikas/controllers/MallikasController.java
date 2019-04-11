@@ -241,7 +241,7 @@ public class MallikasController {
 	@ApiOperation(value = "Get a list of all requirements", notes = "Returns a list with every single requirement saved in the database!")
 	@GetMapping(value = "allRequirements")
 	@ApiIgnore
-	public ResponseEntity<String> sendAllRequirementsToMilla() {
+	public ResponseEntity<String> getAllRequirements() {
 		List<Requirement> allReqs = reqRepository.findAll();
 		List<Dependency> dependencies = dependencyRepository.findAll();
 		if (!allReqs.isEmpty()) {
@@ -297,7 +297,7 @@ public class MallikasController {
 	public ResponseEntity<String> getSelectedRequirements(@RequestBody Collection<String> ids) {
 		List<Requirement> selectedReqs = reqRepository.findByIdIn(ids);
 		if (!selectedReqs.isEmpty() && selectedReqs != null) {
-			List<Dependency> dependencies = dependencyRepository.findByIdIn(ids);
+			List<Dependency> dependencies = dependencyRepository.findByIdIn(ids, true);
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
 						HttpStatus.FOUND);
@@ -446,18 +446,19 @@ public class MallikasController {
 	 * @return
 	 */
 	@ApiOperation(value = "Get all requirements and dependencies of a project",
-			notes = "Get all requirements and dependencies of a project saved in the database.")
+			notes = "Get all requirements and dependencies of a project saved in the database, excluding rejected dependencies."
+					+ " Has an option whether to include proposed dependencies, included by default.")
 	@GetMapping(value = "projectRequirements")
-	public ResponseEntity<String> sendRequirementsInProjectToMilla(@RequestParam String projectId) {
+	public ResponseEntity<String> getRequirementsInProject(@RequestParam String projectId, 
+			@RequestParam(required = false) boolean includeProposed) {
 		Project project = projectRepository.findById(projectId);
 
 		if (project != null) {
-			// System.out.println("Sending projects to Milla");
 			List<Project> projects = new ArrayList<>();
 			projects.add(project);
 			List<String> requirementIds = project.getSpecifiedRequirements();
 			List<Requirement> requirements = reqRepository.findByIdIn(requirementIds);
-			List<Dependency> dependencies = dependencyRepository.findByIdIn(requirementIds);
+			List<Dependency> dependencies = dependencyRepository.findByIdIn(requirementIds, includeProposed);
 			if (!requirementIds.isEmpty()) {
 				try {
 					return new ResponseEntity<String>(createUPCJsonString(projects, requirements, dependencies),
