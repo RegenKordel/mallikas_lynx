@@ -9,27 +9,19 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import eu.openreq.mallikas.models.json.Dependency;
-import eu.openreq.mallikas.models.json.Dependency_type;
 
 public interface DependencyRepository extends JpaRepository<Dependency, String> {
 
 	Dependency findById(String id);
-	List<Dependency> findByFromid(String fromId);
-	List<Dependency> findByToid(String toId);
-	
-	List<Dependency> findByFromidIn(Collection<String> ids);
-	List<Dependency> findByToidIn(Collection<String> ids);
-	
 	
 	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN (?1)) OR (dep.toid IN (?1)))"
 			+ "AND (dep.status != 2)")
-	List<Dependency> findByIdIn(Collection<String> ids);
+	List<Dependency> findByIdIncludeProposed(Collection<String> ids);
 	
-	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN (?1)) OR (dep.toid IN (?1)))")
-	List<Dependency> findByIdIncludeRejected(Collection<String> ids);
-	
-	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE dep.dependency_type = ?1")
-	List<Dependency> findByType(Dependency_type type);
+	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN (?1)) OR (dep.toid IN (?1)))"
+			+ "AND (dep.status = 1)")
+	List<Dependency> findByIdExcludeProposed(Collection<String> ids);
+
 	
 	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN (?1)) OR (dep.toid IN (?1))) "
 			+ "AND (?2 is null OR dep.dependency_score >= ?2) "

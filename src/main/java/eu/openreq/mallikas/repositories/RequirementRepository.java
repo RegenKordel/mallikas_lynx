@@ -15,19 +15,7 @@ public interface RequirementRepository extends JpaRepository<Requirement, String
 	Requirement findById(String id);
 	
 	List<Requirement> findByIdIn(Collection<String> ids);
-	
-	@Query("SELECT DISTINCT req FROM Requirement req WHERE req.requirement_type = ?1")
-	List<Requirement> findByType(Requirement_type type);
-	
-	@Query("SELECT DISTINCT req FROM Requirement req WHERE req.status = ?1")
-	List<Requirement> findByStatus(Requirement_status status);
-	
-	@Query("SELECT DISTINCT req FROM Requirement req WHERE req.created_at >= ?1")
-	List<Requirement> findCreatedSinceDate(Long created_at);
-	
-	@Query("SELECT DISTINCT req FROM Requirement req WHERE req.requirement_type = ?1 AND req.status = ?2")
-	List<Requirement> findByTypeAndStatus(Requirement_type type, Requirement_status status);
-	
+
 	@Query("SELECT DISTINCT req FROM Requirement req, IN (req.requirementParts) AS reqPart WHERE reqPart.text = ?1")
 	List<Requirement> findByRequirementPart(String resolutionValue);
 	
