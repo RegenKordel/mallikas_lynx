@@ -28,7 +28,7 @@ public class SwaggerConfig {
     private ApiInfo metaData() {
       return new ApiInfoBuilder()
               .title("Mallikas")
-              .version("1.10")
+              .version("1.11")
               .description("Mallikas is a database service in the dependency engine of OpenReq infrastructure serving primarily the Milla service. "
               		+ "Mallikas takes care of storing OpenReq relevant data in OpenReq specific format. "
               		+ "While Mallikas has public endpoints, the endpoints of Mallikas should be accessed only through other services, such as Milla. "
