@@ -222,7 +222,7 @@ public class MallikasController {
 			}
 			project.setSpecifiedRequirements(projectReqs);
 			projectRepository.save(project);
-			return new ResponseEntity<>(projectId + " specified requirements updated", HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -297,7 +297,7 @@ public class MallikasController {
 	public ResponseEntity<String> getSelectedRequirements(@RequestBody Collection<String> ids) {
 		List<Requirement> selectedReqs = reqRepository.findByIdIn(ids);
 		if (!selectedReqs.isEmpty() && selectedReqs != null) {
-			List<Dependency> dependencies = dependencyRepository.findByIdIn(ids, true);
+			List<Dependency> dependencies = dependencyRepository.findByIdIncludeProposed(ids);
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
 						HttpStatus.FOUND);
@@ -447,7 +447,7 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Get all requirements and dependencies of a project",
 			notes = "Get all requirements and dependencies of a project saved in the database, excluding rejected dependencies."
-					+ " Has an option whether to include proposed dependencies, included by default.")
+					+ " Has an option whether to include proposed dependencies.")
 	@GetMapping(value = "projectRequirements")
 	public ResponseEntity<String> getRequirementsInProject(@RequestParam String projectId, 
 			@RequestParam(required = false) boolean includeProposed) {
@@ -458,7 +458,12 @@ public class MallikasController {
 			projects.add(project);
 			List<String> requirementIds = project.getSpecifiedRequirements();
 			List<Requirement> requirements = reqRepository.findByIdIn(requirementIds);
-			List<Dependency> dependencies = dependencyRepository.findByIdIn(requirementIds, includeProposed);
+			List<Dependency> dependencies = null;
+			if (includeProposed) {
+				dependencies = dependencyRepository.findByIdIncludeProposed(requirementIds);
+			} else {
+				dependencies = dependencyRepository.findByIdExcludeProposed(requirementIds);
+			}
 			if (!requirementIds.isEmpty()) {
 				try {
 					return new ResponseEntity<String>(createUPCJsonString(projects, requirements, dependencies),

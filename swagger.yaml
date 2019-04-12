@@ -98,7 +98,7 @@ paths:
       tags:
         - mallikas-controller
       summary: Get all requirements and dependencies of a project
-      description: 'Get all requirements and dependencies of a project saved in the database, excluding rejected dependencies. Has an option whether to include proposed dependencies, included by default.'
+      description: 'Get all requirements and dependencies of a project saved in the database, excluding rejected dependencies. Has an option whether to include proposed dependencies.'
       operationId: getRequirementsInProjectUsingGET
       consumes:
         - application/json

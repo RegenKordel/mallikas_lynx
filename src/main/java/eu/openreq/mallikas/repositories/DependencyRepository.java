@@ -9,15 +9,18 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import eu.openreq.mallikas.models.json.Dependency;
-import eu.openreq.mallikas.models.json.Dependency_type;
 
 public interface DependencyRepository extends JpaRepository<Dependency, String> {
 
 	Dependency findById(String id);
 	
 	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN (?1)) OR (dep.toid IN (?1)))"
-			+ "AND (((?2 is null OR ?2 is TRUE) AND (dep.status != 2)) OR (?2 is FALSE AND dep.status = 1))")
-	List<Dependency> findByIdIn(Collection<String> ids, Boolean includeProposed);
+			+ "AND (dep.status != 2)")
+	List<Dependency> findByIdIncludeProposed(Collection<String> ids);
+	
+	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN (?1)) OR (dep.toid IN (?1)))"
+			+ "AND (dep.status = 1)")
+	List<Dependency> findByIdExcludeProposed(Collection<String> ids);
 
 	
 	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN (?1)) OR (dep.toid IN (?1))) "
