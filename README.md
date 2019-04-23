@@ -8,7 +8,7 @@ This service was created as a result of the OpenReq project funded by the Europe
 
 # Technical Description
 
-Mallikas should not be accessed directly but it is used only through Milla. Mallikas is a database service for the Milla service used especially in the Qt Jira trial of OpenReq to cache requirements for performance etc. purposes. For further details, see the [swagger documentation](http://217.172.12.199:9203/swagger-ui.html).
+Mallikas should not be accessed directly but it is used only through Milla. Mallikas is a database service for the Milla service used especially in the Qt Jira trial of OpenReq to cache requirements for performance etc. purposes. For further details, see the [swagger documentation](https://api.openreq.eu/mallikas/swagger-ui.html).
 
 
 # The following technologies are used:
@@ -24,7 +24,7 @@ Mallikas should not be accessed directly but it is used only through Milla. Mall
 
 The API is documented by using Swagger2:
 
-http://217.172.12.199:9204/swagger-ui.html
+https://api.openreq.eu/mallikas/swagger-ui.html
 
 
 ## How to Install
@@ -38,7 +38,7 @@ Mallikas uses port 9204 that needs to be open.
 
 Mallikas is used only from Milla to store (cache) requirements, see details from [Milla](https://github.com/OpenReqEU/milla/)
 
-The endpoints can be used for testing purposes, see  [swagger documentation](http://217.172.12.199:9203/swagger-ui.html).
+The endpoints can be used for testing purposes, see  [swagger documentation](https://api.openreq.eu/mallikas/swagger-ui.html).
 
 # Notes for Developers
 
