@@ -29,7 +29,7 @@ https://api.openreq.eu/mallikas/swagger-ui.html
 
 ## How to Install
 
-Run the compiled jar file, e.g., `java -jar Mallikas-1.9.jar`.
+Run the compiled jar file, e.g., `java -jar Mallikas-1.10.jar`.
 
 Mallikas uses port 9204 that needs to be open. 
 
