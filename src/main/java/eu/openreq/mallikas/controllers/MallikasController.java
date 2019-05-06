@@ -231,7 +231,6 @@ public class MallikasController {
 		return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
 	}
 
-
 	// Should work (but the returned String might be too large to show in Swagger
 	//
 	/**
@@ -251,7 +250,7 @@ public class MallikasController {
 				String reqString = mapper.writeValueAsString(allReqs);
 				String dependencyString = mapper.writeValueAsString(dependencies);
 				String all = "{ \"requirements\":" + reqString + ", \"dependencies\":" + dependencyString + "}";
-				return new ResponseEntity<String>(all, HttpStatus.FOUND);
+				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -277,7 +276,7 @@ public class MallikasController {
 				String dependencyString = mapper.writeValueAsString(dependencies);
 				dependencies.clear();
 				String all = "{\"dependencies\":" + dependencyString + "}";
-				return new ResponseEntity<String>(all, HttpStatus.FOUND);
+				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -301,7 +300,7 @@ public class MallikasController {
 			List<Dependency> dependencies = dependencyRepository.findByIdIncludeProposed(ids);
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
-						HttpStatus.FOUND);
+						HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -345,7 +344,7 @@ public class MallikasController {
 			selectedReqs.addAll(reqRepository.findByIdIn(dependentReqIds));
 
 			try {
-				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies), HttpStatus.FOUND);
+				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies), HttpStatus.OK);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -427,10 +426,10 @@ public class MallikasController {
 			try {
 				if (projects==null) {
 					return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
-							HttpStatus.FOUND); 
+							HttpStatus.OK); 
 				}
 				return new ResponseEntity<String>(createUPCJsonString(projects, selectedReqs, dependencies),
-						HttpStatus.FOUND);
+						HttpStatus.OK);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -468,7 +467,7 @@ public class MallikasController {
 			if (!requirementIds.isEmpty()) {
 				try {
 					return new ResponseEntity<String>(createUPCJsonString(projects, requirements, dependencies),
-							HttpStatus.FOUND);
+							HttpStatus.OK);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
