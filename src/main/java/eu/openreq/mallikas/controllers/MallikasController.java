@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.PageRequest;
@@ -241,6 +243,7 @@ public class MallikasController {
 	@ApiOperation(value = "Get a list of all requirements", notes = "Returns a list with every single requirement saved in the database!")
 	@GetMapping(value = "allRequirements")
 	@ApiIgnore
+	@Transactional
 	public ResponseEntity<String> getAllRequirements() {
 		List<Requirement> allReqs = reqRepository.findAll();
 		List<Dependency> dependencies = dependencyRepository.findAll();
@@ -268,6 +271,7 @@ public class MallikasController {
 	@ApiOperation(value = "Get a list of all dependencies", notes = "Returns a list with every single dependency saved in the database!")
 	@GetMapping(value = "allDependencies")
 	@ApiIgnore
+	@Transactional
 	public ResponseEntity<String> getAllDependencies() {
 		List<Dependency> dependencies = dependencyRepository.findAll();
 		if (!dependencies.isEmpty()) {
@@ -294,6 +298,7 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Get requirements by ids posted", notes = "Fetches a list of requirements based on the ids provided.")
 	@PostMapping(value = "selectedReqs")
+	@Transactional
 	public ResponseEntity<String> getSelectedRequirements(@RequestBody Collection<String> ids) {
 		List<Requirement> selectedReqs = reqRepository.findByIdIn(ids);
 		if (!selectedReqs.isEmpty() && selectedReqs != null) {
@@ -315,6 +320,7 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Get dependencies by params posted", notes = "Fetches dependencies and their dependent requirements by parameters provided.")
 	@PostMapping(value = "dependenciesByParams") 
+	@Transactional
 	public ResponseEntity<String> getDependenciesByParams(@RequestBody RequestParams params) {
 		List<String> reqIds = params.getRequirementIds();
 		
@@ -362,6 +368,7 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Get requirements by params posted", notes = "Fetches requirements and their dependencies by parameters provided.")
 	@PostMapping(value = "requirementsByParams")
+	@Transactional
 	public ResponseEntity<String> getRequirementsByParams(@RequestBody RequestParams params) {
 		
 		List<Project> projects = null;
@@ -449,6 +456,7 @@ public class MallikasController {
 			notes = "Get all requirements and dependencies of a project saved in the database, excluding rejected dependencies."
 					+ " Has an option whether to include proposed dependencies.")
 	@GetMapping(value = "projectRequirements")
+	@Transactional
 	public ResponseEntity<String> getRequirementsInProject(@RequestParam String projectId, 
 			@RequestParam(required = false) boolean includeProposed) {
 		Project project = projectRepository.findById(projectId);
@@ -512,6 +520,7 @@ public class MallikasController {
 	 */
 	@ApiIgnore
 	@DeleteMapping(value = "deleteAllButRejectedDependencies")
+	@Transactional
 	public ResponseEntity<String> deleteAllButRejectedDependencies() {
 		projectRepository.deleteAll();
 		reqRepository.deleteAll();
