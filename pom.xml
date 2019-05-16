@@ -27,12 +27,6 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
@@ -40,6 +34,17 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context</artifactId>
+		    <version>4.2.5.RELEASE</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jdbc</artifactId>
+		    <version>4.2.5.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -74,6 +79,11 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.jooq</groupId>
+		    <artifactId>jooq</artifactId>
 		</dependency>
 
 		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-thymeleaf</artifactId> 
@@ -114,7 +124,81 @@
 
 	<build>
 		<pluginManagement>
-			<plugins>	
+			<plugins>
+				<plugin>
+				    <groupId>org.jooq</groupId>
+				    <artifactId>jooq-codegen-maven</artifactId>
+				    <version>${org.jooq.version}</version>
+				    <executions>
+				        <execution>
+				            <phase>generate-sources</phase>
+				            <goals>
+				                <goal>generate</goal>
+				            </goals>
+				            <configuration>
+				                <jdbc>
+				                    <driver>org.postgresql.Driver</driver>
+				                    <url>localhost:5432/postgres</url>
+				                    <user>postgres</user>
+				                    <password>docker</password>
+				                </jdbc>
+				                <generator>
+				                    <target>
+				                        <packageName>com.baeldung.jooq.introduction.db</packageName>
+				                        <directory>src/main/java</directory>
+				                    </target>
+				                </generator>
+				            </configuration>
+				        </execution>
+				    </executions>
+				</plugin>
+				<plugin>
+				    <groupId>org.codehaus.mojo</groupId>
+				    <artifactId>sql-maven-plugin</artifactId>
+				    <version>1.5</version>
+				    <executions>
+				        <execution>
+				            <phase>initialize</phase>
+				            <goals>
+				                <goal>execute</goal>
+				            </goals>
+				            <configuration>
+				                <driver>${db.driver}</driver>
+				                <url>${db.url}</url>
+				                <username>${db.username}</username>
+				                <password>${db.password}</password>
+				                <srcFiles>
+				                    <srcFile>src/main/resources/intro_schema.sql</srcFile>
+				                </srcFiles>
+				            </configuration>
+				        </execution>
+				    </executions>
+				    <dependencies>
+				        <dependency>
+				            <groupId>com.h2database</groupId>
+				            <artifactId>h2</artifactId>
+				            <version>1.4.191</version>
+				        </dependency>
+				    </dependencies>
+				</plugin>
+				<plugin>
+				    <groupId>org.codehaus.mojo</groupId>
+				    <artifactId>properties-maven-plugin</artifactId>
+				    <version>1.0.0</version>
+				    <executions>
+				        <execution>
+				            <phase>initialize</phase>
+				            <goals>
+				                <goal>read-project-properties</goal>
+				            </goals>
+				            <configuration>
+				                <files>
+				                    <file>src/main/resources/intro_config.properties</file>
+				                </files>
+				            </configuration>
+				        </execution>
+				    </executions>
+				</plugin>	
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
