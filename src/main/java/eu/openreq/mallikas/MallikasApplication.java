@@ -2,8 +2,10 @@ package eu.openreq.mallikas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
+@EnableWebMvc 
 public class MallikasApplication {
 
 // For enabling H2 console for testing purpose, uncomment the following

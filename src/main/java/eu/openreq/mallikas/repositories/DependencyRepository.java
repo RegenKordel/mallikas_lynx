@@ -2,6 +2,7 @@ package eu.openreq.mallikas.repositories;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,13 +15,20 @@ public interface DependencyRepository extends JpaRepository<Dependency, String> 
 
 	Dependency findById(String id);
 	
-	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN (?1)) OR (dep.toid IN (?1)))"
-			+ "AND (dep.status != 2)")
-	List<Dependency> findByIdIncludeProposed(Collection<String> ids);
+//	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN ()) OR (dep.toid IN (?1)))"
+//			+ "AND (dep.status != 2)")
+//	List<Dependency> findByIdIncludeProposed(Collection<String> ids);
 	
-	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN (?1)) OR (dep.toid IN (?1)))"
-			+ "AND (dep.status = 1)")
-	List<Dependency> findByIdExcludeProposed(Collection<String> ids);
+	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE (dep.fromid IN (SELECT proj.specifiedRequirements FROM "
+			+ "Project proj WHERE proj.id = ?1) OR dep.toid IN (SELECT proj.specifiedRequirements "
+			+ "FROM Project proj WHERE proj.id = ?1)) AND (dep.status != 2)")
+	List<Dependency> findByIdIncludeProposed(String projectId);
+	
+	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE (dep.fromid IN (SELECT s FROM Project proj "
+			+ "INNER JOIN proj.specifiedRequirements s WHERE proj.id = ?1) OR dep.toid IN "
+			+ "(SELECT s FROM Project proj INNER JOIN proj.specifiedRequirements s "
+			+ "WHERE proj.id = ?1)) AND (dep.status = 1)")
+	List<Dependency> findByIdExcludeProposed(String projectId);
 
 	
 	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN (?1)) OR (dep.toid IN (?1))) "
@@ -36,5 +44,6 @@ public interface DependencyRepository extends JpaRepository<Dependency, String> 
 	@Query("DELETE FROM Dependency WHERE status != 2")
 	void deleteAllNotRejected();
 	
+	//SELECT DISTINCT dep FROM Dependency dep WHERE (dep.fromid IN (SELECT proj.specified_requirements FROM Project_specified_requirements proj WHERE proj.project_id = ?1) OR dep.toid IN (SELECT proj.specified_requirements FROM Project_specified_requirements proj WHERE proj.project_id = ?1)) AND (dep.status != 2);"
 }
 

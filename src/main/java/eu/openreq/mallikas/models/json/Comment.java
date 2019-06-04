@@ -3,8 +3,13 @@ package eu.openreq.mallikas.models.json;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Type;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -22,6 +27,21 @@ public class Comment implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "requirement_id")
+	private Requirement requirement;
+	
+//	private String requirementId;
+//	
+//	public String getRequirementId() {
+//		return requirementId;
+//	}
+//
+//	public void setRequirementId(String requirementId) {
+//		this.requirementId = requirementId;
+//	}
+	
 	/**
 	* The unique identifier of a comment
 	* (Required)
@@ -36,11 +56,13 @@ public class Comment implements Serializable{
 	* (Required)
 	* 
 	*/
-	@Lob
+	@Type(type="text")
 	@SerializedName("text")
 	@Expose
 	private String text;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="person_username")
 	@SerializedName("commentDoneBy")
 	@Expose
 	private Person commentDoneBy;
@@ -60,6 +82,15 @@ public class Comment implements Serializable{
 	@Expose
 	private long modified_at;
 	
+
+	public Requirement getRequirement() {
+		return requirement;
+	}
+
+	public void setRequirement(Requirement requirement) {
+		this.requirement = requirement;
+	}
+
 	public String getId() {
 		return id;
 	}

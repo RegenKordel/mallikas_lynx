@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,16 +28,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import eu.openreq.mallikas.models.json.Comment;
 import eu.openreq.mallikas.models.json.Dependency;
 import eu.openreq.mallikas.models.json.Dependency_status;
 import eu.openreq.mallikas.models.json.Dependency_type;
+import eu.openreq.mallikas.models.json.Person;
 import eu.openreq.mallikas.models.json.Project;
 import eu.openreq.mallikas.models.json.RequestParams;
 import eu.openreq.mallikas.models.json.Requirement;
+import eu.openreq.mallikas.models.json.RequirementPart;
 import eu.openreq.mallikas.models.json.Requirement_status;
 import eu.openreq.mallikas.models.json.Requirement_type;
 import eu.openreq.mallikas.repositories.DependencyRepository;
+import eu.openreq.mallikas.repositories.PersonRepository;
 import eu.openreq.mallikas.repositories.ProjectRepository;
 import eu.openreq.mallikas.repositories.RequirementRepository;
 import io.swagger.annotations.ApiOperation;
@@ -53,6 +61,9 @@ public class MallikasController {
 
 	@Autowired
 	ProjectRepository projectRepository;
+	
+	@Autowired
+	PersonRepository personRepository;
 
 	/**
 	 * Check which projects are already saved in the database
@@ -157,6 +168,7 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Post dependencies to be updated", notes = "Update existing and save new dependencies in the database.")
 	@PostMapping(value = "updateDependencies")
+	@Transactional
 	public ResponseEntity<?> updateDependencies(@RequestBody Collection<Dependency> dependencies, 
 			@RequestParam(required = false) boolean userInput, @RequestParam(required = false) boolean isProposed) {
 		try {
@@ -185,20 +197,44 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Post requirements to be updated", notes = "Update existing and save new requirements to the database.")
 	@PostMapping(value = "updateRequirements")
+	@Transactional
 	public ResponseEntity<?> updateRequirements(@RequestBody Collection<Requirement> requirements) {
 		List<Requirement> savedRequirements = new ArrayList<>();
+		List<Comment> savedComments = new ArrayList<>();
+		List<RequirementPart> savedReqParts = new ArrayList<>();
+		List<Person> savedPersons = new ArrayList<>();
 
 		try {
 			for (Requirement requirement : requirements) {
+				requirement.setId(requirement.getId());
+				
+				Set<RequirementPart> reqParts = requirement.getRequirementParts();
+				for (RequirementPart part : reqParts) {
+					part.setRequirement(requirement);
+					//savedReqParts.add(part);
+				}
+				requirement.setRequirementParts(reqParts);
+				
+				Set<Comment> comments = requirement.getComments();
+				for (Comment comment : comments) {
+					comment.setRequirement(requirement);
+					Person person = comment.getCommentDoneBy();
+					savedPersons.add(person);
+					//savedComments.add(comment);
+				}
+				requirement.setComments(comments);
+				
 				if (requirementRepository.findById(requirement.getId()) == null) {
 					savedRequirements.add(requirement);
 				} else if (requirement.getModified_at() > requirementRepository.findById(requirement.getId()).getModified_at()) {
 					savedRequirements.add(requirement);
 				}
 			}
+			personRepository.save(savedPersons);
 			requirementRepository.save(savedRequirements);
 			System.out.println("Requirements saved " + requirementRepository.count());
 			savedRequirements.clear();
+			savedComments.clear();
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -217,7 +253,7 @@ public class MallikasController {
 	public ResponseEntity<String> updateProjectSpecifiedRequirements(@RequestBody Map<String, Collection<String>> reqIds, @RequestParam String projectId) {
 		try {
 			Project project = projectRepository.findById(projectId);
-			List<String> projectReqs = project.getSpecifiedRequirements();
+			Set<String> projectReqs = project.getSpecifiedRequirements();
 			for (String reqId : reqIds.get(projectId)) {
 				if (!projectReqs.contains(reqId)) {
 					projectReqs.add(reqId);
@@ -305,7 +341,7 @@ public class MallikasController {
 			List<Dependency> dependencies = new ArrayList<Dependency>();
 			List<List<String>> splitReqIds = splitRequirementIds(ids);
 			for (List<String> splitIds : splitReqIds) {
-				dependencies.addAll(dependencyRepository.findByIdIncludeProposed(splitIds));
+				//dependencies.addAll(dependencyRepository.findByIdIncludeProposed(splitIds));
 			}
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
@@ -386,15 +422,16 @@ public class MallikasController {
 	public ResponseEntity<String> getRequirementsByParams(@RequestBody RequestParams params) {
 		
 		List<Project> projects = null;
-		List<String> reqIds = params.getRequirementIds();
+		List<String> reqIds = new ArrayList<String>();
+		reqIds.addAll(params.getRequirementIds());
 		
 		if (params.getProjectId() != null && projectRepository.findById(params.getProjectId())!=null) {
 			Project project = projectRepository.findById(params.getProjectId());
 			projects = new ArrayList<Project>();
 			projects.add(project);
-			List<String> projectReqIds = project.getSpecifiedRequirements();
-			if (reqIds==null) {
-				reqIds = projectReqIds;
+			Set<String> projectReqIds = project.getSpecifiedRequirements();
+			if (reqIds.isEmpty()) {
+				reqIds.addAll(projectReqIds);
 			} else {
 				reqIds.retainAll(projectReqIds);
 			}
@@ -490,22 +527,24 @@ public class MallikasController {
 			List<Project> projects = new ArrayList<>();
 			projects.add(project);
 			
-			List<String> requirementIds = project.getSpecifiedRequirements();
-			List<List<String>> splitReqIds = splitRequirementIds(requirementIds);
+			Set<String> requirementIds = project.getSpecifiedRequirements();
+			//List<List<String>> splitReqIds = splitRequirementIds(requirementIds);
 			
 			List<Requirement> requirements = new ArrayList<Requirement>();
 			List<Dependency> dependencies = new ArrayList<Dependency>();	
 			
 			if (includeProposed) {
-				for (List<String> reqIds : splitReqIds) {
-					requirements.addAll(requirementRepository.findByIdIn(reqIds));
-					dependencies.addAll(dependencyRepository.findByIdIncludeProposed(reqIds));
-				}				
+				//for (List<String> reqIds : splitReqIds) {
+					//requirements.addAll(requirementRepository.findByProject(projectId));
+					dependencies.addAll(dependencyRepository.findByIdIncludeProposed(projectId));
+				//}				
 			} else {
-				for (List<String> reqIds : splitReqIds) {
-					requirements.addAll(requirementRepository.findByIdIn(reqIds));
-					dependencies.addAll(dependencyRepository.findByIdExcludeProposed(reqIds));
-				}	
+				//for (List<String> reqIds : splitReqIds) {
+					//requirements = requirementRepository.findByProject(projectId);
+					
+					requirements = requirementRepository.findByProject(projectId);
+					dependencies = dependencyRepository.findByIdExcludeProposed(projectId);
+				//}	
 			}
 			if (!requirementIds.isEmpty()) {
 				try {
@@ -578,7 +617,7 @@ public class MallikasController {
 	 */
 	private String createUPCJsonString(List<Project> projects, List<Requirement> requirements,
 			List<Dependency> dependencies) throws JsonProcessingException {
-		Gson gson = new Gson();
+		Gson gson =  new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();	
 		String dependencyString = gson.toJson(dependencies);
 		String reqsString = gson.toJson(requirements);
 		String projectsString = gson.toJson(projects);
@@ -620,8 +659,8 @@ public class MallikasController {
 			}
 			Dependency originalDependency = dependencyRepository.findById(depId);
 			if (originalDependency!=null) {
-				List<String> descriptions = originalDependency.getDescription();
-				String newDescription = dep.getDescription().get(0);
+				Set<String> descriptions = originalDependency.getDescription();
+				String newDescription = dep.getDescription().iterator().next();
 				if (!descriptions.contains(newDescription)) {
 					descriptions.add(newDescription);
 					originalDependency.setDescription(descriptions);
