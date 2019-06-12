@@ -61,7 +61,7 @@ public class Comment implements Serializable{
 	@Expose
 	private String text;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="person_username")
 	@SerializedName("commentDoneBy")
 	@Expose

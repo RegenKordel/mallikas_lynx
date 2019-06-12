@@ -201,12 +201,11 @@ public class MallikasController {
 	public ResponseEntity<?> updateRequirements(@RequestBody Collection<Requirement> requirements) {
 		List<Requirement> savedRequirements = new ArrayList<>();
 		List<Comment> savedComments = new ArrayList<>();
-		List<RequirementPart> savedReqParts = new ArrayList<>();
+		//List<RequirementPart> savedReqParts = new ArrayList<>();
 		List<Person> savedPersons = new ArrayList<>();
 
 		try {
 			for (Requirement requirement : requirements) {
-				requirement.setId(requirement.getId());
 				
 				Set<RequirementPart> reqParts = requirement.getRequirementParts();
 				for (RequirementPart part : reqParts) {
@@ -382,7 +381,7 @@ public class MallikasController {
 			List<Dependency> dependencies = new ArrayList<Dependency>();
 			
 			for (List<String> splitIds : splitReqIds) {
-				dependencies.addAll(dependencyRepository.findByIdWithParams(splitIds, params.getScoreThreshold(), 
+				dependencies.addAll(dependencyRepository.findByIdWithParams(splitIds, params.getScoreThreshold(),
 						params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit));
 			}
 			
@@ -398,6 +397,8 @@ public class MallikasController {
 			}
 			
 			selectedReqs.addAll(requirementRepository.findByIdIn(dependentReqIds));
+			
+			
 
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies), HttpStatus.OK);
@@ -535,7 +536,7 @@ public class MallikasController {
 			
 			if (includeProposed) {
 				//for (List<String> reqIds : splitReqIds) {
-					//requirements.addAll(requirementRepository.findByProject(projectId));
+					requirements = requirementRepository.findByProject(projectId);
 					dependencies.addAll(dependencyRepository.findByIdIncludeProposed(projectId));
 				//}				
 			} else {
@@ -573,7 +574,7 @@ public class MallikasController {
 	 */
 	private String createJsonString(Project project, Requirement requirement, List<Requirement> requirements,
 			List<Dependency> dependencies) throws JsonProcessingException {
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();	
 		String dependencyString = gson.toJson(dependencies);
 		String reqsString = gson.toJson(requirements);
 		String jsonString = "{";

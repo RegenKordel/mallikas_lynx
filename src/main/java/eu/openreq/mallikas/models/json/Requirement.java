@@ -73,15 +73,7 @@ public class Requirement implements Serializable {
 	@SerializedName("created_at")
 	@Expose
 	private long created_at;
-	
-	
-	public String getId() {
-		return id;
-	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	/**
 	* Last modification time
@@ -121,7 +113,6 @@ public class Requirement implements Serializable {
 	*/
 	@ElementCollection
 	@SerializedName("children")
-	@Expose
 	private Set<Requirement> children = null;
 	
 	
@@ -135,6 +126,13 @@ public class Requirement implements Serializable {
 	private Set<RequirementPart> requirementParts = null;
 	
 	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 	
 	public String getName() {
 		return name;
