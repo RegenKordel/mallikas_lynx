@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -198,12 +196,13 @@ public class MallikasController {
 	@ApiOperation(value = "Post requirements to be updated", notes = "Update existing and save new requirements to the database.")
 	@PostMapping(value = "updateRequirements")
 	@Transactional
-	public ResponseEntity<?> updateRequirements(@RequestBody Collection<Requirement> requirements) {
+	public ResponseEntity<?> updateRequirements(@RequestBody Collection<Requirement> requirements, 
+			@RequestParam String projectId) {
 		List<Requirement> savedRequirements = new ArrayList<>();
 		List<Comment> savedComments = new ArrayList<>();
 		//List<RequirementPart> savedReqParts = new ArrayList<>();
 		List<Person> savedPersons = new ArrayList<>();
-
+		
 		try {
 			for (Requirement requirement : requirements) {
 				
@@ -228,6 +227,7 @@ public class MallikasController {
 				} else if (requirement.getModified_at() > requirementRepository.findById(requirement.getId()).getModified_at()) {
 					savedRequirements.add(requirement);
 				}
+				requirement.setProjectId(projectId);
 			}
 			personRepository.save(savedPersons);
 			requirementRepository.save(savedRequirements);
@@ -340,7 +340,7 @@ public class MallikasController {
 			List<Dependency> dependencies = new ArrayList<Dependency>();
 			List<List<String>> splitReqIds = splitRequirementIds(ids);
 			for (List<String> splitIds : splitReqIds) {
-				//dependencies.addAll(dependencyRepository.findByIdIncludeProposed(splitIds));
+			dependencies.addAll(dependencyRepository.findByIdIncludeProposed(splitIds));
 			}
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
@@ -529,23 +529,15 @@ public class MallikasController {
 			projects.add(project);
 			
 			Set<String> requirementIds = project.getSpecifiedRequirements();
-			//List<List<String>> splitReqIds = splitRequirementIds(requirementIds);
-			
 			List<Requirement> requirements = new ArrayList<Requirement>();
 			List<Dependency> dependencies = new ArrayList<Dependency>();	
 			
 			if (includeProposed) {
-				//for (List<String> reqIds : splitReqIds) {
-					requirements = requirementRepository.findByProject(projectId);
-					dependencies.addAll(dependencyRepository.findByIdIncludeProposed(projectId));
-				//}				
+				requirements = requirementRepository.findByProjectId(projectId);
+				dependencies.addAll(dependencyRepository.findByProjectIdIncludeProposed(projectId));			
 			} else {
-				//for (List<String> reqIds : splitReqIds) {
-					//requirements = requirementRepository.findByProject(projectId);
-					
-					requirements = requirementRepository.findByProject(projectId);
-					dependencies = dependencyRepository.findByIdExcludeProposed(projectId);
-				//}	
+				requirements = requirementRepository.findByProjectId(projectId);
+				dependencies = dependencyRepository.findByProjectIdExcludeProposed(projectId);	
 			}
 			if (!requirementIds.isEmpty()) {
 				try {
@@ -682,7 +674,7 @@ public class MallikasController {
 	 * @return
 	 */
 	private List<List<String>> splitRequirementIds(List<String> requirementIds) {
-		if (requirementIds.size()<=15000) {
+		if (requirementIds.size()<=10000) {
 			return Arrays.asList(requirementIds);
 		}
 		List<List<String>> splitLists = new ArrayList<>();

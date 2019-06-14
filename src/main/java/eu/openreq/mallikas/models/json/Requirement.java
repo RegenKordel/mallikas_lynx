@@ -1,7 +1,6 @@
 package eu.openreq.mallikas.models.json;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -10,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Type;
@@ -31,6 +29,11 @@ public class Requirement implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	
+	
+	private String projectId;
+	
 	/**
 	* The unique identifier for a requirement
 	* (Required)
@@ -125,7 +128,15 @@ public class Requirement implements Serializable {
 	@Expose
 	private Set<RequirementPart> requirementParts = null;
 	
-	
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+
 	public String getId() {
 		return id;
 	}

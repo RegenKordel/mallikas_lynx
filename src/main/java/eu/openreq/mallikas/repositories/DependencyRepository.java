@@ -2,7 +2,6 @@ package eu.openreq.mallikas.repositories;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,13 +20,25 @@ public interface DependencyRepository extends JpaRepository<Dependency, String> 
 			+ "INNER JOIN proj.specifiedRequirements s WHERE proj.id = ?1) OR dep.toid IN "
 			+ "(SELECT s FROM Project proj INNER JOIN proj.specifiedRequirements s "
 			+ "WHERE proj.id = ?1)) AND (dep.status != 2)")
-	List<Dependency> findByIdIncludeProposed(String projectId);
+	List<Dependency> findByProjectIdIncludeProposed(String projectId);
 	
 	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE (dep.fromid IN (SELECT s FROM Project proj "
 			+ "INNER JOIN proj.specifiedRequirements s WHERE proj.id = ?1) OR dep.toid IN "
 			+ "(SELECT s FROM Project proj INNER JOIN proj.specifiedRequirements s "
 			+ "WHERE proj.id = ?1)) AND (dep.status = 1)")
-	List<Dependency> findByIdExcludeProposed(String projectId);
+	List<Dependency> findByProjectIdExcludeProposed(String projectId);
+
+	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE (dep.fromid IN (SELECT s FROM Project proj "
+			+ "INNER JOIN proj.specifiedRequirements s WHERE proj.id = ?1) OR dep.toid IN "
+			+ "(SELECT s FROM Project proj INNER JOIN proj.specifiedRequirements s "
+			+ "WHERE proj.id = ?1)) AND (dep.status != 2)")
+	List<Dependency> findByIdIncludeProposed(Collection<String> ids);
+	
+	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE (dep.fromid IN (SELECT s FROM Project proj "
+			+ "INNER JOIN proj.specifiedRequirements s WHERE proj.id = ?1) OR dep.toid IN "
+			+ "(SELECT s FROM Project proj INNER JOIN proj.specifiedRequirements s "
+			+ "WHERE proj.id = ?1)) AND (dep.status = 1)")
+	List<Dependency> findByIdExcludeProposed(Collection<String> ids);
 
 	
 	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN (?1)) OR (dep.toid IN (?1))) "
