@@ -29,6 +29,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<exclusions>
+        		<exclusion>
+            		<groupId>com.vaadin.external.google</groupId>
+           			<artifactId>android-json</artifactId>
+        		</exclusion>
+    		</exclusions>
 		</dependency>
 		
 				<dependency>
@@ -125,35 +131,6 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-				<plugin>
-				    <groupId>org.codehaus.mojo</groupId>
-				    <artifactId>sql-maven-plugin</artifactId>
-				    <version>1.5</version>
-				    <executions>
-				        <execution>
-				            <phase>initialize</phase>
-				            <goals>
-				                <goal>execute</goal>
-				            </goals>
-				            <configuration>
-				                <driver>${db.driver}</driver>
-				                <url>${db.url}</url>
-				                <username>${db.username}</username>
-				                <password>${db.password}</password>
-				                <srcFiles>
-				                    <srcFile>src/main/resources/intro_schema.sql</srcFile>
-				                </srcFiles>
-				            </configuration>
-				        </execution>
-				    </executions>
-				    <dependencies>
-				        <dependency>
-				            <groupId>com.h2database</groupId>
-				            <artifactId>h2</artifactId>
-				            <version>1.4.191</version>
-				        </dependency>
-				    </dependencies>
-				</plugin>
 				<plugin>
 				    <groupId>org.codehaus.mojo</groupId>
 				    <artifactId>properties-maven-plugin</artifactId>
