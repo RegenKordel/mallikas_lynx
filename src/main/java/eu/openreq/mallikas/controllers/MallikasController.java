@@ -80,7 +80,7 @@ public class MallikasController {
 		for (Project project : projects) {
 			projectIds.put(project.getId(), project.getSpecifiedRequirements().size());
 		}
-		return new ResponseEntity<>(projectIds, HttpStatus.FOUND);
+		return new ResponseEntity<>(projectIds, HttpStatus.OK);
 	}
 
 	/**
