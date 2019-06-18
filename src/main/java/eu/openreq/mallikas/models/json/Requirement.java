@@ -1,16 +1,17 @@
 package eu.openreq.mallikas.models.json;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Type;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -28,6 +29,11 @@ public class Requirement implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	
+	
+	private String projectId;
+	
 	/**
 	* The unique identifier for a requirement
 	* (Required)
@@ -37,6 +43,7 @@ public class Requirement implements Serializable {
 	@SerializedName("id")
 	@Expose
 	private String id;
+	
 	/**
 	* The name of the requirement
 	* 
@@ -48,7 +55,7 @@ public class Requirement implements Serializable {
 	* The textual description of the requirement
 	* 
 	*/
-	@Lob
+	@Type(type="text")
 	@SerializedName("text")
 	@Expose
 	private String text;
@@ -57,10 +64,10 @@ public class Requirement implements Serializable {
 	* The comments to the requirement
 	* 
 	*/
-	@OneToMany(cascade = { CascadeType.ALL })
+	@OneToMany(mappedBy = "requirement", cascade = CascadeType.ALL)
 	@SerializedName("comments")
 	@Expose
-	private List<Comment> comments = null;
+	private Set<Comment> comments = null;
 	/**
 	* Creation timestamp
 	* (Required)
@@ -69,6 +76,8 @@ public class Requirement implements Serializable {
 	@SerializedName("created_at")
 	@Expose
 	private long created_at;
+
+
 	/**
 	* Last modification time
 	* 
@@ -100,29 +109,38 @@ public class Requirement implements Serializable {
 	@Expose
 	@Enumerated(EnumType.STRING)
 	private Requirement_status status;
+	
 	/**
 	* The requirements belonging to this requirement
 	* 
 	*/
-	@OneToMany(cascade = { CascadeType.ALL })
+	@ElementCollection
 	@SerializedName("children")
-	@Expose
-	private List<Requirement> children = null;
+	private Set<Requirement> children = null;
+	
 	
 	/**
 	* RequirementParts of a requirement
 	* 
 	*/
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@OneToMany(mappedBy = "requirement", cascade = CascadeType.ALL)
 	@SerializedName("requirementParts")
 	@Expose
-	private List<RequirementPart> requirementParts = null;
+	private Set<RequirementPart> requirementParts = null;
 	
-	
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+
 	public String getId() {
 		return id;
 	}
-	
+
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -143,11 +161,11 @@ public class Requirement implements Serializable {
 		this.text = text;
 	}
 	
-	public List<Comment> getComments() {
+	public Set<Comment> getComments() {
 		return comments;
 	}
 	
-	public void setComments(List<Comment> comments) {
+	public void setComments(Set<Comment> comments) {
 		this.comments = comments;
 	}
 	
@@ -191,19 +209,19 @@ public class Requirement implements Serializable {
 		this.status = status;
 	}
 	
-	public List<Requirement> getChildren() {
+	public Set<Requirement> getChildren() {
 		return children;
 	}
 	
-	public void setChildren(List<Requirement> children) {
+	public void setChildren(Set<Requirement> children) {
 		this.children = children;
 	}
 	
-	public List<RequirementPart> getRequirementParts() {
+	public Set<RequirementPart> getRequirementParts() {
 		return requirementParts;
 	}
 
-	public void setRequirementParts(List<RequirementPart> requirementParts) {
+	public void setRequirementParts(Set<RequirementPart> requirementParts) {
 		this.requirementParts = requirementParts;
 	}
 }

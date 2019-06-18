@@ -3,8 +3,13 @@ package eu.openreq.mallikas.models.json;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Type;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -22,11 +27,16 @@ public class RequirementPart implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="requirement_id")
+	private Requirement requirement;
+	
+
 	/**
 	* The unique identifier of a RequirementPart
 	* (Required)
 	* 
-	*/
+	*/		
 	@Id
 	@SerializedName("id")
 	@Expose
@@ -42,7 +52,7 @@ public class RequirementPart implements Serializable{
 	* The textual description of a RequirementPart
 	* 
 	*/
-	@Lob
+	@Type(type="text")
 	@SerializedName("text")
 	@Expose
 	private String text;
@@ -63,6 +73,14 @@ public class RequirementPart implements Serializable{
 		this.id = id;
 	}
 	
+	public Requirement getRequirement() {
+		return requirement;
+	}
+
+	public void setRequirement(Requirement req) {
+		this.requirement = req;
+	}
+
 	public String getName() {
 		return name;
 	}

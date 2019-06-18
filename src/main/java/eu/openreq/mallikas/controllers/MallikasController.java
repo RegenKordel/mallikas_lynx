@@ -1,10 +1,12 @@
 package eu.openreq.mallikas.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,16 +26,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import eu.openreq.mallikas.models.json.Comment;
 import eu.openreq.mallikas.models.json.Dependency;
 import eu.openreq.mallikas.models.json.Dependency_status;
 import eu.openreq.mallikas.models.json.Dependency_type;
+import eu.openreq.mallikas.models.json.Person;
 import eu.openreq.mallikas.models.json.Project;
 import eu.openreq.mallikas.models.json.RequestParams;
 import eu.openreq.mallikas.models.json.Requirement;
+import eu.openreq.mallikas.models.json.RequirementPart;
 import eu.openreq.mallikas.models.json.Requirement_status;
 import eu.openreq.mallikas.models.json.Requirement_type;
 import eu.openreq.mallikas.repositories.DependencyRepository;
+import eu.openreq.mallikas.repositories.PersonRepository;
 import eu.openreq.mallikas.repositories.ProjectRepository;
 import eu.openreq.mallikas.repositories.RequirementRepository;
 import io.swagger.annotations.ApiOperation;
@@ -44,13 +52,16 @@ import springfox.documentation.annotations.ApiIgnore;
 public class MallikasController {
 
 	@Autowired
-	RequirementRepository reqRepository;
+	RequirementRepository requirementRepository;
 
 	@Autowired
 	DependencyRepository dependencyRepository;
 
 	@Autowired
 	ProjectRepository projectRepository;
+	
+	@Autowired
+	PersonRepository personRepository;
 
 	/**
 	 * Check which projects are already saved in the database
@@ -87,14 +98,14 @@ public class MallikasController {
 		System.out.println("Received requirements from Milla");
 		List<Requirement> savedReqs = new ArrayList<>();
 		for (Requirement req : requirements) {
-			if (reqRepository.findById(req.getId()) == null) {
+			if (requirementRepository.findById(req.getId()) == null) {
 				savedReqs.add(req);
 			} else {
 				System.out.println("Found a duplicate " + req.getId());
 			}
 		}
-		reqRepository.save(savedReqs);
-		System.out.println("Requirements saved " + reqRepository.count());
+		requirementRepository.save(savedReqs);
+		System.out.println("Requirements saved " + requirementRepository.count());
 		savedReqs.clear();
 		return new ResponseEntity<>("Requirements saved", HttpStatus.OK);
 	}
@@ -155,6 +166,7 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Post dependencies to be updated", notes = "Update existing and save new dependencies in the database.")
 	@PostMapping(value = "updateDependencies")
+	@Transactional
 	public ResponseEntity<?> updateDependencies(@RequestBody Collection<Dependency> dependencies, 
 			@RequestParam(required = false) boolean userInput, @RequestParam(required = false) boolean isProposed) {
 		try {
@@ -183,20 +195,45 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Post requirements to be updated", notes = "Update existing and save new requirements to the database.")
 	@PostMapping(value = "updateRequirements")
-	public ResponseEntity<?> updateRequirements(@RequestBody Collection<Requirement> requirements) {
+	@Transactional
+	public ResponseEntity<?> updateRequirements(@RequestBody Collection<Requirement> requirements, 
+			@RequestParam String projectId) {
 		List<Requirement> savedRequirements = new ArrayList<>();
-
+		List<Comment> savedComments = new ArrayList<>();
+		//List<RequirementPart> savedReqParts = new ArrayList<>();
+		List<Person> savedPersons = new ArrayList<>();
+		
 		try {
 			for (Requirement requirement : requirements) {
-				if (reqRepository.findById(requirement.getId()) == null) {
+				
+				Set<RequirementPart> reqParts = requirement.getRequirementParts();
+				for (RequirementPart part : reqParts) {
+					part.setRequirement(requirement);
+					//savedReqParts.add(part);
+				}
+				requirement.setRequirementParts(reqParts);
+				
+				Set<Comment> comments = requirement.getComments();
+				for (Comment comment : comments) {
+					comment.setRequirement(requirement);
+					Person person = comment.getCommentDoneBy();
+					savedPersons.add(person);
+					//savedComments.add(comment);
+				}
+				requirement.setComments(comments);
+				
+				if (requirementRepository.findById(requirement.getId()) == null) {
 					savedRequirements.add(requirement);
-				} else if (requirement.getModified_at() > reqRepository.findById(requirement.getId()).getModified_at()) {
+				} else if (requirement.getModified_at() > requirementRepository.findById(requirement.getId()).getModified_at()) {
 					savedRequirements.add(requirement);
 				}
+				requirement.setProjectId(projectId);
 			}
-			reqRepository.save(savedRequirements);
-			System.out.println("Requirements saved " + reqRepository.count());
+			personRepository.save(savedPersons);
+			requirementRepository.save(savedRequirements);
+			System.out.println("Requirements saved " + requirementRepository.count());
 			savedRequirements.clear();
+			savedComments.clear();
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -215,7 +252,7 @@ public class MallikasController {
 	public ResponseEntity<String> updateProjectSpecifiedRequirements(@RequestBody Map<String, Collection<String>> reqIds, @RequestParam String projectId) {
 		try {
 			Project project = projectRepository.findById(projectId);
-			List<String> projectReqs = project.getSpecifiedRequirements();
+			Set<String> projectReqs = project.getSpecifiedRequirements();
 			for (String reqId : reqIds.get(projectId)) {
 				if (!projectReqs.contains(reqId)) {
 					projectReqs.add(reqId);
@@ -231,7 +268,6 @@ public class MallikasController {
 		return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
 	}
 
-
 	// Should work (but the returned String might be too large to show in Swagger
 	//
 	/**
@@ -242,8 +278,9 @@ public class MallikasController {
 	@ApiOperation(value = "Get a list of all requirements", notes = "Returns a list with every single requirement saved in the database!")
 	@GetMapping(value = "allRequirements")
 	@ApiIgnore
+	@Transactional(readOnly = true)
 	public ResponseEntity<String> getAllRequirements() {
-		List<Requirement> allReqs = reqRepository.findAll();
+		List<Requirement> allReqs = requirementRepository.findAll();
 		List<Dependency> dependencies = dependencyRepository.findAll();
 		if (!allReqs.isEmpty()) {
 			try {
@@ -251,7 +288,7 @@ public class MallikasController {
 				String reqString = mapper.writeValueAsString(allReqs);
 				String dependencyString = mapper.writeValueAsString(dependencies);
 				String all = "{ \"requirements\":" + reqString + ", \"dependencies\":" + dependencyString + "}";
-				return new ResponseEntity<String>(all, HttpStatus.FOUND);
+				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -269,6 +306,7 @@ public class MallikasController {
 	@ApiOperation(value = "Get a list of all dependencies", notes = "Returns a list with every single dependency saved in the database!")
 	@GetMapping(value = "allDependencies")
 	@ApiIgnore
+	@Transactional(readOnly = true)
 	public ResponseEntity<String> getAllDependencies() {
 		List<Dependency> dependencies = dependencyRepository.findAll();
 		if (!dependencies.isEmpty()) {
@@ -277,7 +315,7 @@ public class MallikasController {
 				String dependencyString = mapper.writeValueAsString(dependencies);
 				dependencies.clear();
 				String all = "{\"dependencies\":" + dependencyString + "}";
-				return new ResponseEntity<String>(all, HttpStatus.FOUND);
+				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -295,13 +333,18 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Get requirements by ids posted", notes = "Fetches a list of requirements based on the ids provided.")
 	@PostMapping(value = "selectedReqs")
-	public ResponseEntity<String> getSelectedRequirements(@RequestBody Collection<String> ids) {
-		List<Requirement> selectedReqs = reqRepository.findByIdIn(ids);
+	@Transactional(readOnly = true)
+	public ResponseEntity<String> getSelectedRequirements(@RequestBody List<String> ids) {
+		List<Requirement> selectedReqs = requirementRepository.findByIdIn(ids);
 		if (!selectedReqs.isEmpty() && selectedReqs != null) {
-			List<Dependency> dependencies = dependencyRepository.findByIdIncludeProposed(ids);
+			List<Dependency> dependencies = new ArrayList<Dependency>();
+			List<List<String>> splitReqIds = splitRequirementIds(ids);
+			for (List<String> splitIds : splitReqIds) {
+			dependencies.addAll(dependencyRepository.findByIdIncludeProposed(splitIds));
+			}
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
-						HttpStatus.FOUND);
+						HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -316,10 +359,17 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Get dependencies by params posted", notes = "Fetches dependencies and their dependent requirements by parameters provided.")
 	@PostMapping(value = "dependenciesByParams") 
+	@Transactional(readOnly = true)
 	public ResponseEntity<String> getDependenciesByParams(@RequestBody RequestParams params) {
 		List<String> reqIds = params.getRequirementIds();
 		
-		List<Requirement> selectedReqs = reqRepository.findByIdIn(reqIds);
+		List<Requirement> selectedReqs = new ArrayList<>();
+		
+		List<List<String>> splitReqIds = splitRequirementIds(reqIds);
+
+		for (List<String> splitIds : splitReqIds) {
+			selectedReqs.addAll(requirementRepository.findByIdIn(splitIds));
+		}
 		
 		if (!selectedReqs.isEmpty() && selectedReqs!=null) {
 			Pageable pageLimit = new PageRequest(0, Integer.MAX_VALUE);
@@ -328,8 +378,12 @@ public class MallikasController {
 				pageLimit = new PageRequest(0, params.getMaxDependencies());
 			}
 			
-			List<Dependency> dependencies = dependencyRepository.findByIdWithParams(reqIds, params.getScoreThreshold(), 
-					params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit);
+			List<Dependency> dependencies = new ArrayList<Dependency>();
+			
+			for (List<String> splitIds : splitReqIds) {
+				dependencies.addAll(dependencyRepository.findByIdWithParams(splitIds, params.getScoreThreshold(),
+						params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit));
+			}
 			
 			List<String> dependentReqIds = new ArrayList<String>();
 			
@@ -342,10 +396,12 @@ public class MallikasController {
 				}
 			}
 			
-			selectedReqs.addAll(reqRepository.findByIdIn(dependentReqIds));
+			selectedReqs.addAll(requirementRepository.findByIdIn(dependentReqIds));
+			
+			
 
 			try {
-				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies), HttpStatus.FOUND);
+				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies), HttpStatus.OK);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -363,18 +419,20 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Get requirements by params posted", notes = "Fetches requirements and their dependencies by parameters provided.")
 	@PostMapping(value = "requirementsByParams")
+	@Transactional(readOnly = true)
 	public ResponseEntity<String> getRequirementsByParams(@RequestBody RequestParams params) {
 		
 		List<Project> projects = null;
-		List<String> reqIds = params.getRequirementIds();
+		List<String> reqIds = new ArrayList<String>();
+		reqIds.addAll(params.getRequirementIds());
 		
 		if (params.getProjectId() != null && projectRepository.findById(params.getProjectId())!=null) {
 			Project project = projectRepository.findById(params.getProjectId());
 			projects = new ArrayList<Project>();
 			projects.add(project);
-			List<String> projectReqIds = project.getSpecifiedRequirements();
-			if (reqIds==null) {
-				reqIds = projectReqIds;
+			Set<String> projectReqIds = project.getSpecifiedRequirements();
+			if (reqIds.isEmpty()) {
+				reqIds.addAll(projectReqIds);
 			} else {
 				reqIds.retainAll(projectReqIds);
 			}
@@ -398,11 +456,17 @@ public class MallikasController {
 			status = Requirement_status.valueOf(params.getStatus());
 		}
 		
-		List<Requirement> selectedReqs = reqRepository.findByParams(reqIds, created, modified, type, status);
+		List<Requirement> selectedReqs = new ArrayList<>();
+		
+		List<List<String>> splitReqIds = splitRequirementIds(reqIds);
+		
+		for (List<String> splitIds : splitReqIds) {
+			selectedReqs.addAll(requirementRepository.findByParams(splitIds, created, modified, type, status));
+		}
 		
 		if (params.getResolution()!=null) {
-			List<Requirement> resolutionReqs = reqRepository.findByRequirementPart(params.getResolution());
-			if (selectedReqs!=null) {
+			List<Requirement> resolutionReqs = requirementRepository.findByRequirementPart(params.getResolution());
+			if (!selectedReqs.isEmpty()) {
 				selectedReqs.retainAll(resolutionReqs);
 			} else {			
 				selectedReqs = resolutionReqs;
@@ -422,15 +486,20 @@ public class MallikasController {
 				pageLimit = new PageRequest(0, params.getMaxDependencies());
 			}
 			
-			dependencies = dependencyRepository.findByIdWithParams(ids, params.getScoreThreshold(),
-					params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit);
+			splitReqIds = splitRequirementIds(ids);
+			
+			for (List<String> splitIds : splitReqIds) {
+				dependencies.addAll(dependencyRepository.findByIdWithParams(splitIds, params.getScoreThreshold(),
+						params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit));
+			}
+			
 			try {
 				if (projects==null) {
 					return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
-							HttpStatus.FOUND); 
+							HttpStatus.OK); 
 				}
 				return new ResponseEntity<String>(createUPCJsonString(projects, selectedReqs, dependencies),
-						HttpStatus.FOUND);
+						HttpStatus.OK);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -450,6 +519,7 @@ public class MallikasController {
 			notes = "Get all requirements and dependencies of a project saved in the database, excluding rejected dependencies."
 					+ " Has an option whether to include proposed dependencies.")
 	@GetMapping(value = "projectRequirements")
+	@Transactional(readOnly = true)
 	public ResponseEntity<String> getRequirementsInProject(@RequestParam String projectId, 
 			@RequestParam(required = false) boolean includeProposed) {
 		Project project = projectRepository.findById(projectId);
@@ -457,19 +527,25 @@ public class MallikasController {
 		if (project != null) {
 			List<Project> projects = new ArrayList<>();
 			projects.add(project);
-			List<String> requirementIds = project.getSpecifiedRequirements();
-			List<Requirement> requirements = reqRepository.findByIdIn(requirementIds);
-			List<Dependency> dependencies = null;
+			
+			Set<String> requirementIds = project.getSpecifiedRequirements();
+			List<Requirement> requirements = new ArrayList<Requirement>();
+			List<Dependency> dependencies = new ArrayList<Dependency>();	
+			
 			if (includeProposed) {
-				dependencies = dependencyRepository.findByIdIncludeProposed(requirementIds);
+				requirements = requirementRepository.findByProjectId(projectId);
+				dependencies.addAll(dependencyRepository.findByProjectIdIncludeProposed(projectId));			
 			} else {
-				dependencies = dependencyRepository.findByIdExcludeProposed(requirementIds);
+				requirements = requirementRepository.findByProjectId(projectId);
+				dependencies = dependencyRepository.findByProjectIdExcludeProposed(projectId);	
 			}
 			if (!requirementIds.isEmpty()) {
 				try {
 					return new ResponseEntity<String>(createUPCJsonString(projects, requirements, dependencies),
-							HttpStatus.FOUND);
+							HttpStatus.OK);
 				} catch (Exception e) {
+					requirements.clear();
+					dependencies.clear();
 					e.printStackTrace();
 				}
 			}
@@ -490,7 +566,7 @@ public class MallikasController {
 	 */
 	private String createJsonString(Project project, Requirement requirement, List<Requirement> requirements,
 			List<Dependency> dependencies) throws JsonProcessingException {
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();	
 		String dependencyString = gson.toJson(dependencies);
 		String reqsString = gson.toJson(requirements);
 		String jsonString = "{";
@@ -513,9 +589,10 @@ public class MallikasController {
 	 */
 	@ApiIgnore
 	@DeleteMapping(value = "deleteAllButRejectedDependencies")
+	@Transactional
 	public ResponseEntity<String> deleteAllButRejectedDependencies() {
 		projectRepository.deleteAll();
-		reqRepository.deleteAll();
+		requirementRepository.deleteAll();
 		dependencyRepository.deleteAllNotRejected();
 
 		return new ResponseEntity<>("Delete successful", HttpStatus.OK);
@@ -533,7 +610,7 @@ public class MallikasController {
 	 */
 	private String createUPCJsonString(List<Project> projects, List<Requirement> requirements,
 			List<Dependency> dependencies) throws JsonProcessingException {
-		Gson gson = new Gson();
+		Gson gson =  new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();	
 		String dependencyString = gson.toJson(dependencies);
 		String reqsString = gson.toJson(requirements);
 		String projectsString = gson.toJson(projects);
@@ -575,8 +652,8 @@ public class MallikasController {
 			}
 			Dependency originalDependency = dependencyRepository.findById(depId);
 			if (originalDependency!=null) {
-				List<String> descriptions = originalDependency.getDescription();
-				String newDescription = dep.getDescription().get(0);
+				Set<String> descriptions = originalDependency.getDescription();
+				String newDescription = dep.getDescription().iterator().next();
 				if (!descriptions.contains(newDescription)) {
 					descriptions.add(newDescription);
 					originalDependency.setDescription(descriptions);
@@ -589,4 +666,23 @@ public class MallikasController {
 		}
 		
 	}
+	
+	/**
+	 * Splits the id lists to avoid the the Postgres query parameter amount limit
+	 * 
+	 * @param requirementIds
+	 * @return
+	 */
+	private List<List<String>> splitRequirementIds(List<String> requirementIds) {
+		if (requirementIds.size()<=10000) {
+			return Arrays.asList(requirementIds);
+		}
+		List<List<String>> splitLists = new ArrayList<>();
+		for (int i = 0; i < requirementIds.size(); i = i + 15000) {
+			List<String> splitList = requirementIds.subList(i, i + 15000 > requirementIds.size() ? requirementIds.size() : i + 15000);
+			splitLists.add(splitList);
+		}
+		return splitLists;
+	}
+	
 }

@@ -1,10 +1,13 @@
 package eu.openreq.mallikas.models.json;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 
 import com.google.gson.annotations.Expose;
@@ -76,10 +79,10 @@ public class Dependency implements Serializable {
 	@Expose
 	private String toid;
 	
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.LAZY)
 	@SerializedName("description")
 	@Expose
-	private List<String> description;
+	private Set<String> description;
 	
 	/**
 	* Creation timestamp
@@ -138,11 +141,11 @@ public class Dependency implements Serializable {
 		this.toid = toid;
 	}
 	
-	public List<String> getDescription() {
+	public Set<String> getDescription() {
 		return description;
 	}
 
-	public void setDescription(List<String> description) {
+	public void setDescription(Set<String> description) {
 		this.description = description;
 	}
 

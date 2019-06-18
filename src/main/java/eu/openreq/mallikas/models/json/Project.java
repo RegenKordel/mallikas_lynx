@@ -2,6 +2,7 @@ package eu.openreq.mallikas.models.json;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -61,7 +62,7 @@ public class Project implements Serializable {
 	@ElementCollection
 	@SerializedName("specifiedRequirements")
 	@Expose
-	private List<String> specifiedRequirements = null;
+	private Set<String> specifiedRequirements = null;
 	
 	public String getId() {
 	return id;
@@ -95,11 +96,11 @@ public class Project implements Serializable {
 	this.modified_at = modified_at;
 	}
 	
-	public List<String> getSpecifiedRequirements() {
-	return specifiedRequirements;
+	public Set<String> getSpecifiedRequirements() {
+		return specifiedRequirements;
 	}
 	
-	public void setSpecifiedRequirements(List<String> specifiedRequirements) {
-	this.specifiedRequirements = specifiedRequirements;
+	public void setSpecifiedRequirements(Set<String> specifiedRequirements) {
+		this.specifiedRequirements = specifiedRequirements;
 	}
 }

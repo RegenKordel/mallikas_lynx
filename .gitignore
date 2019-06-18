@@ -31,3 +31,4 @@ bin/
 #database
 mallikas-db.mv.db
 mallikas-db.trace.db
+mallikas-db.h2.db

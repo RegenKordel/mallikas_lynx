@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eu.openreq</groupId>
 	<artifactId>Mallikas</artifactId>
-	<version>1.10</version>
+	<version>1.11</version>
 	<packaging>jar</packaging>
 
 	<name>Mallikas</name>
@@ -30,10 +30,24 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+				<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jdbc</artifactId>
 		</dependency>
 
 		<dependency>
@@ -45,11 +59,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		
+		<dependency>
+   			 <groupId>org.springframework</groupId>
+   			 <artifactId>spring-core</artifactId>
+ 		 </dependency>
 
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.8.5</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
@@ -70,16 +88,25 @@
 			<version>2.8.2</version> </dependency> <dependency> <groupId>com.squareup.okhttp3</groupId> 
 			<artifactId>okhttp</artifactId> <version>3.10.0</version> </dependency> -->
 		<!-- database features -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+
 		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-jdbc</artifactId> 
 			</dependency> -->
-		<dependency>
-			<groupId>com.h2database</groupId>
+		<!--  <dependency>
+				<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-	<!--  	<scope>runtime</scope> -->	
+		 	<scope>runtime</scope> 
+			 </dependency> --> 
+        
+         <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        
+        <dependency>
+    		<groupId>org.postgresql</groupId>
+    		<artifactId>postgresql</artifactId>
+    		<scope>runtime</scope>
 		</dependency>
 
 		<!-- Swagger -->
@@ -96,27 +123,76 @@
 	</dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.1.0</version>
-			</plugin>
-			<plugin>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+				    <groupId>org.codehaus.mojo</groupId>
+				    <artifactId>sql-maven-plugin</artifactId>
+				    <version>1.5</version>
+				    <executions>
+				        <execution>
+				            <phase>initialize</phase>
+				            <goals>
+				                <goal>execute</goal>
+				            </goals>
+				            <configuration>
+				                <driver>${db.driver}</driver>
+				                <url>${db.url}</url>
+				                <username>${db.username}</username>
+				                <password>${db.password}</password>
+				                <srcFiles>
+				                    <srcFile>src/main/resources/intro_schema.sql</srcFile>
+				                </srcFiles>
+				            </configuration>
+				        </execution>
+				    </executions>
+				    <dependencies>
+				        <dependency>
+				            <groupId>com.h2database</groupId>
+				            <artifactId>h2</artifactId>
+				            <version>1.4.191</version>
+				        </dependency>
+				    </dependencies>
+				</plugin>
+				<plugin>
+				    <groupId>org.codehaus.mojo</groupId>
+				    <artifactId>properties-maven-plugin</artifactId>
+				    <version>1.0.0</version>
+				    <executions>
+				        <execution>
+				            <phase>initialize</phase>
+				            <goals>
+				                <goal>read-project-properties</goal>
+				            </goals>
+				            <configuration>
+				                <files>
+				                    <file>src/main/resources/intro_config.properties</file>
+				                </files>
+				            </configuration>
+				        </execution>
+				    </executions>
+				</plugin>	
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>3.1.0</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<executions>
+						<execution>
+							<goals>
+								<goal>integration-test</goal>
+								<goal>verify</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 		</plugins>
+		</pluginManagement>
 	</build>
 </project>

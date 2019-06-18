@@ -5,16 +5,21 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import eu.openreq.mallikas.models.json.Requirement;
 import eu.openreq.mallikas.models.json.Requirement_status;
 import eu.openreq.mallikas.models.json.Requirement_type;
 
+@Repository
 public interface RequirementRepository extends JpaRepository<Requirement, String> {
 	
 	Requirement findById(String id);
 	
 	List<Requirement> findByIdIn(Collection<String> ids);
+	
+	@Query("SELECT DISTINCT req FROM Requirement req WHERE req.projectId = ?1)")
+	List<Requirement> findByProjectId(String projectId);
 
 	@Query("SELECT DISTINCT req FROM Requirement req, IN (req.requirementParts) AS reqPart WHERE reqPart.text = ?1")
 	List<Requirement> findByRequirementPart(String resolutionValue);
