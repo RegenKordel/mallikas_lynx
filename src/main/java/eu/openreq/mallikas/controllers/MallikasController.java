@@ -181,7 +181,7 @@ public class MallikasController {
 			System.out.println("Dependencies saved " + dependencyRepository.count());
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 			return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -236,7 +236,7 @@ public class MallikasController {
 			savedComments.clear();
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
 	}
@@ -262,7 +262,7 @@ public class MallikasController {
 			projectRepository.save(project);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 
 		return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
@@ -290,7 +290,7 @@ public class MallikasController {
 				String all = "{ \"requirements\":" + reqString + ", \"dependencies\":" + dependencyString + "}";
 				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -317,7 +317,7 @@ public class MallikasController {
 				String all = "{\"dependencies\":" + dependencyString + "}";
 				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -346,7 +346,7 @@ public class MallikasController {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
 						HttpStatus.OK);
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -404,7 +404,7 @@ public class MallikasController {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies), HttpStatus.OK);
 				
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 		
 		}
@@ -502,7 +502,7 @@ public class MallikasController {
 						HttpStatus.OK);
 				
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -546,7 +546,7 @@ public class MallikasController {
 				} catch (Exception e) {
 					requirements.clear();
 					dependencies.clear();
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 			}
 		}
