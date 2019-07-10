@@ -268,8 +268,6 @@ public class MallikasController {
 		return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
 	}
 
-	// Should work (but the returned String might be too large to show in Swagger
-	//
 	/**
 	 * Sends all Requirements in the database as a String to Milla
 	 *
@@ -296,8 +294,7 @@ public class MallikasController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	// Should work (but the returned String might be too large to show in Swagger
-	//
+
 	/**
 	 * Get all dependencies from the database as a JSON String
 	 *
