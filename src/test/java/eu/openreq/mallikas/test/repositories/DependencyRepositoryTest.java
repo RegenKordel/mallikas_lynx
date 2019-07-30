@@ -1,5 +1,7 @@
 package eu.openreq.mallikas.test.repositories;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,6 +23,8 @@ import eu.openreq.mallikas.models.json.Project;
 import eu.openreq.mallikas.models.json.Requirement;
 import eu.openreq.mallikas.models.json.Requirement_status;
 import eu.openreq.mallikas.repositories.DependencyRepository;
+import eu.openreq.mallikas.repositories.ProjectRepository;
+import eu.openreq.mallikas.repositories.RequirementRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,8 +32,16 @@ public class DependencyRepositoryTest {
 	
 	@Autowired
 	DependencyRepository dependencyRepository;
+
+	@Autowired
+	ProjectRepository projectRepository;
+	
+	@Autowired
+	RequirementRepository reqRepository;
 	
 	private Dependency dep1;
+	
+	private Dependency dep2;
 	
 	private Project project;
 	
@@ -49,7 +61,20 @@ public class DependencyRepositoryTest {
     	req1.setStatus(Requirement_status.SUBMITTED);
     	
     	req2 = new Requirement();
+    	req2.setCreated_at(1);
+    	req2.setId("RE2");
+    	req2.setProjectId("PRO");
+    	req2.setStatus(Requirement_status.OPEN);
+    	
     	req3 = new Requirement();
+    	req3.setCreated_at(1);
+    	req3.setId("RE3");
+    	req3.setProjectId("PRO");
+    	req3.setStatus(Requirement_status.OPEN);
+    	
+    	reqRepository.save(req1);
+    	reqRepository.save(req2);
+    	reqRepository.save(req3);
     	 
     	project = new Project();
     	project.setCreated_at(1);
@@ -57,8 +82,12 @@ public class DependencyRepositoryTest {
     	
     	Set <String> reqIds = new HashSet<String>();
     	reqIds.add("RE1");
+    	reqIds.add("RE2");
+    	reqIds.add("RE3");
     	
     	project.setSpecifiedRequirements(reqIds);
+    	
+    	projectRepository.save(project);
     	
 		 dep1 = new Dependency();
 		 dep1.setCreated_at(1);
@@ -68,6 +97,16 @@ public class DependencyRepositoryTest {
 		 dep1.setFromid("RE1");
 		 dep1.setToid("RE2");
 		 dep1.setId("RE1_RE2_REQUIRES");
+		 
+		 dep2 = new Dependency();
+		 dep2.setCreated_at(1);
+		 dep2.setDependency_score(0.5);
+		 dep2.setDependency_type(Dependency_type.DUPLICATES);
+		 dep2.setStatus(Dependency_status.PROPOSED);
+		 dep2.setFromid("RE1");
+		 dep2.setToid("RE3");
+		 dep2.setId("RE1_RE2_DUPLICATES");
+		 
     }
 	 @Test
 	  public void repositorySavesOneDependency() {	 
@@ -82,5 +121,21 @@ public class DependencyRepositoryTest {
 		 Assert.assertNotNull(dependencyRepository.findById("RE1_RE2_REQUIRES"));
 		 Assert.assertNull(dependencyRepository.findById("RE3_RE2_REQUIRES"));
 	  }
+	 
+	 @Test
+	 public void findByProjectIdIncludeProposedWorks() {
+		 dependencyRepository.save(dep1);
+		 dependencyRepository.save(dep2);
+		 List<Dependency> dependencies = dependencyRepository.findByProjectIdIncludeProposed("PRO");
+		 assertEquals(2, dependencies.size());
+	 }
+	 
+	 @Test
+	 public void findByProjectIdExcludeProposedWorks() {
+		 dependencyRepository.save(dep1);
+		 dependencyRepository.save(dep2);
+		 List<Dependency> dependencies = dependencyRepository.findByProjectIdExcludeProposed("PRO");
+		 assertEquals(1, dependencies.size());
+	 }
 
 }
