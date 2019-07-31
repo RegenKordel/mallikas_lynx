@@ -13,82 +13,41 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import eu.openreq.mallikas.models.json.Dependency;
 import eu.openreq.mallikas.models.json.Dependency_status;
 import eu.openreq.mallikas.models.json.Dependency_type;
 import eu.openreq.mallikas.models.json.Project;
-import eu.openreq.mallikas.models.json.Requirement;
-import eu.openreq.mallikas.models.json.Requirement_status;
 import eu.openreq.mallikas.repositories.DependencyRepository;
 import eu.openreq.mallikas.repositories.ProjectRepository;
-import eu.openreq.mallikas.repositories.RequirementRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@DataJpaTest
 public class DependencyRepositoryTest {
 	
 	@Autowired
-	DependencyRepository dependencyRepository;
+	private DependencyRepository dependencyRepository;
 
 	@Autowired
-	ProjectRepository projectRepository;
-	
-	@Autowired
-	RequirementRepository reqRepository;
+	private ProjectRepository projectRepository;
 	
 	private Dependency dep1;
 	
 	private Dependency dep2;
 	
+	private Dependency dep3;
+	
 	private Project project;
 	
-	private Requirement req1;
-	
-	private Requirement req2;
-	
-	private Requirement req3;
-	
     @Before
-    public void setUp() throws IOException {
-    	
-    	req1 = new Requirement();
-    	req1.setCreated_at(1);
-    	req1.setId("RE1");
-    	req1.setProjectId("PRO");
-    	req1.setStatus(Requirement_status.SUBMITTED);
-    	
-    	req2 = new Requirement();
-    	req2.setCreated_at(1);
-    	req2.setId("RE2");
-    	req2.setProjectId("PRO");
-    	req2.setStatus(Requirement_status.OPEN);
-    	
-    	req3 = new Requirement();
-    	req3.setCreated_at(1);
-    	req3.setId("RE3");
-    	req3.setProjectId("PRO");
-    	req3.setStatus(Requirement_status.OPEN);
-    	
-    	reqRepository.save(req1);
-    	reqRepository.save(req2);
-    	reqRepository.save(req3);
-    	 
-    	project = new Project();
-    	project.setCreated_at(1);
-    	project.setId("PRO");
-    	
-    	Set <String> reqIds = new HashSet<String>();
-    	reqIds.add("RE1");
-    	reqIds.add("RE2");
-    	reqIds.add("RE3");
-    	
-    	project.setSpecifiedRequirements(reqIds);
-    	
-    	projectRepository.save(project);
-    	
+    public void setUp() throws IOException {    	
+    	initializeDependencies();
+    	initializeProjectAndRepository();		 
+    }
+    
+	 private void initializeDependencies() {
 		 dep1 = new Dependency();
 		 dep1.setCreated_at(1);
 		 dep1.setDependency_score(0.5);
@@ -103,11 +62,35 @@ public class DependencyRepositoryTest {
 		 dep2.setDependency_score(0.5);
 		 dep2.setDependency_type(Dependency_type.DUPLICATES);
 		 dep2.setStatus(Dependency_status.PROPOSED);
-		 dep2.setFromid("RE1");
+		 dep2.setFromid("RE2");
 		 dep2.setToid("RE3");
-		 dep2.setId("RE1_RE2_DUPLICATES");
+		 dep2.setId("RE2_RE3_DUPLICATES");
 		 
-    }
+		 dep3 = new Dependency();
+		 dep3.setCreated_at(1);
+		 dep3.setDependency_score(0.5);
+		 dep3.setDependency_type(Dependency_type.DUPLICATES);
+		 dep3.setStatus(Dependency_status.REJECTED);
+		 dep3.setFromid("RE1");
+		 dep3.setToid("RE3");
+		 dep3.setId("RE1_RE3_DUPLICATES");
+	 }
+	 
+	 private void initializeProjectAndRepository() {
+	    	project = new Project();
+	    	project.setCreated_at(1);
+	    	project.setId("PRO");
+	    	
+	    	Set <String> reqIds = new HashSet<String>();
+	    	reqIds.add("RE1");
+	    	reqIds.add("RE2");
+	    	reqIds.add("RE3");
+	    	
+	    	project.setSpecifiedRequirements(reqIds);
+	    	
+	    	projectRepository.save(project);
+	 }
+    
 	 @Test
 	  public void repositorySavesOneDependency() {	 
 		 dependencyRepository.save(dep1);
@@ -136,6 +119,77 @@ public class DependencyRepositoryTest {
 		 dependencyRepository.save(dep2);
 		 List<Dependency> dependencies = dependencyRepository.findByProjectIdExcludeProposed("PRO");
 		 assertEquals(1, dependencies.size());
+	 } 
+	 
+	 @Test
+	 public void findByRequirementIdIncludeProposedWorks() {
+		 dependencyRepository.save(dep1);
+		 dependencyRepository.save(dep2);
+		 List<String> ids = new ArrayList<String>();
+		 ids.add("RE1");
+		 ids.add("RE2");
+		 ids.add("RE3");
+		 List<Dependency> dependencies = dependencyRepository.findByRequirementIdIncludeProposed(ids);
+		 assertEquals(2, dependencies.size());
 	 }
+	 
+	 @Test
+	 public void findByRequirementIdExcludeProposedWorks() {
+		 dependencyRepository.save(dep1);
+		 dependencyRepository.save(dep2);
+		 List<String> ids = new ArrayList<String>();
+		 ids.add("RE1");
+		 ids.add("RE2");
+		 ids.add("RE3");
+		 List<Dependency> dependencies = dependencyRepository.findByRequirementIdExcludeProposed(ids);
+		 assertEquals(1, dependencies.size());
+	 }
+	 
+	 @Test
+	 public void deleteAllNotRejectedWorks() {
+		 dependencyRepository.save(dep1);
+		 dependencyRepository.save(dep2);		
+		 dependencyRepository.save(dep3);
+		 assertEquals(3, dependencyRepository.count());
+		 
+		 dependencyRepository.deleteAllNotRejected();
+		 
+		 List<Dependency> dependencies = dependencyRepository.findAll();
+		 assertEquals(1, dependencies.size());
+	 } 
+	 
+	 @Test
+	 public void findByRequirementIdWithParamsWorksWhenParamsNull() {
+		 dependencyRepository.save(dep1);
+		 dependencyRepository.save(dep2);
+		 dependencyRepository.save(dep3);
+		 
+		 List<String> ids = new ArrayList<String>();
+		 ids.add("RE1");
+		 ids.add("RE2");
+		 ids.add("RE3");
 
+		 assertEquals(3, dependencyRepository.count());
+		 
+		 List<Dependency> dependencies = dependencyRepository.findByRequirementIdWithParams(ids, null, null, null, null, null);
+		 assertEquals(2, dependencies.size());
+	 } 
+	 
+	 @Test
+	 public void findByRequirementIdWithParamsWorksWhenIncludeRejectedTrue() {
+		 dependencyRepository.save(dep1);
+		 dependencyRepository.save(dep2);
+		 dependencyRepository.save(dep3);
+		 
+		 List<String> ids = new ArrayList<String>();
+		 ids.add("RE1");
+		 ids.add("RE2");
+		 ids.add("RE3");
+		
+		 assertEquals(3, dependencyRepository.count());
+		 
+		 List<Dependency> dependencies = dependencyRepository.findByRequirementIdWithParams(ids, null, null, null, true, null);
+		 assertEquals(3, dependencies.size());
+	 }
+	 
 }

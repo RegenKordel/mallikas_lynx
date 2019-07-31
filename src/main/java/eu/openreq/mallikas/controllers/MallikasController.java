@@ -337,7 +337,7 @@ public class MallikasController {
 			List<Dependency> dependencies = new ArrayList<Dependency>();
 			List<List<String>> splitReqIds = splitRequirementIds(ids);
 			for (List<String> splitIds : splitReqIds) {
-			dependencies.addAll(dependencyRepository.findByIdIncludeProposed(splitIds));
+			dependencies.addAll(dependencyRepository.findByRequirementIdIncludeProposed(splitIds));
 			}
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
@@ -378,7 +378,7 @@ public class MallikasController {
 			List<Dependency> dependencies = new ArrayList<Dependency>();
 			
 			for (List<String> splitIds : splitReqIds) {
-				dependencies.addAll(dependencyRepository.findByIdWithParams(splitIds, params.getScoreThreshold(),
+				dependencies.addAll(dependencyRepository.findByRequirementIdWithParams(splitIds, params.getScoreThreshold(),
 						params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit));
 			}
 			
@@ -486,7 +486,7 @@ public class MallikasController {
 			splitReqIds = splitRequirementIds(ids);
 			
 			for (List<String> splitIds : splitReqIds) {
-				dependencies.addAll(dependencyRepository.findByIdWithParams(splitIds, params.getScoreThreshold(),
+				dependencies.addAll(dependencyRepository.findByRequirementIdWithParams(splitIds, params.getScoreThreshold(),
 						params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit));
 			}
 			
