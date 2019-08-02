@@ -101,12 +101,18 @@ public class RequirementRepositoryTest {
 		req2.setRequirementParts(reqParts);
 
 		req3 = new Requirement();
-		req3.setCreated_at(1);
+		req3.setCreated_at(0);
 		req3.setModified_at(3);
 		req3.setId("RE3");
 		req3.setProjectId("PRO");
 		req3.setStatus(Requirement_status.OPEN);
 		req3.setRequirement_type(Requirement_type.REQUIREMENT);
+	}
+
+	private void saveAllRequirements() {
+		reqRepository.save(req1);
+		reqRepository.save(req2);
+		reqRepository.save(req3);
 	}
 
 	@Test
@@ -125,9 +131,7 @@ public class RequirementRepositoryTest {
 
 	@Test
 	public void findByIdInWorks() {
-		reqRepository.save(req1);
-		reqRepository.save(req2);
-		reqRepository.save(req3);
+		saveAllRequirements();
 
 		List<String> reqIds = new ArrayList<String>();
 		reqIds.add("RE1");
@@ -140,9 +144,7 @@ public class RequirementRepositoryTest {
 
 	@Test
 	public void findByProjectIdWorks() {
-		reqRepository.save(req1);
-		reqRepository.save(req2);
-		reqRepository.save(req3);
+		saveAllRequirements();
 
 		List<Requirement> requirements = reqRepository.findByProjectId("PRO");
 		assertEquals(3, requirements.size());
@@ -153,9 +155,7 @@ public class RequirementRepositoryTest {
 
 	// @Test
 	// public void findByRequirementPartWorks() {
-	// reqRepository.save(req1);
-	// reqRepository.save(req2);
-	// reqRepository.save(req3);
+	// saveAllRequirements();
 	//
 	// List<Requirement> requirements =
 	// reqRepository.findByRequirementPart("TestResolution1");
@@ -164,4 +164,73 @@ public class RequirementRepositoryTest {
 	// requirements = reqRepository.findByRequirementPart("Wrong");
 	// assertEquals(0, requirements.size());
 	// }
+
+	@Test
+	public void findByParamsWorksWhenReqIdsGiven() {
+		saveAllRequirements();
+
+		List<String> reqIds = new ArrayList<String>();
+		reqIds.add("RE1");
+		reqIds.add("RE2");
+		reqIds.add("RE4");
+
+		List<Requirement> requirements = reqRepository.findByParams(reqIds, null, null, null, null);
+		assertEquals(2, requirements.size());
+	}
+
+	@Test
+	public void findByParamsWorksWhenCreatedAtGiven() {
+		saveAllRequirements();
+
+		List<Requirement> requirements = reqRepository.findByParams(null, 1L, null, null, null);
+		assertEquals(2, requirements.size());
+	}
+
+	@Test
+	public void findByParamsWorksWhenModifiedAtGiven() {
+		saveAllRequirements();
+
+		List<Requirement> requirements = reqRepository.findByParams(null, null, 3L, null, null);
+		assertEquals(1, requirements.size());
+	}
+
+	@Test
+	public void findByParamsWorksWhenRequirementTypeGiven() {
+		saveAllRequirements();
+
+		List<Requirement> requirements = reqRepository.findByParams(null, null, null, Requirement_type.REQUIREMENT,
+				null);
+		assertEquals(1, requirements.size());
+	}
+
+	@Test
+	public void findByParamsWorksWhenRequirementStatusGiven() {
+		saveAllRequirements();
+
+		List<Requirement> requirements = reqRepository.findByParams(null, null, null, null, Requirement_status.OPEN);
+		assertEquals(2, requirements.size());
+	}
+
+	@Test
+	public void findByParamsWorksWhenAllParamsGiven() {
+		saveAllRequirements();
+
+		List<String> reqIds = new ArrayList<String>();
+		reqIds.add("RE1");
+		reqIds.add("RE2");
+		reqIds.add("RE3");
+
+		List<Requirement> requirements = reqRepository.findByParams(reqIds, 0L, 2L, Requirement_type.REQUIREMENT,
+				Requirement_status.OPEN);
+		assertEquals(1, requirements.size());
+		assertEquals("RE3", requirements.get(0).getId());
+	}
+
+	@Test
+	public void findByParamsWorksWhenNoParamsGiven() {
+		saveAllRequirements();
+
+		List<Requirement> requirements = reqRepository.findByParams(null, null, null, null, null);
+		assertEquals(requirements.size(), reqRepository.count());
+	}
 }

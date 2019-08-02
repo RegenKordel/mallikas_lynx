@@ -90,6 +90,12 @@ public class DependencyRepositoryTest {
 	    	
 	    	projectRepository.save(project);
 	 }
+	 
+	 private void saveAllDependencies() {
+		 dependencyRepository.save(dep1);
+		 dependencyRepository.save(dep2);		
+		 dependencyRepository.save(dep3);
+	 }
     
 	 @Test
 	  public void repositorySavesOneDependency() {	 
@@ -109,7 +115,9 @@ public class DependencyRepositoryTest {
 	 public void findByProjectIdIncludeProposedWorks() {
 		 dependencyRepository.save(dep1);
 		 dependencyRepository.save(dep2);
+		 
 		 List<Dependency> dependencies = dependencyRepository.findByProjectIdIncludeProposed("PRO");
+		 
 		 assertEquals(2, dependencies.size());
 	 }
 	 
@@ -117,7 +125,9 @@ public class DependencyRepositoryTest {
 	 public void findByProjectIdExcludeProposedWorks() {
 		 dependencyRepository.save(dep1);
 		 dependencyRepository.save(dep2);
+		 
 		 List<Dependency> dependencies = dependencyRepository.findByProjectIdExcludeProposed("PRO");
+		 
 		 assertEquals(1, dependencies.size());
 	 } 
 	 
@@ -125,10 +135,12 @@ public class DependencyRepositoryTest {
 	 public void findByRequirementIdIncludeProposedWorks() {
 		 dependencyRepository.save(dep1);
 		 dependencyRepository.save(dep2);
+		 
 		 List<String> ids = new ArrayList<String>();
 		 ids.add("RE1");
 		 ids.add("RE2");
 		 ids.add("RE3");
+		 
 		 List<Dependency> dependencies = dependencyRepository.findByRequirementIdIncludeProposed(ids);
 		 assertEquals(2, dependencies.size());
 	 }
@@ -137,19 +149,19 @@ public class DependencyRepositoryTest {
 	 public void findByRequirementIdExcludeProposedWorks() {
 		 dependencyRepository.save(dep1);
 		 dependencyRepository.save(dep2);
+		 
 		 List<String> ids = new ArrayList<String>();
 		 ids.add("RE1");
 		 ids.add("RE2");
 		 ids.add("RE3");
+		 
 		 List<Dependency> dependencies = dependencyRepository.findByRequirementIdExcludeProposed(ids);
 		 assertEquals(1, dependencies.size());
 	 }
 	 
 	 @Test
 	 public void deleteAllNotRejectedWorks() {
-		 dependencyRepository.save(dep1);
-		 dependencyRepository.save(dep2);		
-		 dependencyRepository.save(dep3);
+		 saveAllDependencies();
 		 assertEquals(3, dependencyRepository.count());
 		 
 		 dependencyRepository.deleteAllNotRejected();
@@ -159,10 +171,8 @@ public class DependencyRepositoryTest {
 	 } 
 	 
 	 @Test
-	 public void findByRequirementIdWithParamsWorksWhenParamsNull() {
-		 dependencyRepository.save(dep1);
-		 dependencyRepository.save(dep2);
-		 dependencyRepository.save(dep3);
+	 public void findByRequirementIdWithParamsWorksWhenIdsGiven() {
+		 saveAllDependencies();
 		 
 		 List<String> ids = new ArrayList<String>();
 		 ids.add("RE1");
@@ -176,10 +186,16 @@ public class DependencyRepositoryTest {
 	 } 
 	 
 	 @Test
+	 public void findByRequirementIdWithParamsWorksWhenParamsNull() {
+		 saveAllDependencies();
+		 
+		 List<Dependency> dependencies = dependencyRepository.findByRequirementIdWithParams(null, null, null, null, null, null);
+		 assertEquals(0, dependencies.size());
+	 } 
+	 
+	 @Test
 	 public void findByRequirementIdWithParamsWorksWhenIncludeRejectedTrue() {
-		 dependencyRepository.save(dep1);
-		 dependencyRepository.save(dep2);
-		 dependencyRepository.save(dep3);
+		 saveAllDependencies();
 		 
 		 List<String> ids = new ArrayList<String>();
 		 ids.add("RE1");
