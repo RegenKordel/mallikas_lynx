@@ -24,7 +24,7 @@ Mallikas should not be accessed directly but it is used only through Milla. Mall
 
 The API is documented by using Swagger2:
 
-https://api.openreq.eu/mallikas/swagger-ui.html
+https://api.openreq.eu/#/services/mallikas
 
 
 ## How to Install
