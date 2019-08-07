@@ -18,19 +18,19 @@ import eu.openreq.mallikas.repositories.ProjectRepository;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class ProjectRepositoryTest {
-	
+
 	@Autowired
 	private ProjectRepository projectRepository;
-	
+
 	private Project project1;
-	
+
 	private Project project2;
 
-    @Before
-    public void setUp() throws IOException {    	
-    	initializeProjects();		 
-    }
-    
+	@Before
+	public void setUp() throws IOException {
+		initializeProjects();
+	}
+
 	private void initializeProjects() {
 		project1 = new Project();
 		project1.setCreated_at(1);
@@ -42,7 +42,7 @@ public class ProjectRepositoryTest {
 		reqIds.add("RE3");
 
 		project1.setSpecifiedRequirements(reqIds);
-		
+
 		project2 = new Project();
 		project2.setCreated_at(2);
 		project2.setId("PRO2");
@@ -54,19 +54,19 @@ public class ProjectRepositoryTest {
 
 		project2.setSpecifiedRequirements(reqIds);
 	}
-	
-	 @Test
-	  public void repositorySavesOneProject() {
-		 projectRepository.save(project1);
-		 Assert.assertNotNull(projectRepository.findOne("PRO1"));
-		 Assert.assertNull(projectRepository.findOne("PRO2"));
-	 }
-	 
-	 @Test
-	  public void findByIdWorks() {
-		 projectRepository.save(project1);
-		 projectRepository.save(project2);
-		 Assert.assertNotNull(projectRepository.findById("PRO1"));
-		 Assert.assertNull(projectRepository.findById("PRO3"));
-	 }
+
+	@Test
+	public void repositorySavesOneProject() {
+		projectRepository.save(project1);
+		Assert.assertNotNull(projectRepository.findOne("PRO1"));
+		Assert.assertNull(projectRepository.findOne("PRO2"));
+	}
+
+	@Test
+	public void findByIdWorks() {
+		projectRepository.save(project1);
+		projectRepository.save(project2);
+		Assert.assertNotNull(projectRepository.findById("PRO1"));
+		Assert.assertNull(projectRepository.findById("PRO3"));
+	}
 }
