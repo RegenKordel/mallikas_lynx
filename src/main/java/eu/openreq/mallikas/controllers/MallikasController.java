@@ -168,7 +168,8 @@ public class MallikasController {
 	@PostMapping(value = "updateDependencies")
 	@Transactional
 	public ResponseEntity<?> updateDependencies(@RequestBody Collection<Dependency> dependencies, 
-			@RequestParam(required = false) boolean userInput, @RequestParam(required = false) boolean isProposed) {
+			@RequestParam(required = false) boolean userInput, 
+			@RequestParam(required = false) boolean isProposed) {
 		try {
 			if (userInput) {
 				updateDependenciesWithUserInput(dependencies);
@@ -179,10 +180,10 @@ public class MallikasController {
 			}
 
 			System.out.println("Dependencies saved " + dependencyRepository.count());
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>("Dependencies saved in Mallikas", HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Mallikas update failed", HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -521,7 +522,7 @@ public class MallikasController {
 	@GetMapping(value = "projectRequirements")
 	@Transactional(readOnly = true)
 	public ResponseEntity<String> getRequirementsInProject(@RequestParam String projectId, 
-			@RequestParam(required = false) boolean includeProposed) {
+			@RequestParam(required = false) boolean includeProposed, @RequestParam(required = false) boolean requirementsOnly) {
 		Project project = projectRepository.findById(projectId);
 
 		if (project != null) {
@@ -532,7 +533,10 @@ public class MallikasController {
 			List<Requirement> requirements = new ArrayList<Requirement>();
 			List<Dependency> dependencies = new ArrayList<Dependency>();	
 			
-			if (includeProposed) {
+			if (requirementsOnly) {
+				requirements = requirementRepository.findByProjectId(projectId);
+			}
+			else if (includeProposed) {
 				requirements = requirementRepository.findByProjectId(projectId);
 				dependencies.addAll(dependencyRepository.findByProjectIdIncludeProposed(projectId));			
 			} else {

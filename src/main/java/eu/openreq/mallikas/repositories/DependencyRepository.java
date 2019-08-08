@@ -28,16 +28,10 @@ public interface DependencyRepository extends JpaRepository<Dependency, String> 
 			+ "WHERE proj.id = ?1)) AND (dep.status = 1)")
 	List<Dependency> findByProjectIdExcludeProposed(String projectId);
 
-	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE (dep.fromid IN (SELECT s FROM Project proj "
-			+ "INNER JOIN proj.specifiedRequirements s WHERE proj.id = ?1) OR dep.toid IN "
-			+ "(SELECT s FROM Project proj INNER JOIN proj.specifiedRequirements s "
-			+ "WHERE proj.id = ?1)) AND (dep.status != 2)")
+	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN ?1) OR (dep.toid IN ?1)) AND (dep.status != 2)")
 	List<Dependency> findByIdIncludeProposed(Collection<String> ids);
 	
-	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE (dep.fromid IN (SELECT s FROM Project proj "
-			+ "INNER JOIN proj.specifiedRequirements s WHERE proj.id = ?1) OR dep.toid IN "
-			+ "(SELECT s FROM Project proj INNER JOIN proj.specifiedRequirements s "
-			+ "WHERE proj.id = ?1)) AND (dep.status = 1)")
+	@Query("SELECT DISTINCT dep FROM Dependency dep WHERE ((dep.fromid IN ?1) OR (dep.toid IN ?1)) AND (dep.status = 1)")
 	List<Dependency> findByIdExcludeProposed(Collection<String> ids);
 
 	
