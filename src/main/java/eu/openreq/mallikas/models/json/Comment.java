@@ -29,6 +29,7 @@ public class Comment implements Serializable{
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "requirement_id")
+	@SerializedName("requirement")
 	private Requirement requirement;
 	
 //	private String requirementId;

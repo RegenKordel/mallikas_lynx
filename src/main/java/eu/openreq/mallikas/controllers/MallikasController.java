@@ -269,8 +269,6 @@ public class MallikasController {
 		return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
 	}
 
-	// Should work (but the returned String might be too large to show in Swagger
-	//
 	/**
 	 * Sends all Requirements in the database as a String to Milla
 	 *
@@ -297,8 +295,7 @@ public class MallikasController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	// Should work (but the returned String might be too large to show in Swagger
-	//
+
 	/**
 	 * Get all dependencies from the database as a JSON String
 	 *
@@ -341,7 +338,7 @@ public class MallikasController {
 			List<Dependency> dependencies = new ArrayList<Dependency>();
 			List<List<String>> splitReqIds = splitRequirementIds(ids);
 			for (List<String> splitIds : splitReqIds) {
-			dependencies.addAll(dependencyRepository.findByIdIncludeProposed(splitIds));
+				dependencies.addAll(dependencyRepository.findByRequirementIdIncludeProposed(splitIds));
 			}
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
@@ -382,7 +379,7 @@ public class MallikasController {
 			List<Dependency> dependencies = new ArrayList<Dependency>();
 			
 			for (List<String> splitIds : splitReqIds) {
-				dependencies.addAll(dependencyRepository.findByIdWithParams(splitIds, params.getScoreThreshold(),
+				dependencies.addAll(dependencyRepository.findByRequirementIdWithParams(splitIds, params.getScoreThreshold(),
 						params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit));
 			}
 			
@@ -425,7 +422,11 @@ public class MallikasController {
 		
 		List<Project> projects = null;
 		List<String> reqIds = new ArrayList<String>();
-		reqIds.addAll(params.getRequirementIds());
+		
+		
+		if (params.getRequirementIds()!=null) {
+			reqIds.addAll(params.getRequirementIds());
+		}
 		
 		if (params.getProjectId() != null && projectRepository.findById(params.getProjectId())!=null) {
 			Project project = projectRepository.findById(params.getProjectId());
@@ -466,7 +467,7 @@ public class MallikasController {
 		}
 		
 		if (params.getResolution()!=null) {
-			List<Requirement> resolutionReqs = requirementRepository.findByRequirementPart(params.getResolution());
+			List<Requirement> resolutionReqs = requirementRepository.findByRequirementPartText(params.getResolution());
 			if (!selectedReqs.isEmpty()) {
 				selectedReqs.retainAll(resolutionReqs);
 			} else {			
@@ -490,7 +491,7 @@ public class MallikasController {
 			splitReqIds = splitRequirementIds(ids);
 			
 			for (List<String> splitIds : splitReqIds) {
-				dependencies.addAll(dependencyRepository.findByIdWithParams(splitIds, params.getScoreThreshold(),
+				dependencies.addAll(dependencyRepository.findByRequirementIdWithParams(splitIds, params.getScoreThreshold(),
 						params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit));
 			}
 			
@@ -588,13 +589,13 @@ public class MallikasController {
 	}
 	
 	/**
-	 * Empties the database except for dependencies with the status "rejected"
+	 * Empties the database except for dependencies with the status "Rejected"
 	 * @return
 	 */
 	@ApiIgnore
-	@DeleteMapping(value = "deleteAllButRejectedDependencies")
+	@DeleteMapping(value = "deleteEverythingButRejectedDependencies")
 	@Transactional
-	public ResponseEntity<String> deleteAllButRejectedDependencies() {
+	public ResponseEntity<String> deleteEverythingButRejectedDependencies() {
 		projectRepository.deleteAll();
 		requirementRepository.deleteAll();
 		dependencyRepository.deleteAllNotRejected();
