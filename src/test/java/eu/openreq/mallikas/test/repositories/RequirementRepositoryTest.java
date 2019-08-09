@@ -37,9 +37,7 @@ public class RequirementRepositoryTest {
 	private Project project;
 
 	private Requirement req1;
-
 	private Requirement req2;
-
 	private Requirement req3;
 
 	@Before
@@ -77,6 +75,7 @@ public class RequirementRepositoryTest {
 		reqPart1.setName("Resolution");
 		reqPart1.setCreated_at(1);
 		reqPart1.setText("TestResolution1");
+		reqPart1.setRequirement(req1);
 
 		Set<RequirementPart> reqParts = new HashSet<RequirementPart>();
 		reqParts.add(reqPart1);
@@ -95,6 +94,7 @@ public class RequirementRepositoryTest {
 		reqPart2.setName("Resolution");
 		reqPart2.setCreated_at(1);
 		reqPart2.setText("TestResolution2");
+		reqPart2.setRequirement(req2);
 
 		reqParts = new HashSet<RequirementPart>();
 		reqParts.add(reqPart2);
@@ -153,17 +153,17 @@ public class RequirementRepositoryTest {
 		assertEquals(0, requirements.size());
 	}
 
-	// @Test
-	// public void findByRequirementPartWorks() {
-	// saveAllRequirements();
-	//
-	// List<Requirement> requirements =
-	// reqRepository.findByRequirementPart("TestResolution1");
-	// assertEquals(1, requirements.size());
-	//
-	// requirements = reqRepository.findByRequirementPart("Wrong");
-	// assertEquals(0, requirements.size());
-	// }
+	 @Test
+	 public void findByRequirementPartWorks() {
+		 saveAllRequirements();
+		 
+		 List<Requirement> requirements =reqRepository.findByRequirementPartText("TestResolution1");
+		 
+		 assertEquals(1, requirements.size());
+		
+		 requirements = reqRepository.findByRequirementPartText("Wrong");
+		 assertEquals(0, requirements.size());
+	 }
 
 	@Test
 	public void findByParamsWorksWhenReqIdsGiven() {

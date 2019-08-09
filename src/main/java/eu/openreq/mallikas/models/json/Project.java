@@ -1,7 +1,6 @@
 package eu.openreq.mallikas.models.json;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.ElementCollection;

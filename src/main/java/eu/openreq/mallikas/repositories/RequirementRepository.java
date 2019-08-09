@@ -21,8 +21,8 @@ public interface RequirementRepository extends JpaRepository<Requirement, String
 	@Query("SELECT DISTINCT req FROM Requirement req WHERE req.projectId = ?1)")
 	List<Requirement> findByProjectId(String projectId);
 
-	@Query("SELECT DISTINCT req FROM Requirement req, IN (req.requirementParts) AS reqPart WHERE reqPart.text = ?1")
-	List<Requirement> findByRequirementPart(String resolutionValue);
+	@Query("SELECT part.requirement FROM RequirementPart part WHERE part.text = ?1")
+	List<Requirement> findByRequirementPartText(String text);
 	
 	@Query("SELECT DISTINCT req FROM Requirement req WHERE ((?1) is null OR req.id IN (?1)) AND (?2 is null OR "
 			+ "req.created_at >= ?2) AND (?3 is null OR req.modified_at >= ?3) AND (?4 is null OR "

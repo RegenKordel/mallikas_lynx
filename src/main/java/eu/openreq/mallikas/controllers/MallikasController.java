@@ -168,7 +168,8 @@ public class MallikasController {
 	@PostMapping(value = "updateDependencies")
 	@Transactional
 	public ResponseEntity<?> updateDependencies(@RequestBody Collection<Dependency> dependencies, 
-			@RequestParam(required = false) boolean userInput, @RequestParam(required = false) boolean isProposed) {
+			@RequestParam(required = false) boolean userInput, 
+			@RequestParam(required = false) boolean isProposed) {
 		try {
 			if (userInput) {
 				updateDependenciesWithUserInput(dependencies);
@@ -179,10 +180,10 @@ public class MallikasController {
 			}
 
 			System.out.println("Dependencies saved " + dependencyRepository.count());
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>("Dependencies saved in Mallikas", HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Mallikas update failed", HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -337,7 +338,7 @@ public class MallikasController {
 			List<Dependency> dependencies = new ArrayList<Dependency>();
 			List<List<String>> splitReqIds = splitRequirementIds(ids);
 			for (List<String> splitIds : splitReqIds) {
-			dependencies.addAll(dependencyRepository.findByRequirementIdIncludeProposed(splitIds));
+				dependencies.addAll(dependencyRepository.findByRequirementIdIncludeProposed(splitIds));
 			}
 			try {
 				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
@@ -421,7 +422,11 @@ public class MallikasController {
 		
 		List<Project> projects = null;
 		List<String> reqIds = new ArrayList<String>();
-		reqIds.addAll(params.getRequirementIds());
+		
+		
+		if (params.getRequirementIds()!=null) {
+			reqIds.addAll(params.getRequirementIds());
+		}
 		
 		if (params.getProjectId() != null && projectRepository.findById(params.getProjectId())!=null) {
 			Project project = projectRepository.findById(params.getProjectId());
@@ -462,7 +467,7 @@ public class MallikasController {
 		}
 		
 		if (params.getResolution()!=null) {
-			List<Requirement> resolutionReqs = requirementRepository.findByRequirementPart(params.getResolution());
+			List<Requirement> resolutionReqs = requirementRepository.findByRequirementPartText(params.getResolution());
 			if (!selectedReqs.isEmpty()) {
 				selectedReqs.retainAll(resolutionReqs);
 			} else {			
@@ -518,7 +523,7 @@ public class MallikasController {
 	@GetMapping(value = "projectRequirements")
 	@Transactional(readOnly = true)
 	public ResponseEntity<String> getRequirementsInProject(@RequestParam String projectId, 
-			@RequestParam(required = false) boolean includeProposed) {
+			@RequestParam(required = false) boolean includeProposed, @RequestParam(required = false) boolean requirementsOnly) {
 		Project project = projectRepository.findById(projectId);
 
 		if (project != null) {
@@ -529,7 +534,10 @@ public class MallikasController {
 			List<Requirement> requirements = new ArrayList<Requirement>();
 			List<Dependency> dependencies = new ArrayList<Dependency>();	
 			
-			if (includeProposed) {
+			if (requirementsOnly) {
+				requirements = requirementRepository.findByProjectId(projectId);
+			}
+			else if (includeProposed) {
 				requirements = requirementRepository.findByProjectId(projectId);
 				dependencies.addAll(dependencyRepository.findByProjectIdIncludeProposed(projectId));			
 			} else {
@@ -581,13 +589,13 @@ public class MallikasController {
 	}
 	
 	/**
-	 * Empties the database except for dependencies with the status "rejected"
+	 * Empties the database except for dependencies with the status "Rejected"
 	 * @return
 	 */
 	@ApiIgnore
-	@DeleteMapping(value = "deleteAllButRejectedDependencies")
+	@DeleteMapping(value = "deleteEverythingButRejectedDependencies")
 	@Transactional
-	public ResponseEntity<String> deleteAllButRejectedDependencies() {
+	public ResponseEntity<String> deleteEverythingButRejectedDependencies() {
 		projectRepository.deleteAll();
 		requirementRepository.deleteAll();
 		dependencyRepository.deleteAllNotRejected();
