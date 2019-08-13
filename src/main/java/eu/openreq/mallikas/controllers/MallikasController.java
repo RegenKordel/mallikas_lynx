@@ -429,6 +429,7 @@ public class MallikasController {
 			if (reqIds.isEmpty()) {
 				reqIds.addAll(projectReqIds);
 			} else {
+				reqIds.addAll(projectReqIds);
 				reqIds.retainAll(projectReqIds);
 			}
 		}
@@ -444,11 +445,16 @@ public class MallikasController {
 		if (params.getModified_at()!=null) {
 			modified = params.getModified_at().getTime();
 		}
-		if (params.getType()!=null) {
-			type = Requirement_type.valueOf(params.getType());
-		}
-		if (params.getStatus()!=null) {
-			status = Requirement_status.valueOf(params.getStatus());
+		
+		try {
+			if (params.getType()!=null) {
+				type = Requirement_type.valueOf(params.getType());
+			}
+			if (params.getStatus()!=null) {
+				status = Requirement_status.valueOf(params.getStatus());
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println("Illegal arguments posted for enums");
 		}
 		
 		List<Requirement> selectedReqs = new ArrayList<>();
@@ -462,8 +468,9 @@ public class MallikasController {
 		if (params.getResolution()!=null) {
 			List<Requirement> resolutionReqs = requirementRepository.findByRequirementPartText(params.getResolution());
 			if (!selectedReqs.isEmpty()) {
+				selectedReqs.addAll(resolutionReqs);
 				selectedReqs.retainAll(resolutionReqs);
-			} else {			
+			} else {
 				selectedReqs = resolutionReqs;
 			}
 		}

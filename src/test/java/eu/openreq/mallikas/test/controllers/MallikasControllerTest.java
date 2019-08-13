@@ -38,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -92,6 +93,7 @@ public class MallikasControllerTest {
 		
 		RequirementPart part = new RequirementPart();
 		part.setId("part1");
+		part.setText("Done");
 		testReq1.setRequirementParts(new HashSet<RequirementPart>(Arrays.asList(part)));
 		
 		Comment comment = new Comment();
@@ -100,6 +102,7 @@ public class MallikasControllerTest {
 		
 		Requirement testReq2 = new Requirement();
 		testReq2.setId("req2");
+		testReq2.setCreated_at(1000000);
 		
 		testReqs = Arrays.asList(testReq1, testReq2);
 		testReqsJson = mapper.writeValueAsString(testReqs);
@@ -108,7 +111,7 @@ public class MallikasControllerTest {
 		testDep1.setId("dep1");
 		testDep1.setFromid("req2");
 		testDep1.setToid("req1");
-		testDep1.setDescription(new HashSet<String>(Arrays.asList("No description available.")));
+		testDep1.setDescription(new HashSet<String>(Arrays.asList("Description here")));
 		Dependency testDep2 = new Dependency();
 		testDep2.setId("dep2");
 		
@@ -126,24 +129,33 @@ public class MallikasControllerTest {
 		testReqIds.put("pro1", Arrays.asList("req1", "req2"));
 		testReqIdsJson = mapper.writeValueAsString(testReqIds);
 		
-		ids = Arrays.asList("req1", "req2");
+		ids = Arrays.asList("req1", "req2");		
+		
+		Requirement testReq3 = new Requirement();
+		testReq3.setId("req3");
+		testReq3.setRequirementParts(new HashSet<RequirementPart>(Arrays.asList(part)));
 		
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
 		Mockito.when(reqRepository.findById(Mockito.anyString())).thenReturn(testReq1);
-		Mockito.when(projectRepository.findById(Mockito.anyString())).thenReturn(testProj);
-		Mockito.when(projectRepository.findAll()).thenReturn(testProjs);
 		Mockito.when(reqRepository.findByProjectId(Mockito.anyString())).thenReturn(testReqs);
 		Mockito.when(reqRepository.findAll()).thenReturn(testReqs);
+		Mockito.when(reqRepository.findByRequirementPartText(Matchers.anyString())).thenReturn(Arrays.asList(testReq3));
+		Mockito.when(reqRepository.findByIdIn(Matchers.any())).thenReturn(testReqs);
+		Mockito.when(reqRepository.findByParams(Matchers.any(), Matchers.any(), Matchers.any(), 
+				Matchers.any(), Matchers.any())).thenReturn(testReqs);
+		
 		Mockito.when(depRepository.findAll()).thenReturn(testDeps);
 		Mockito.when(depRepository.findByRequirementIdIncludeProposed(Matchers.any())).thenReturn(testDeps);
-		Mockito.when(reqRepository.findByIdIn(Matchers.any())).thenReturn(testReqs);
 		Mockito.when(depRepository.findByRequirementIdWithParams(Matchers.any(), Matchers.anyDouble(), 
 				Matchers.any(), Matchers.any(), Matchers.any(), 
 				org.mockito.Matchers.isA(Pageable.class))).thenReturn(testDeps);
-		Mockito.when(reqRepository.findByParams(Matchers.any(), Matchers.any(), Matchers.any(), 
-				Matchers.any(), Matchers.any())).thenReturn(testReqs);
 		Mockito.when(depRepository.findById(Matchers.any())).thenReturn(testDep1);
+		
+		Mockito.when(projectRepository.findById(Mockito.anyString())).thenReturn(testProj);
+		Mockito.when(projectRepository.findAll()).thenReturn(testProjs);
+		
+		testDep1.setDescription(new HashSet<String>(Arrays.asList("Another description")));
 	}
 	
 	@Test
@@ -249,6 +261,45 @@ public class MallikasControllerTest {
 		params.setIncludeRejected(false);
 		params.setMaxDependencies(20);
 		params.setProjectId("pro1");
+		params.setStatus("fakeStatus");
+		params.setType("noType");
+		
+	    String requestJson = mapper.writeValueAsString(params);
+	    
+		mockMvc.perform(post("/requirementsByParams")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(requestJson))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.requirements[0].id").value("req1"));	
+
+	}	
+	
+	@Test
+	public void requirementsByParamsWithResolutionTest() throws Exception {
+		
+		RequestParams params = new RequestParams();
+		params.setProjectId("pro1");
+		params.setResolution("Done");
+		
+	    String requestJson = mapper.writeValueAsString(params);
+	    
+		mockMvc.perform(post("/requirementsByParams")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(requestJson))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.requirements[0].id").value("req3"));	
+
+	}	
+	
+	@Test
+	public void requirementsByParamsWithIds() throws Exception {
+		
+		RequestParams params = new RequestParams();
+		params.setRequirementIds(ids);
+		params.setCreated_at(new Date(1000001));
+		params.setModified_at(new Date(1000002));
+		params.setStatus("PENDING");
+		params.setType("PROSE");
 		
 	    String requestJson = mapper.writeValueAsString(params);
 	    
