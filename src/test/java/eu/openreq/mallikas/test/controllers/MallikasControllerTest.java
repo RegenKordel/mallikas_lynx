@@ -29,6 +29,8 @@ import eu.openreq.mallikas.repositories.DependencyRepository;
 import eu.openreq.mallikas.repositories.PersonRepository;
 import eu.openreq.mallikas.repositories.ProjectRepository;
 import eu.openreq.mallikas.repositories.RequirementRepository;
+import eu.openreq.mallikas.services.FilteringService;
+import eu.openreq.mallikas.services.UpdateService;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -60,6 +62,12 @@ public class MallikasControllerTest {
 	
 	@MockBean
 	private PersonRepository personRepository;
+	
+	@Autowired
+	FilteringService filteringService;
+	
+	@Autowired
+	UpdateService updateService;
 	
 	@Autowired
 	MallikasController controller;

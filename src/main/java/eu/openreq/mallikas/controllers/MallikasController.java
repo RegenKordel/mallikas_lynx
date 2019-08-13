@@ -1,18 +1,11 @@
 package eu.openreq.mallikas.controllers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,26 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import eu.openreq.mallikas.models.json.Comment;
 import eu.openreq.mallikas.models.json.Dependency;
-import eu.openreq.mallikas.models.json.Dependency_status;
-import eu.openreq.mallikas.models.json.Dependency_type;
-import eu.openreq.mallikas.models.json.Person;
 import eu.openreq.mallikas.models.json.Project;
 import eu.openreq.mallikas.models.json.RequestParams;
 import eu.openreq.mallikas.models.json.Requirement;
-import eu.openreq.mallikas.models.json.RequirementPart;
-import eu.openreq.mallikas.models.json.Requirement_status;
-import eu.openreq.mallikas.models.json.Requirement_type;
-import eu.openreq.mallikas.repositories.DependencyRepository;
-import eu.openreq.mallikas.repositories.PersonRepository;
-import eu.openreq.mallikas.repositories.ProjectRepository;
-import eu.openreq.mallikas.repositories.RequirementRepository;
+import eu.openreq.mallikas.services.FilteringService;
+import eu.openreq.mallikas.services.UpdateService;
 import io.swagger.annotations.ApiOperation;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -50,19 +29,13 @@ import springfox.documentation.annotations.ApiIgnore;
 @Controller
 @RequestMapping("/")
 public class MallikasController {
-
-	@Autowired
-	RequirementRepository requirementRepository;
-
-	@Autowired
-	DependencyRepository dependencyRepository;
-
-	@Autowired
-	ProjectRepository projectRepository;
 	
 	@Autowired
-	PersonRepository personRepository;
+	FilteringService filteringService;
 
+	@Autowired
+	UpdateService updateService;
+	
 	/**
 	 * Check which projects are already saved in the database
 	 * 
@@ -70,17 +43,8 @@ public class MallikasController {
 	 */
 	@ApiOperation(value = "Get a list (map) of projects currently saved", notes = "Get a map with ids of all saved projects and their requirement counts.")
 	@GetMapping(value = "listOfProjects")
-	public ResponseEntity<?> getListOfProjects() {
-		List<Project> projects = projectRepository.findAll();
-		Map<String, Integer> projectIds = new HashMap<String, Integer>();
-		if (projects.isEmpty() || projects == null) {
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
-
-		for (Project project : projects) {
-			projectIds.put(project.getId(), project.getSpecifiedRequirements().size());
-		}
-		return new ResponseEntity<>(projectIds, HttpStatus.OK);
+	public ResponseEntity<Map<String, Integer>> getListOfProjects() {
+		return filteringService.listOfProjects();
 	}
 
 	/**
@@ -94,20 +58,8 @@ public class MallikasController {
 	@ApiOperation(value = "Import a list of requirements", notes = "Import a list of new OpenReq JSON Requirements to the database. If a requirement exists, it is not updated or changed.")
 	@PostMapping(value = "importRequirements")
 	@ApiIgnore
-	public ResponseEntity<?> importRequirements(@RequestBody Collection<Requirement> requirements) {
-		System.out.println("Received requirements from Milla");
-		List<Requirement> savedReqs = new ArrayList<>();
-		for (Requirement req : requirements) {
-			if (requirementRepository.findById(req.getId()) == null) {
-				savedReqs.add(req);
-			} else {
-				System.out.println("Found a duplicate " + req.getId());
-			}
-		}
-		requirementRepository.save(savedReqs);
-		System.out.println("Requirements saved " + requirementRepository.count());
-		savedReqs.clear();
-		return new ResponseEntity<>("Requirements saved", HttpStatus.OK);
+	public ResponseEntity<String> importRequirements(@RequestBody Collection<Requirement> requirements) {
+		return updateService.importRequirements(requirements);
 	}
 
 	/**
@@ -122,19 +74,7 @@ public class MallikasController {
 	@PostMapping(value = "importDependencies")
 	@ApiIgnore
 	public ResponseEntity<?> importDependencies(@RequestBody Collection<Dependency> dependencies) {
-		System.out.println("Received dependencies from Milla");
-		List<Dependency> savedDependencies = new ArrayList<>();
-		for (Dependency dependency : dependencies) {
-			if (dependencyRepository.findById(dependency.getId()) == null) {
-				savedDependencies.add(dependency);
-			} else {
-				System.out.println("Found a duplicate " + dependency.getId());
-			}
-		}
-		dependencyRepository.save(savedDependencies);
-		System.out.println("Dependencies saved " + dependencyRepository.count());
-		savedDependencies.clear();
-		return new ResponseEntity<>("Dependencies saved", HttpStatus.OK);
+		return updateService.importDependencies(dependencies);
 	}
 
 	/**
@@ -147,15 +87,8 @@ public class MallikasController {
 	@ApiOperation(value = "Import a project", notes = "Import an OpenReq JSON project to the database. If a project exists, it is updated.")
 	@PostMapping(value = "importProject")
 	@Transactional
-	public ResponseEntity<?> importProject(@RequestBody Project project) {
-		System.out.println("Received a project from Milla " + project.getId());
-		if (projectRepository.findOne(project.getId()) != null) {
-			System.out.println("Found a duplicate " + project.getId());
-		} 
-		projectRepository.save(project);	
-		
-		System.out.println("Project saved " + projectRepository.count());
-		return new ResponseEntity<>("Project saved", HttpStatus.OK);
+	public ResponseEntity<String> importProject(@RequestBody Project project) {
+		return updateService.importProject(project);
 	}
 
 	/**
@@ -168,24 +101,9 @@ public class MallikasController {
 	@ApiOperation(value = "Post dependencies to be updated", notes = "Update existing and save new dependencies in the database.")
 	@PostMapping(value = "updateDependencies")
 	@Transactional
-	public ResponseEntity<?> updateDependencies(@RequestBody Collection<Dependency> dependencies, 
-			@RequestParam(required = false) boolean userInput, 
-			@RequestParam(required = false) boolean isProposed) {
-		try {
-			if (userInput) {
-				updateDependenciesWithUserInput(dependencies);
-			} else if (isProposed) {
-				saveProposedDependencies(dependencies);
-			} else {
-				dependencyRepository.save(dependencies);
-			}
-
-			System.out.println("Dependencies saved " + dependencyRepository.count());
-			return new ResponseEntity<>("Dependencies saved in Mallikas", HttpStatus.OK);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return new ResponseEntity<>("Mallikas update failed", HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<String> updateDependencies(@RequestBody Collection<Dependency> dependencies, 
+			boolean userInput, boolean isProposed) {
+		return updateService.updateDependencies(dependencies, userInput, isProposed);
 	}
 
 	/**
@@ -198,47 +116,9 @@ public class MallikasController {
 	@ApiOperation(value = "Post requirements to be updated", notes = "Update existing and save new requirements to the database.")
 	@PostMapping(value = "updateRequirements")
 	@Transactional
-	public ResponseEntity<?> updateRequirements(@RequestBody Collection<Requirement> requirements, 
+	public ResponseEntity<String> updateRequirements(@RequestBody Collection<Requirement> requirements, 
 			@RequestParam String projectId) {
-		List<Requirement> savedRequirements = new ArrayList<>();
-		List<Person> savedPersons = new ArrayList<>();		
-		try {
-			for (Requirement requirement : requirements) {		
-				Set<RequirementPart> reqParts = requirement.getRequirementParts();
-				
-				if (reqParts!=null) {
-					for (RequirementPart part : reqParts) {
-						part.setRequirement(requirement);
-					}
-					requirement.setRequirementParts(reqParts);
-				}
-				Set<Comment> comments = requirement.getComments();
-				
-				if (comments!=null) {
-					for (Comment comment : comments) {
-						comment.setRequirement(requirement);
-						Person person = comment.getCommentDoneBy();
-						savedPersons.add(person);
-					}
-					requirement.setComments(comments);
-				}
-				
-				if (requirementRepository.findById(requirement.getId()) == null) {
-					savedRequirements.add(requirement);
-				} else if (requirement.getModified_at() > requirementRepository.findById(requirement.getId())
-						.getModified_at()) {
-					savedRequirements.add(requirement);
-				}
-				requirement.setProjectId(projectId);
-			}
-			personRepository.save(savedPersons);
-			requirementRepository.save(savedRequirements);
-			System.out.println("Requirements saved " + requirementRepository.count());
-			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
+		return updateService.updateRequirements(requirements, projectId);
 	}
 	
 	/**
@@ -250,22 +130,7 @@ public class MallikasController {
 			notes = "Update the specified requirements of a project in the database.")
 	@PostMapping(value = "updateProjectSpecifiedRequirements")
 	public ResponseEntity<String> updateProjectSpecifiedRequirements(@RequestBody Map<String, Collection<String>> reqIds, @RequestParam String projectId) {
-		try {
-			Project project = projectRepository.findById(projectId);
-			Set<String> projectReqs = project.getSpecifiedRequirements();
-			for (String reqId : reqIds.get(projectId)) {
-				if (!projectReqs.contains(reqId)) {
-					projectReqs.add(reqId);
-				}
-			}
-			project.setSpecifiedRequirements(projectReqs);
-			projectRepository.save(project);
-			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-
-		return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
+		return updateService.updateProjectSpecifiedRequirements(reqIds, projectId);
 	}
 
 	/**
@@ -278,20 +143,7 @@ public class MallikasController {
 	@ApiIgnore
 	@Transactional(readOnly = true)
 	public ResponseEntity<String> getAllRequirements() {
-		List<Requirement> allReqs = requirementRepository.findAll();
-		List<Dependency> allDeps = dependencyRepository.findAll();
-		if (!allReqs.isEmpty()) {
-			try {
-				ObjectMapper mapper = new ObjectMapper();
-				String reqString = mapper.writeValueAsString(allReqs);
-				String dependencyString = mapper.writeValueAsString(allDeps);
-				String all = "{ \"requirements\":" + reqString + ", \"dependencies\":" + dependencyString + "}";
-				return new ResponseEntity<String>(all, HttpStatus.OK);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		return new ResponseEntity<>(HttpStatus.OK);
+		return filteringService.allRequirements();
 	}
 
 
@@ -305,19 +157,7 @@ public class MallikasController {
 	@ApiIgnore
 	@Transactional(readOnly = true)
 	public ResponseEntity<String> getAllDependencies() {
-		List<Dependency> dependencies = dependencyRepository.findAll();
-		if (!dependencies.isEmpty()) {
-			try {
-				ObjectMapper mapper = new ObjectMapper();
-				String dependencyString = mapper.writeValueAsString(dependencies);
-				dependencies.clear();
-				String all = "{\"dependencies\":" + dependencyString + "}";
-				return new ResponseEntity<String>(all, HttpStatus.OK);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		return new ResponseEntity<>(HttpStatus.OK);
+		return filteringService.allDependencies();
 	}
 
 	/**
@@ -332,75 +172,7 @@ public class MallikasController {
 	@PostMapping(value = "selectedReqs")
 	@Transactional(readOnly = true)
 	public ResponseEntity<String> getSelectedRequirements(@RequestBody List<String> ids) {
-		List<Requirement> selectedReqs = requirementRepository.findByIdIn(ids);
-		if (!selectedReqs.isEmpty() && selectedReqs != null) {
-			List<Dependency> dependencies = new ArrayList<Dependency>();
-			List<List<String>> splitReqIds = splitRequirementIds(ids);
-			for (List<String> splitIds : splitReqIds) {
-				dependencies.addAll(dependencyRepository.findByRequirementIdIncludeProposed(splitIds));
-			}
-			try {
-				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
-						HttpStatus.OK);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-	
-	/**
-	 * Fetches dependencies by given parameters along with their dependent requirements
-	 * @param params
-	 * @return
-	 */
-	@ApiOperation(value = "Get dependencies by params posted", notes = "Fetches dependencies and their dependent requirements by parameters provided.")
-	@PostMapping(value = "dependenciesByParams") 
-	@Transactional(readOnly = true)
-	public ResponseEntity<String> getDependenciesByParams(@RequestBody RequestParams params) {
-		List<String> reqIds = params.getRequirementIds();	
-		List<Requirement> selectedReqs = new ArrayList<>();	
-		List<List<String>> splitReqIds = splitRequirementIds(reqIds);
-
-		for (List<String> splitIds : splitReqIds) {
-			selectedReqs.addAll(requirementRepository.findByIdIn(splitIds));
-		}
-		
-		if (!selectedReqs.isEmpty() && selectedReqs!=null) {
-			Pageable pageLimit = new PageRequest(0, Integer.MAX_VALUE);
-			
-			if (params.getMaxDependencies()!=null && params.getMaxDependencies()>0) {
-				pageLimit = new PageRequest(0, params.getMaxDependencies());
-			}
-			
-			List<Dependency> dependencies = new ArrayList<Dependency>();
-			
-			for (List<String> splitIds : splitReqIds) {
-				dependencies.addAll(dependencyRepository.findByRequirementIdWithParams(splitIds, params.getScoreThreshold(),
-						params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit));
-			}
-			
-			List<String> dependentReqIds = new ArrayList<String>();
-			for (Dependency dep : dependencies) {
-				if (!reqIds.contains(dep.getFromid())) {
-					dependentReqIds.add(dep.getFromid());
-				}
-				if (!reqIds.contains(dep.getToid())) {
-					dependentReqIds.add(dep.getToid());
-				}
-			}
-			
-			selectedReqs.addAll(requirementRepository.findByIdIn(dependentReqIds));
-			
-			try {
-				return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies), HttpStatus.OK);	
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-		
-		}
-		
-		return new ResponseEntity<>(HttpStatus.OK);
+		return filteringService.selectedRequirements(ids);
 	}
 
 	/**
@@ -412,102 +184,19 @@ public class MallikasController {
 	@PostMapping(value = "requirementsByParams")
 	@Transactional(readOnly = true)
 	public ResponseEntity<String> getRequirementsByParams(@RequestBody RequestParams params) {
-		
-		List<Project> projects = null;
-		List<String> reqIds = new ArrayList<String>();
-		
-		
-		if (params.getRequirementIds()!=null) {
-			reqIds.addAll(params.getRequirementIds());
-		}
-		
-		if (params.getProjectId() != null && projectRepository.findById(params.getProjectId())!=null) {
-			Project project = projectRepository.findById(params.getProjectId());
-			projects = new ArrayList<Project>();
-			projects.add(project);
-			Set<String> projectReqIds = project.getSpecifiedRequirements();
-			if (reqIds.isEmpty()) {
-				reqIds.addAll(projectReqIds);
-			} else {
-				reqIds.addAll(projectReqIds);
-				reqIds.retainAll(projectReqIds);
-			}
-		}
-		
-		Long created = null;
-		Long modified = null;
-		Requirement_type type = null;
-		Requirement_status status = null;
-		
-		if (params.getCreated_at()!=null) {
-			created = params.getCreated_at().getTime();
-		}
-		if (params.getModified_at()!=null) {
-			modified = params.getModified_at().getTime();
-		}
-		
-		try {
-			if (params.getType()!=null) {
-				type = Requirement_type.valueOf(params.getType());
-			}
-			if (params.getStatus()!=null) {
-				status = Requirement_status.valueOf(params.getStatus());
-			}
-		} catch (IllegalArgumentException e) {
-			System.out.println("Illegal arguments posted for enums");
-		}
-		
-		List<Requirement> selectedReqs = new ArrayList<>();
-		
-		List<List<String>> splitReqIds = splitRequirementIds(reqIds);
-		
-		for (List<String> splitIds : splitReqIds) {
-			selectedReqs.addAll(requirementRepository.findByParams(splitIds, created, modified, type, status));
-		}
-		
-		if (params.getResolution()!=null) {
-			List<Requirement> resolutionReqs = requirementRepository.findByRequirementPartText(params.getResolution());
-			if (!selectedReqs.isEmpty()) {
-				selectedReqs.addAll(resolutionReqs);
-				selectedReqs.retainAll(resolutionReqs);
-			} else {
-				selectedReqs = resolutionReqs;
-			}
-		}
-		
-		if (!selectedReqs.isEmpty() && selectedReqs!=null) {
-			List<String> ids = new ArrayList<String>();
-			for (Requirement req : selectedReqs) {
-				ids.add(req.getId());
-			}
-			List<Dependency> dependencies = new ArrayList<Dependency>();
-			
-			Pageable pageLimit = new PageRequest(0, Integer.MAX_VALUE);
-			
-			if (params.getMaxDependencies()!=null && params.getMaxDependencies()>0) {
-				pageLimit = new PageRequest(0, params.getMaxDependencies());
-			}
-			
-			splitReqIds = splitRequirementIds(ids);
-			
-			for (List<String> splitIds : splitReqIds) {
-				dependencies.addAll(dependencyRepository.findByRequirementIdWithParams(splitIds, params.getScoreThreshold(),
-						params.getIncludeProposed(), params.getProposedOnly(), params.getIncludeRejected(), pageLimit));
-			}
-			
-			try {
-				if (projects==null) {
-					return new ResponseEntity<String>(createJsonString(null, null, selectedReqs, dependencies),
-							HttpStatus.OK); 
-				}
-				return new ResponseEntity<String>(createUPCJsonString(projects, selectedReqs, dependencies),
-						HttpStatus.OK);
-				
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		return new ResponseEntity<>(HttpStatus.OK);
+		return filteringService.requirementsByParams(params);
+	}
+	
+	/**
+	 * Fetches dependencies by given parameters along with their dependent requirements
+	 * @param params
+	 * @return
+	 */
+	@ApiOperation(value = "Get dependencies by params posted", notes = "Fetches dependencies and their dependent requirements by parameters provided.")
+	@PostMapping(value = "dependenciesByParams") 
+	@Transactional(readOnly = true)
+	public ResponseEntity<String> getDependenciesByParams(@RequestBody RequestParams params) {
+		return filteringService.dependenciesByParams(params);
 	}
 	
 	/**
@@ -524,69 +213,10 @@ public class MallikasController {
 	@Transactional(readOnly = true)
 	public ResponseEntity<String> getRequirementsInProject(@RequestParam String projectId, 
 			@RequestParam(required = false) boolean includeProposed, @RequestParam(required = false) boolean requirementsOnly) {
-		Project project = projectRepository.findById(projectId);
-
-		if (project != null) {
-			List<Project> projects = new ArrayList<>();
-			projects.add(project);
-			
-			Set<String> requirementIds = project.getSpecifiedRequirements();
-			List<Requirement> requirements = new ArrayList<Requirement>();
-			List<Dependency> dependencies = new ArrayList<Dependency>();	
-			
-			if (requirementsOnly) {
-				requirements = requirementRepository.findByProjectId(projectId);
-			}
-			else if (includeProposed) {
-				requirements = requirementRepository.findByProjectId(projectId);
-				dependencies.addAll(dependencyRepository.findByProjectIdIncludeProposed(projectId));			
-			} else {
-				requirements = requirementRepository.findByProjectId(projectId);
-				dependencies = dependencyRepository.findByProjectIdExcludeProposed(projectId);	
-			}
-			if (!requirementIds.isEmpty()) {
-				try {
-					return new ResponseEntity<String>(createUPCJsonString(projects, requirements, dependencies),
-							HttpStatus.OK);
-				} catch (Exception e) {
-					requirements.clear();
-					dependencies.clear();
-					System.out.println(e.getMessage());
-				}
-			}
-		}
-		return new ResponseEntity<>(HttpStatus.OK);
+		return filteringService.requirementsInProject(projectId, includeProposed, requirementsOnly);
 	}
 
-	/**
-	 * Create a String containing (possibly) Project, Requirements and Dependencies
-	 * in JSON format
-	 * 
-	 * @param project
-	 * @param requirement
-	 * @param requirements
-	 * @param dependencies
-	 * @return
-	 * @throws JsonProcessingException
-	 */
-	private String createJsonString(Project project, Requirement requirement, List<Requirement> requirements,
-			List<Dependency> dependencies) throws JsonProcessingException {
-		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();	
-		String dependencyString = gson.toJson(dependencies);
-		String reqsString = gson.toJson(requirements);
-		String jsonString = "{";
-		if (requirement != null) {
-			String reqString = gson.toJson(requirement);
-			jsonString += "\"requirement\":" + reqString + ", ";
-		} else if (project != null) {
-			String projectString = gson.toJson(project);
-			jsonString += "\"project\":" + projectString + ", ";
-		} 
-		
-		jsonString += "\"requirements\":" + reqsString + ", \"dependencies\":" + dependencyString + "}";
-		
-		return jsonString;
-	}
+	
 	
 	/**
 	 * Empties the database except for dependencies with the status "Rejected"
@@ -596,100 +226,8 @@ public class MallikasController {
 	@DeleteMapping(value = "deleteEverythingButRejectedDependencies")
 	@Transactional
 	public ResponseEntity<String> deleteEverythingButRejectedDependencies() {
-		projectRepository.deleteAll();
-		requirementRepository.deleteAll();
-		dependencyRepository.deleteAllNotRejected();
-
-		return new ResponseEntity<>("Delete successful", HttpStatus.OK);
-	}
-
-	/**
-	 * Create a String containing Projects, Requirements and Dependencies in JSON
-	 * format for UPC
-	 * 
-	 * @param projects
-	 * @param requirements
-	 * @param dependencies
-	 * @return
-	 * @throws JsonProcessingException
-	 */
-	private String createUPCJsonString(List<Project> projects, List<Requirement> requirements,
-			List<Dependency> dependencies) throws JsonProcessingException {
-		Gson gson =  new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();	
-		String dependencyString = gson.toJson(dependencies);
-		String reqsString = gson.toJson(requirements);
-		String projectsString = gson.toJson(projects);
-		String jsonString = "{ \"projects\":" + projectsString + ", \"requirements\":" + reqsString
-				+ ", \"dependencies\":" + dependencyString + "}";
-		return jsonString;
-	}
-
-	/**
-	 * Updates dependency status and type as determined by user input
-	 * 
-	 * @param dependencies
-	 */
-	private void updateDependenciesWithUserInput(Collection<Dependency> dependencies) {
-		for (Dependency dep : dependencies) {
-			String depId = dep.getFromid() + "_" + dep.getToid() + "_SIMILAR";
-			Dependency originalDependency = dependencyRepository.findById(depId);
-			if (originalDependency!=null && ((dep.getStatus()==Dependency_status.ACCEPTED && 
-					dep.getDependency_type()!=Dependency_type.SIMILAR) || 
-					(dep.getStatus()!=Dependency_status.ACCEPTED))) {
-
-				originalDependency.setStatus(dep.getStatus());
-				originalDependency.setDependency_type(dep.getDependency_type());
-				dependencyRepository.save(originalDependency);
-			}
-		}
-	}
+		return updateService.deleteEverythingButRejectedDependencies();
+	}	
 	
-	/**
-	 * Save proposed dependencies received from similarity detection services and such
-	 * 
-	 * @param dependencies
-	 */
-	private void saveProposedDependencies(Collection<Dependency> dependencies) {
-		for (Dependency dep : dependencies) {
-			String depId = dep.getId();
-			if (depId==null) {
-				depId = dep.getFromid() + "_" + dep.getToid() + "_SIMILAR"; 
-			}
-			Dependency originalDependency = dependencyRepository.findById(depId);
-			if (originalDependency!=null) {
-				Set<String> descriptions = originalDependency.getDescription();
-				if (dep.getDescription()!=null) {
-					String newDescription = dep.getDescription().iterator().next();
-					if (!descriptions.contains(newDescription)) {
-						descriptions.add(newDescription);
-						originalDependency.setDescription(descriptions);
-						dependencyRepository.save(originalDependency);
-					}
-				}
-			} else {
-				dep.setId(depId);
-				dependencyRepository.save(dep);
-			}
-		}
-		
-	}
-	
-	/**
-	 * Splits the id lists to avoid the the Postgres query parameter amount limit
-	 * 
-	 * @param requirementIds
-	 * @return
-	 */
-	private List<List<String>> splitRequirementIds(List<String> requirementIds) {
-		if (requirementIds.size()<=10000) {
-			return Arrays.asList(requirementIds);
-		}
-		List<List<String>> splitLists = new ArrayList<>();
-		for (int i = 0; i < requirementIds.size(); i = i + 15000) {
-			List<String> splitList = requirementIds.subList(i, i + 15000 > requirementIds.size() ? requirementIds.size() : i + 15000);
-			splitLists.add(splitList);
-		}
-		return splitLists;
-	}
 	
 }
