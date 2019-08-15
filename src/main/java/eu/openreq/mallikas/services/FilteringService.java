@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -63,10 +62,10 @@ public class FilteringService {
 		List<Dependency> allDeps = dependencyRepository.findAll();
 		if (!allReqs.isEmpty()) {
 			try {
-				ObjectMapper mapper = new ObjectMapper();
-				String reqString = mapper.writeValueAsString(allReqs);
-				String dependencyString = mapper.writeValueAsString(allDeps);
-				String all = "{ \"requirements\":" + reqString + ", \"dependencies\":" + dependencyString + "}";
+				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();	
+				String reqsString = gson.toJson(allReqs);
+				String dependencyString = gson.toJson(allDeps);
+				String all = "{ \"requirements\":" + reqsString + ", \"dependencies\":" + dependencyString + "}";
 				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -79,9 +78,8 @@ public class FilteringService {
 		List<Dependency> dependencies = dependencyRepository.findAll();
 		if (!dependencies.isEmpty()) {
 			try {
-				ObjectMapper mapper = new ObjectMapper();
-				String dependencyString = mapper.writeValueAsString(dependencies);
-				dependencies.clear();
+				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();	
+				String dependencyString = gson.toJson(dependencies);
 				String all = "{\"dependencies\":" + dependencyString + "}";
 				return new ResponseEntity<String>(all, HttpStatus.OK);
 			} catch (Exception e) {
