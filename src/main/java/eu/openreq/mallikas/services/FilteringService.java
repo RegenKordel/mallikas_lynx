@@ -260,8 +260,6 @@ public class FilteringService {
 					return new ResponseEntity<String>(createUPCJsonString(projects, requirements, dependencies),
 							HttpStatus.OK);
 				} catch (Exception e) {
-					requirements.clear();
-					dependencies.clear();
 					System.out.println(e.getMessage());
 				}
 			}

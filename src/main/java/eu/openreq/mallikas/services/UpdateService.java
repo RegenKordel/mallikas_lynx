@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import eu.openreq.mallikas.models.json.Comment;
 import eu.openreq.mallikas.models.json.Dependency;
@@ -84,9 +83,8 @@ public class UpdateService {
 		return new ResponseEntity<>("Project saved", HttpStatus.OK);
 	}
 	
-	public ResponseEntity<String> updateDependencies(@RequestBody Collection<Dependency> dependencies, 
-			@RequestParam(required = false) boolean userInput, 
-			@RequestParam(required = false) boolean isProposed) {
+	public ResponseEntity<String> updateDependencies(Collection<Dependency> dependencies, 
+			boolean userInput, boolean isProposed) {
 		try {
 			if (userInput) {
 				updateDependenciesWithUserInput(dependencies);
@@ -104,8 +102,8 @@ public class UpdateService {
 		}
 	}
 	
-	public ResponseEntity<String> updateRequirements(@RequestBody Collection<Requirement> requirements, 
-			@RequestParam String projectId) {
+	public ResponseEntity<String> updateRequirements(Collection<Requirement> requirements, 
+			String projectId) {
 		List<Requirement> savedRequirements = new ArrayList<>();
 		List<Person> savedPersons = new ArrayList<>();		
 		try {
@@ -147,7 +145,8 @@ public class UpdateService {
 		return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
 	}
 	
-	public ResponseEntity<String> updateProjectSpecifiedRequirements(@RequestBody Map<String, Collection<String>> reqIds, @RequestParam String projectId) {
+	public ResponseEntity<String> updateProjectSpecifiedRequirements(Map<String, Collection<String>> 
+			reqIds, String projectId) {
 		try {
 			Project project = projectRepository.findById(projectId);
 			Set<String> projectReqs = project.getSpecifiedRequirements();
@@ -175,7 +174,7 @@ public class UpdateService {
 		for (Dependency dep : dependencies) {
 			String depId = dep.getId();
 			if (depId==null) {
-				depId = dep.getFromid() + "_" + dep.getToid() + "_SIMILAR"; 
+				depId = dep.getFromid() + "_" + dep.getToid(); 
 			}
 			Dependency originalDependency = dependencyRepository.findById(depId);
 			if (originalDependency!=null) {
@@ -203,12 +202,11 @@ public class UpdateService {
 	 */
 	private void updateDependenciesWithUserInput(Collection<Dependency> dependencies) {
 		for (Dependency dep : dependencies) {
-			String depId = dep.getFromid() + "_" + dep.getToid() + "_SIMILAR";
+			String depId = dep.getFromid() + "_" + dep.getToid();
 			Dependency originalDependency = dependencyRepository.findById(depId);
 			if (originalDependency!=null && ((dep.getStatus()==Dependency_status.ACCEPTED && 
 					dep.getDependency_type()!=Dependency_type.SIMILAR) || 
 					(dep.getStatus()!=Dependency_status.ACCEPTED))) {
-
 				originalDependency.setStatus(dep.getStatus());
 				originalDependency.setDependency_type(dep.getDependency_type());
 				dependencyRepository.save(originalDependency);
