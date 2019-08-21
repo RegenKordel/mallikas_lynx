@@ -21,6 +21,7 @@ import eu.openreq.mallikas.MallikasApplication;
 import eu.openreq.mallikas.controllers.MallikasController;
 import eu.openreq.mallikas.models.json.Comment;
 import eu.openreq.mallikas.models.json.Dependency;
+import eu.openreq.mallikas.models.json.Dependency_status;
 import eu.openreq.mallikas.models.json.Project;
 import eu.openreq.mallikas.models.json.RequestParams;
 import eu.openreq.mallikas.models.json.Requirement;
@@ -116,9 +117,10 @@ public class MallikasControllerTest {
 		testReqsJson = mapper.writeValueAsString(testReqs);
 		
 		Dependency testDep1 = new Dependency();
-		testDep1.setId("dep1");
-		testDep1.setFromid("req2");
-		testDep1.setToid("req1");
+		testDep1.setId("req1_req2");
+		testDep1.setFromid("req1");
+		testDep1.setToid("req2");
+		testDep1.setStatus(Dependency_status.ACCEPTED);
 		testDep1.setDescription(new HashSet<String>(Arrays.asList("Description here")));
 		Dependency testDep2 = new Dependency();
 		testDep2.setId("dep2");
