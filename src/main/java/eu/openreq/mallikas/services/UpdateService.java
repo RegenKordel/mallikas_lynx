@@ -216,10 +216,15 @@ public class UpdateService {
 		}
 	}
 	
-	public ResponseEntity<String> deleteEverythingButRejectedDependencies() {
+	public ResponseEntity<String> deleteEverything(Boolean keepRejected) {
 		projectRepository.deleteAll();
 		requirementRepository.deleteAll();
-		dependencyRepository.deleteAllNotRejected();
+		if (keepRejected) {
+			dependencyRepository.deleteAllNotRejected();
+		} else {
+			dependencyRepository.deleteAll();
+		}
+		personRepository.deleteAll();
 
 		return new ResponseEntity<>("Delete successful", HttpStatus.OK);
 	}	

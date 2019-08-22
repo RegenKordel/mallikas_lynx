@@ -219,14 +219,15 @@ public class MallikasController {
 	
 	
 	/**
-	 * Empties the database except for dependencies with the status "Rejected"
+	 * Empties the database. Optionally keep dependencies with the status "Rejected"
+	 * @param keepRejected
 	 * @return
 	 */
 	@ApiIgnore
-	@DeleteMapping(value = "deleteEverythingButRejectedDependencies")
+	@DeleteMapping(value = "deleteEverything")
 	@Transactional
-	public ResponseEntity<String> deleteEverythingButRejectedDependencies() {
-		return updateService.deleteEverythingButRejectedDependencies();
+	public ResponseEntity<String> deleteEverything(@RequestParam Boolean keepRejected) {
+		return updateService.deleteEverything(keepRejected);
 	}	
 	
 	
