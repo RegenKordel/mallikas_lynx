@@ -348,8 +348,8 @@ public class MallikasControllerTest {
 	}
   
 	@Test
-	public void deleteEverythingButRejectedDependenciesTest() throws Exception {
-		mockMvc.perform(delete("/deleteEverythingButRejectedDependencies"))
+	public void deleteEverythingTest() throws Exception {
+		mockMvc.perform(delete("/deleteEverything?keepRejected=true"))
 				.andExpect(status().isOk());
 	}
 }
