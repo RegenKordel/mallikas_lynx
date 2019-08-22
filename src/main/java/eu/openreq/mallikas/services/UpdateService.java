@@ -11,12 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import eu.openreq.mallikas.models.json.Comment;
 import eu.openreq.mallikas.models.json.Dependency;
 import eu.openreq.mallikas.models.json.Dependency_status;
-import eu.openreq.mallikas.models.json.Dependency_type;
 import eu.openreq.mallikas.models.json.Person;
 import eu.openreq.mallikas.models.json.Project;
 import eu.openreq.mallikas.models.json.Requirement;
@@ -84,14 +82,13 @@ public class UpdateService {
 		return new ResponseEntity<>("Project saved", HttpStatus.OK);
 	}
 	
-	public ResponseEntity<String> updateDependencies(@RequestBody Collection<Dependency> dependencies, 
-			@RequestParam(required = false) boolean userInput, 
-			@RequestParam(required = false) boolean isProposed) {
+	public ResponseEntity<String> updateDependencies(Collection<Dependency> dependencies, 
+			boolean userInput, boolean isProposed) {
 		try {
 			if (userInput) {
-				updateDependenciesWithUserInput(dependencies);
+				updateUserInputDependencies(dependencies);
 			} else if (isProposed) {
-				saveProposedDependencies(dependencies);
+				updateProposedDependencies(dependencies);
 			} else {
 				dependencyRepository.save(dependencies);
 			}
@@ -104,8 +101,8 @@ public class UpdateService {
 		}
 	}
 	
-	public ResponseEntity<String> updateRequirements(@RequestBody Collection<Requirement> requirements, 
-			@RequestParam String projectId) {
+	public ResponseEntity<String> updateRequirements(Collection<Requirement> requirements, 
+			String projectId) {
 		List<Requirement> savedRequirements = new ArrayList<>();
 		List<Person> savedPersons = new ArrayList<>();		
 		try {
@@ -147,7 +144,8 @@ public class UpdateService {
 		return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
 	}
 	
-	public ResponseEntity<String> updateProjectSpecifiedRequirements(@RequestBody Map<String, Collection<String>> reqIds, @RequestParam String projectId) {
+	public ResponseEntity<String> updateProjectSpecifiedRequirements(Map<String, Collection<String>> 
+			reqIds, String projectId) {
 		try {
 			Project project = projectRepository.findById(projectId);
 			Set<String> projectReqs = project.getSpecifiedRequirements();
@@ -167,59 +165,66 @@ public class UpdateService {
 	}
 	
 	/**
-	 * Save proposed dependencies received from similarity detection services and such
+	 * Save dependencies received from similarity detection services and such
 	 * 
 	 * @param dependencies
 	 */
-	private void saveProposedDependencies(Collection<Dependency> dependencies) {
-		for (Dependency dep : dependencies) {
-			String depId = dep.getId();
-			if (depId==null) {
-				depId = dep.getFromid() + "_" + dep.getToid() + "_SIMILAR"; 
-			}
-			Dependency originalDependency = dependencyRepository.findById(depId);
-			if (originalDependency!=null) {
-				Set<String> descriptions = originalDependency.getDescription();
-				if (dep.getDescription()!=null) {
-					String newDescription = dep.getDescription().iterator().next();
-					if (!descriptions.contains(newDescription)) {
-						descriptions.add(newDescription);
-						originalDependency.setDescription(descriptions);
-						dependencyRepository.save(originalDependency);
-					}
-				}
-			} else {
-				dep.setId(depId);
+	private void saveDependency(Dependency dep) {
+		String depId = dep.getFromid() + "_" + dep.getToid(); 
+		String reverseId = dep.getToid() + "_" + dep.getFromid(); 
+		if (dependencyRepository.findById(reverseId)!=null) {
+			depId = reverseId;
+		}
+		dep.setId(depId);
+		
+		Dependency originalDep = dependencyRepository.findById(depId);
+		if (originalDep != null) {
+			if (originalDep.getStatus()==Dependency_status.PROPOSED 
+					|| dep.getStatus()==Dependency_status.ACCEPTED 
+					|| dep.getStatus()==Dependency_status.REJECTED) {
 				dependencyRepository.save(dep);
-			}
+			} 
+		} else {
+			dependencyRepository.save(dep);
 		}
 		
 	}
 	
 	/**
-	 * Updates dependency status and type as determined by user input
+	 * Updates dependency as determined by user input, no proposed dependencies
 	 * 
 	 * @param dependencies
 	 */
-	private void updateDependenciesWithUserInput(Collection<Dependency> dependencies) {
+	private void updateUserInputDependencies(Collection<Dependency> dependencies) {
 		for (Dependency dep : dependencies) {
-			String depId = dep.getFromid() + "_" + dep.getToid() + "_SIMILAR";
-			Dependency originalDependency = dependencyRepository.findById(depId);
-			if (originalDependency!=null && ((dep.getStatus()==Dependency_status.ACCEPTED && 
-					dep.getDependency_type()!=Dependency_type.SIMILAR) || 
-					(dep.getStatus()!=Dependency_status.ACCEPTED))) {
-
-				originalDependency.setStatus(dep.getStatus());
-				originalDependency.setDependency_type(dep.getDependency_type());
-				dependencyRepository.save(originalDependency);
+			if (dep.getStatus()!=Dependency_status.PROPOSED) {
+				saveDependency(dep);			
 			}
 		}
 	}
 	
-	public ResponseEntity<String> deleteEverythingButRejectedDependencies() {
+	/**
+	 * Update only proposed dependencies
+	 * 
+	 * @param dependencies
+	 */
+	private void updateProposedDependencies(Collection<Dependency> dependencies) {
+		for (Dependency dep : dependencies) {
+			if (dep.getStatus()==Dependency_status.PROPOSED) {
+				saveDependency(dep);			
+			}
+		}
+	}
+	
+	public ResponseEntity<String> deleteEverything(Boolean keepRejected) {
 		projectRepository.deleteAll();
 		requirementRepository.deleteAll();
-		dependencyRepository.deleteAllNotRejected();
+		if (keepRejected) {
+			dependencyRepository.deleteAllNotRejected();
+		} else {
+			dependencyRepository.deleteAll();
+		}
+		personRepository.deleteAll();
 
 		return new ResponseEntity<>("Delete successful", HttpStatus.OK);
 	}	
