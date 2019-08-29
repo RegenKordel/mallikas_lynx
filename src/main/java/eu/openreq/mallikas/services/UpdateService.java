@@ -50,7 +50,7 @@ public class UpdateService {
 			}
 		}
 		requirementRepository.save(savedReqs);
-		System.out.println("Requirements saved " + requirementRepository.count());
+		System.out.println(requirementRepository.count() + " requirements total");
 		savedReqs.clear();
 		return new ResponseEntity<>("Requirements saved", HttpStatus.OK);
 	}
@@ -58,6 +58,7 @@ public class UpdateService {
 	public ResponseEntity<String> importDependencies(@RequestBody Collection<Dependency> dependencies) {
 		System.out.println("Received dependencies from Milla");
 		List<Dependency> savedDependencies = new ArrayList<>();
+		
 		for (Dependency dependency : dependencies) {
 			if (dependencyRepository.findById(dependency.getId()) == null) {
 				savedDependencies.add(dependency);
@@ -66,7 +67,7 @@ public class UpdateService {
 			}
 		}
 		dependencyRepository.save(savedDependencies);
-		System.out.println("Dependencies saved " + dependencyRepository.count());
+		System.out.println(dependencyRepository.count() + " dependencies total");
 		savedDependencies.clear();
 		return new ResponseEntity<>("Dependencies saved", HttpStatus.OK);
 	}
@@ -78,7 +79,7 @@ public class UpdateService {
 		} 
 		projectRepository.save(project);	
 		
-		System.out.println("Project saved " + projectRepository.count());
+		System.out.println(projectRepository.count() + " projects total");
 		return new ResponseEntity<>("Project saved", HttpStatus.OK);
 	}
 	
@@ -93,11 +94,12 @@ public class UpdateService {
 				dependencyRepository.save(dependencies);
 			}
 
-			System.out.println("Dependencies saved " + dependencyRepository.count());
-			return new ResponseEntity<>("Dependencies saved in Mallikas", HttpStatus.OK);
+			String saved = dependencyRepository.count() + " dependencies total";
+			System.out.println(saved);
+			return new ResponseEntity<>(saved, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			return new ResponseEntity<>("Mallikas update failed", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Updating dependencies failed", HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -105,6 +107,7 @@ public class UpdateService {
 			String projectId) {
 		List<Requirement> savedRequirements = new ArrayList<>();
 		List<Person> savedPersons = new ArrayList<>();		
+		
 		try {
 			for (Requirement requirement : requirements) {		
 				Set<RequirementPart> reqParts = requirement.getRequirementParts();
@@ -136,12 +139,13 @@ public class UpdateService {
 			}
 			personRepository.save(savedPersons);
 			requirementRepository.save(savedRequirements);
-			System.out.println("Requirements saved " + requirementRepository.count());
-			return new ResponseEntity<>(HttpStatus.OK);
+			String saved = requirementRepository.count() + " requirements total";;
+			System.out.println(saved);
+			return new ResponseEntity<>(saved, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return new ResponseEntity<>("Update failed", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>("Updating requirements failed", HttpStatus.BAD_REQUEST);
 	}
 	
 	public ResponseEntity<String> updateProjectSpecifiedRequirements(Map<String, Collection<String>> 
