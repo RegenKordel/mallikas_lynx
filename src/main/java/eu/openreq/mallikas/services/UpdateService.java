@@ -85,6 +85,8 @@ public class UpdateService {
 	
 	public ResponseEntity<String> updateDependencies(Collection<Dependency> dependencies, 
 			boolean userInput, boolean isProposed) {
+		Long originalCount = dependencyRepository.count();
+		
 		try {
 			if (userInput) {
 				updateUserInputDependencies(dependencies);
@@ -94,7 +96,10 @@ public class UpdateService {
 				dependencyRepository.save(dependencies);
 			}
 
-			String saved = dependencyRepository.count() + " dependencies total";
+
+			Long newCount = dependencyRepository.count() - originalCount;
+			
+			String saved = newCount + " dependencies added, " + dependencyRepository.count() + " dependencies total";
 			System.out.println(saved);
 			return new ResponseEntity<>(saved, HttpStatus.OK);
 		} catch (Exception e) {
@@ -107,6 +112,7 @@ public class UpdateService {
 			String projectId) {
 		List<Requirement> savedRequirements = new ArrayList<>();
 		List<Person> savedPersons = new ArrayList<>();		
+		Long originalCount = requirementRepository.count();
 		
 		try {
 			for (Requirement requirement : requirements) {		
@@ -139,7 +145,10 @@ public class UpdateService {
 			}
 			personRepository.save(savedPersons);
 			requirementRepository.save(savedRequirements);
-			String saved = requirementRepository.count() + " requirements total";;
+			
+			Long newCount = requirementRepository.count() - originalCount;
+			
+			String saved = newCount + " requirements added, " + requirementRepository.count() + " requirements total";;
 			System.out.println(saved);
 			return new ResponseEntity<>(saved, HttpStatus.OK);
 		} catch (Exception e) {

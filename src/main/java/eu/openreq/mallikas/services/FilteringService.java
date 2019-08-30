@@ -286,6 +286,23 @@ public class FilteringService {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	public ResponseEntity<String> correctDependenciesAndProjects(List<Dependency> dependencies) {
+		Map<String, List<Dependency>> correctDeps = new HashMap<>();
+		for (Dependency dep : dependencies) {
+			String reverse = dep.getToid() + "_" + dep.getFromid();
+			if (dependencyRepository.findById(reverse)!=null) {
+				String tempFrom = dep.getFromid();
+				dep.setFromid(dep.getToid());
+				dep.setToid(tempFrom);
+			}
+			Requirement req = requirementRepository.findById(dep.getFromid());
+		
+			correctDeps.computeIfAbsent(req.getProjectId(), k -> new ArrayList<>()).add(dep);
+			
+		}
+		return new ResponseEntity<String>(new Gson().toJson(correctDeps), HttpStatus.OK);
+		
+	}
 	
 	/**
 	 * Create a String containing (possibly) Project, Requirements and Dependencies

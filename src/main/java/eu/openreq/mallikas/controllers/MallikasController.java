@@ -200,6 +200,17 @@ public class MallikasController {
 	}
 	
 	/**
+	 * Replaces the dependency from/to ids with correct ones if they were the wrong way around, also returns project ids
+	 * @param params
+	 * @return
+	 */
+	@ApiIgnore
+	@PostMapping(value = "correctDependenciesAndProjects") 
+	public ResponseEntity<String> getCorrectDependenciesAndProjects(@RequestBody List<Dependency> dependencies) {
+		return filteringService.correctDependenciesAndProjects(dependencies);
+	}
+	
+	/**
 	 * Receives a projectId from Milla and sends back all requirements and their
 	 * dependencies in that project (projects list version)
 	 * 
