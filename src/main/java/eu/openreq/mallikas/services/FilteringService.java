@@ -295,10 +295,15 @@ public class FilteringService {
 				dep.setFromid(dep.getToid());
 				dep.setToid(tempFrom);
 			}
-			Requirement req = requirementRepository.findById(dep.getFromid());
-		
-			correctDeps.computeIfAbsent(req.getProjectId(), k -> new ArrayList<>()).add(dep);
-			
+			dep.setId(dep.getFromid() + "_" + dep.getToid());
+			Requirement fromReq = requirementRepository.findById(dep.getFromid());
+			Requirement toReq = requirementRepository.findById(dep.getToid());
+			if (fromReq!=null) {
+				correctDeps.computeIfAbsent(fromReq.getProjectId(), k -> new ArrayList<>()).add(dep);
+			}
+			if (toReq!=null) {
+				correctDeps.computeIfAbsent(toReq.getProjectId(), k -> new ArrayList<>()).add(dep);
+			}
 		}
 		return new ResponseEntity<String>(new Gson().toJson(correctDeps), HttpStatus.OK);
 		
