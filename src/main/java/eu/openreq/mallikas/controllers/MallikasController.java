@@ -205,10 +205,22 @@ public class MallikasController {
 	 * @return
 	 */
 	@ApiIgnore
-	@PostMapping(value = "correctDependenciesAndProjects") 
-	public ResponseEntity<String> getCorrectDependenciesAndProjects(@RequestBody List<Dependency> dependencies) {
-		return filteringService.correctDependenciesAndProjects(dependencies);
+	@PostMapping(value = "correctIdsForDependencies") 
+	public ResponseEntity<String> getCorrectIdsForDependencies(@RequestBody List<Dependency> dependencies) {
+		return filteringService.correctIdsForDependencies(dependencies);
 	}
+	
+	/**
+	 * Finds the projects where the dependencies belong, returning a hashmap
+	 * @param params
+	 * @return
+	 */
+	@ApiIgnore
+	@PostMapping(value = "projectsForDependencies") 
+	public ResponseEntity<String> getProjectsForDependencies(@RequestBody List<Dependency> dependencies) {
+		return filteringService.projectsForDependencies(dependencies);
+	}
+	
 	
 	/**
 	 * Receives a projectId from Milla and sends back all requirements and their

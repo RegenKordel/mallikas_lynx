@@ -44,6 +44,8 @@ public class FilteringService {
 	@Autowired
 	PersonRepository personRepository;
 	
+	Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+	
 	public ResponseEntity<Map<String, Integer>> listOfProjects() {
 		List<Project> projects = projectRepository.findAll();
 		Map<String, Integer> projectIds = new HashMap<String, Integer>();
@@ -62,7 +64,6 @@ public class FilteringService {
 		List<Dependency> allDeps = dependencyRepository.findAll();
 		if (!allReqs.isEmpty()) {
 			try {
-				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();	
 				String reqsString = gson.toJson(allReqs);
 				String dependencyString = gson.toJson(allDeps);
 				String all = "{ \"requirements\":" + reqsString + ", \"dependencies\":" + dependencyString + "}";
@@ -78,7 +79,6 @@ public class FilteringService {
 		List<Dependency> dependencies = dependencyRepository.findAll();
 		if (!dependencies.isEmpty()) {
 			try {
-				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();	
 				String dependencyString = gson.toJson(dependencies);
 				String all = "{\"dependencies\":" + dependencyString + "}";
 				return new ResponseEntity<String>(all, HttpStatus.OK);
@@ -286,8 +286,13 @@ public class FilteringService {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	public ResponseEntity<String> correctDependenciesAndProjects(List<Dependency> dependencies) {
-		Map<String, List<Dependency>> correctDeps = new HashMap<>();
+	/**
+	 * Corrects the dependency from/to IDs if necessary
+	 * @param dependencies
+	 * @return
+	 */
+	public ResponseEntity<String> correctIdsForDependencies(List<Dependency> dependencies) {
+		List<Dependency> correctDependencies = new ArrayList<Dependency>();
 		for (Dependency dep : dependencies) {
 			String reverse = dep.getToid() + "_" + dep.getFromid();
 			if (dependencyRepository.findById(reverse)!=null) {
@@ -296,17 +301,29 @@ public class FilteringService {
 				dep.setToid(tempFrom);
 			}
 			dep.setId(dep.getFromid() + "_" + dep.getToid());
+			correctDependencies.add(dep);
+		}
+		return new ResponseEntity<String>(gson.toJson(correctDependencies), HttpStatus.OK);
+	}
+	
+	/**
+	 * Returns the dependencies in a HashMap labeled under their respective projects
+	 * @param dependencies
+	 * @return
+	 */
+	public ResponseEntity<String> projectsForDependencies(List<Dependency> dependencies) {
+		Map<String, List<Dependency>> depMap = new HashMap<>();
+		for (Dependency dep : dependencies) {
 			Requirement fromReq = requirementRepository.findById(dep.getFromid());
 			Requirement toReq = requirementRepository.findById(dep.getToid());
 			if (fromReq!=null) {
-				correctDeps.computeIfAbsent(fromReq.getProjectId(), k -> new ArrayList<>()).add(dep);
+				depMap.computeIfAbsent(fromReq.getProjectId(), k -> new ArrayList<>()).add(dep);
 			}
 			if (toReq!=null) {
-				correctDeps.computeIfAbsent(toReq.getProjectId(), k -> new ArrayList<>()).add(dep);
+				depMap.computeIfAbsent(toReq.getProjectId(), k -> new ArrayList<>()).add(dep);
 			}
 		}
-		return new ResponseEntity<String>(new Gson().toJson(correctDeps), HttpStatus.OK);
-		
+		return new ResponseEntity<String>(gson.toJson(depMap), HttpStatus.OK);
 	}
 	
 	/**
@@ -322,7 +339,6 @@ public class FilteringService {
 	 */
 	public String createJsonString(Project project, Requirement requirement, List<Requirement> requirements,
 			List<Dependency> dependencies) throws JsonProcessingException {
-		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();	
 		String dependencyString = gson.toJson(dependencies);
 		String reqsString = gson.toJson(requirements);
 		String jsonString = "{";
@@ -351,7 +367,6 @@ public class FilteringService {
 	 */
 	private String createUPCJsonString(List<Project> projects, List<Requirement> requirements,
 			List<Dependency> dependencies) throws JsonProcessingException {
-		Gson gson =  new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();	
 		String dependencyString = gson.toJson(dependencies);
 		String reqsString = gson.toJson(requirements);
 		String projectsString = gson.toJson(projects);
