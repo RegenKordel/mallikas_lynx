@@ -92,8 +92,7 @@ public class FilteringService {
 	public ResponseEntity<String> requirementsByParams(RequestParams params) {
 		List<Project> projects = null;
 		List<String> reqIds = new ArrayList<String>();
-		
-		
+				
 		if (params.getRequirementIds()!=null) {
 			reqIds.addAll(params.getRequirementIds());
 		}
@@ -106,7 +105,6 @@ public class FilteringService {
 			if (reqIds.isEmpty()) {
 				reqIds.addAll(projectReqIds);
 			} else {
-				reqIds.addAll(projectReqIds);
 				reqIds.retainAll(projectReqIds);
 			}
 		}
@@ -145,7 +143,6 @@ public class FilteringService {
 		if (params.getResolution()!=null) {
 			List<Requirement> resolutionReqs = requirementRepository.findByRequirementPartText(params.getResolution());
 			if (!selectedReqs.isEmpty()) {
-				selectedReqs.addAll(resolutionReqs);
 				selectedReqs.retainAll(resolutionReqs);
 			} else {
 				selectedReqs = resolutionReqs;
