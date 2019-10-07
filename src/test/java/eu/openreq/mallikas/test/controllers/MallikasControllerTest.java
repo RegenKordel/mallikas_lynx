@@ -102,6 +102,7 @@ public class MallikasControllerTest {
 		
 		RequirementPart part = new RequirementPart();
 		part.setId("part1");
+		part.setName("Resolution");
 		part.setText("Done");
 		testReq1.setRequirementParts(new HashSet<RequirementPart>(Arrays.asList(part)));
 		
@@ -112,8 +113,12 @@ public class MallikasControllerTest {
 		Requirement testReq2 = new Requirement();
 		testReq2.setId("req2");
 		testReq2.setCreated_at(1000000);
+
+		Requirement testReq3 = new Requirement();
+		testReq3.setId("req3");
+		testReq3.setRequirementParts(new HashSet<RequirementPart>(Arrays.asList(part)));
 		
-		testReqs = Arrays.asList(testReq1, testReq2);
+		testReqs = Arrays.asList(testReq1, testReq2, testReq3);
 		testReqsJson = mapper.writeValueAsString(testReqs);
 		
 		Dependency testDep1 = new Dependency();
@@ -130,20 +135,16 @@ public class MallikasControllerTest {
 		
 		Project testProj = new Project();
 		testProj.setId("pro1");
-		testProj.setSpecifiedRequirements(new HashSet<String>(Arrays.asList("req1", "req2")));
+		testProj.setSpecifiedRequirements(new HashSet<String>(Arrays.asList("req1", "req2, req3")));
 		testProJson = mapper.writeValueAsString(testProj);
 		testProjs = Arrays.asList(testProj);
 		testProjsJson = mapper.writeValueAsString(testProjs);
 		
 		testReqIds = new HashMap<>();
-		testReqIds.put("pro1", Arrays.asList("req1", "req2"));
+		testReqIds.put("pro1", Arrays.asList("req1", "req2", "req3"));
 		testReqIdsJson = mapper.writeValueAsString(testReqIds);
 		
-		ids = Arrays.asList("req1", "req2");		
-		
-		Requirement testReq3 = new Requirement();
-		testReq3.setId("req3");
-		testReq3.setRequirementParts(new HashSet<RequirementPart>(Arrays.asList(part)));
+		ids = Arrays.asList("req1", "req2", "req3");		
 		
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
