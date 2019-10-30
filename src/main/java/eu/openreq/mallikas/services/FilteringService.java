@@ -379,7 +379,7 @@ public class FilteringService {
 	 * @return
 	 */
 	public List<List<String>> splitRequirementIds(List<String> requirementIds) {
-		if (requirementIds.size()<=10000) {
+		if ((requirementIds==null) || (requirementIds.size() <= 10000)) {
 			return Arrays.asList(requirementIds);
 		}
 		List<List<String>> splitLists = new ArrayList<>();

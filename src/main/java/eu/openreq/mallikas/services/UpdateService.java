@@ -38,7 +38,7 @@ public class UpdateService {
 	
 	@Autowired
 	PersonRepository personRepository;
-	
+
 	public ResponseEntity<String> importRequirements(Collection<Requirement> requirements) {
 		System.out.println("Received requirements from Milla");
 		List<Requirement> savedReqs = new ArrayList<>();
@@ -180,7 +180,7 @@ public class UpdateService {
 	/**
 	 * Save dependencies received from similarity detection services and such
 	 * 
-	 * @param dependencies
+	 * @param dep
 	 */
 	private void saveDependency(Dependency dep) {
 		String depId = dep.getFromid() + "_" + dep.getToid(); 
