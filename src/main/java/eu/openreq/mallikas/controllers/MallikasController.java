@@ -38,7 +38,8 @@ public class MallikasController {
 	
 	/**
 	 * Check which projects are already saved in the database
-	 * 
+	 *
+	 *
 	 * @return
 	 */
 	@ApiOperation(value = "Get a list (map) of projects currently saved", notes = "Get a map with ids of all saved projects and their requirement counts.")
