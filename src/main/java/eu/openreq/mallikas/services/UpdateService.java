@@ -6,19 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import eu.closedreq.bridge.models.json.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import eu.openreq.mallikas.models.json.Comment;
-import eu.openreq.mallikas.models.json.Dependency;
-import eu.openreq.mallikas.models.json.Dependency_status;
-import eu.openreq.mallikas.models.json.Person;
-import eu.openreq.mallikas.models.json.Project;
-import eu.openreq.mallikas.models.json.Requirement;
-import eu.openreq.mallikas.models.json.RequirementPart;
 import eu.openreq.mallikas.repositories.DependencyRepository;
 import eu.openreq.mallikas.repositories.PersonRepository;
 import eu.openreq.mallikas.repositories.ProjectRepository;
@@ -115,7 +109,7 @@ public class UpdateService {
 		Long originalCount = requirementRepository.count();
 		
 		try {
-			for (Requirement requirement : requirements) {		
+			for (Requirement requirement : requirements) {
 				Set<RequirementPart> reqParts = requirement.getRequirementParts();
 				
 				if (reqParts!=null) {

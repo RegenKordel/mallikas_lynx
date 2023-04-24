@@ -4,6 +4,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import eu.closedreq.bridge.models.json.Dependency;
+import eu.closedreq.bridge.models.json.Project;
+import eu.closedreq.bridge.models.json.RequestParams;
+import eu.closedreq.bridge.models.json.Requirement;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import eu.openreq.mallikas.models.json.Dependency;
-import eu.openreq.mallikas.models.json.Project;
-import eu.openreq.mallikas.models.json.RequestParams;
-import eu.openreq.mallikas.models.json.Requirement;
 import eu.openreq.mallikas.services.FilteringService;
 import eu.openreq.mallikas.services.UpdateService;
 import io.swagger.annotations.ApiOperation;
@@ -201,7 +202,6 @@ public class MallikasController {
 	
 	/**
 	 * Replaces the dependency from/to ids with correct ones if they were the wrong way around, also returns project ids
-	 * @param params
 	 * @return
 	 */
 	@ApiIgnore
@@ -212,7 +212,6 @@ public class MallikasController {
 	
 	/**
 	 * Finds the projects where the dependencies belong, returning a hashmap
-	 * @param params
 	 * @return
 	 */
 	@ApiIgnore

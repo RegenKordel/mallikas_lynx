@@ -18,12 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import eu.openreq.mallikas.models.json.Dependency;
-import eu.openreq.mallikas.models.json.Project;
-import eu.openreq.mallikas.models.json.RequestParams;
-import eu.openreq.mallikas.models.json.Requirement;
-import eu.openreq.mallikas.models.json.Requirement_status;
-import eu.openreq.mallikas.models.json.Requirement_type;
+import eu.closedreq.bridge.models.json.*;
 import eu.openreq.mallikas.repositories.DependencyRepository;
 import eu.openreq.mallikas.repositories.PersonRepository;
 import eu.openreq.mallikas.repositories.ProjectRepository;
@@ -111,25 +106,14 @@ public class FilteringService {
 		
 		Long created = null;
 		Long modified = null;
-		Requirement_type type = null;
-		Requirement_status status = null;
+		String type = params.getType();
+		String status = params.getStatus();
 		
 		if (params.getCreated_at()!=null) {
 			created = params.getCreated_at().getTime();
 		}
 		if (params.getModified_at()!=null) {
 			modified = params.getModified_at().getTime();
-		}
-		
-		try {
-			if (params.getType()!=null) {
-				type = Requirement_type.valueOf(params.getType());
-			}
-			if (params.getStatus()!=null) {
-				status = Requirement_status.valueOf(params.getStatus());
-			}
-		} catch (IllegalArgumentException e) {
-			System.out.println("Illegal arguments posted for enums");
 		}
 		
 		List<Requirement> selectedReqs = new ArrayList<>();
@@ -149,7 +133,7 @@ public class FilteringService {
 			}
 		}
 		
-		if (!selectedReqs.isEmpty() && selectedReqs!=null) {
+		if (selectedReqs != null && !selectedReqs.isEmpty()) {
 			List<String> ids = new ArrayList<String>();
 			for (Requirement req : selectedReqs) {
 				ids.add(req.getId());

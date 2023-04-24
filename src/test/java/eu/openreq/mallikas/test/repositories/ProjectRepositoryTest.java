@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import eu.closedreq.bridge.models.json.Project;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import eu.openreq.mallikas.models.json.Project;
 import eu.openreq.mallikas.repositories.ProjectRepository;
 
 @RunWith(SpringRunner.class)

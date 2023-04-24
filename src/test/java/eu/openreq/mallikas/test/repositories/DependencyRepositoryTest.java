@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import eu.closedreq.bridge.models.json.Dependency;
+import eu.closedreq.bridge.models.json.Dependency_status;
+import eu.closedreq.bridge.models.json.Project;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,10 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import eu.openreq.mallikas.models.json.Dependency;
-import eu.openreq.mallikas.models.json.Dependency_status;
-import eu.openreq.mallikas.models.json.Dependency_type;
-import eu.openreq.mallikas.models.json.Project;
 import eu.openreq.mallikas.repositories.DependencyRepository;
 import eu.openreq.mallikas.repositories.ProjectRepository;
 
@@ -51,7 +50,7 @@ public class DependencyRepositoryTest {
 		dep1 = new Dependency();
 		dep1.setCreated_at(1);
 		dep1.setDependency_score(0.5);
-		dep1.setDependency_type(Dependency_type.REQUIRES);
+		dep1.setDependency_type("requires");
 		dep1.setStatus(Dependency_status.ACCEPTED);
 		dep1.setFromid("RE1");
 		dep1.setToid("RE2");
@@ -60,7 +59,7 @@ public class DependencyRepositoryTest {
 		dep2 = new Dependency();
 		dep2.setCreated_at(1);
 		dep2.setDependency_score(0.5);
-		dep2.setDependency_type(Dependency_type.DUPLICATES);
+		dep2.setDependency_type("duplicates");
 		dep2.setStatus(Dependency_status.PROPOSED);
 		dep2.setFromid("RE2");
 		dep2.setToid("RE3");
@@ -69,7 +68,7 @@ public class DependencyRepositoryTest {
 		dep3 = new Dependency();
 		dep3.setCreated_at(1);
 		dep3.setDependency_score(0.5);
-		dep3.setDependency_type(Dependency_type.DUPLICATES);
+		dep3.setDependency_type("duplicates");
 		dep3.setStatus(Dependency_status.REJECTED);
 		dep3.setFromid("RE1");
 		dep3.setToid("RE3");

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import eu.openreq.mallikas.models.json.Dependency;
+import eu.closedreq.bridge.models.json.*;
 
 public interface DependencyRepository extends JpaRepository<Dependency, String> {
 

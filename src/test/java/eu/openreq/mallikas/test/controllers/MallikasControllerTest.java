@@ -1,5 +1,6 @@
 package eu.openreq.mallikas.test.controllers;
 
+import eu.closedreq.bridge.models.json.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,13 +20,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import eu.openreq.mallikas.MallikasApplication;
 import eu.openreq.mallikas.controllers.MallikasController;
-import eu.openreq.mallikas.models.json.Comment;
-import eu.openreq.mallikas.models.json.Dependency;
-import eu.openreq.mallikas.models.json.Dependency_status;
-import eu.openreq.mallikas.models.json.Project;
-import eu.openreq.mallikas.models.json.RequestParams;
-import eu.openreq.mallikas.models.json.Requirement;
-import eu.openreq.mallikas.models.json.RequirementPart;
 import eu.openreq.mallikas.repositories.DependencyRepository;
 import eu.openreq.mallikas.repositories.PersonRepository;
 import eu.openreq.mallikas.repositories.ProjectRepository;
@@ -126,7 +120,7 @@ public class MallikasControllerTest {
 		testDep1.setFromid("req1");
 		testDep1.setToid("req2");
 		testDep1.setStatus(Dependency_status.ACCEPTED);
-		testDep1.setDescription(new HashSet<String>(Arrays.asList("Description here")));
+		testDep1.setDescription(Arrays.asList("Description here"));
 		Dependency testDep2 = new Dependency();
 		testDep2.setId("dep2");
 		
@@ -166,7 +160,7 @@ public class MallikasControllerTest {
 		Mockito.when(projectRepository.findById(Mockito.anyString())).thenReturn(testProj);
 		Mockito.when(projectRepository.findAll()).thenReturn(testProjs);
 		
-		testDep1.setDescription(new HashSet<String>(Arrays.asList("Another description")));
+		testDep1.setDescription(Arrays.asList("Another description"));
 	}
 	
 	@Test

@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import eu.closedreq.bridge.models.json.Project;
+import eu.closedreq.bridge.models.json.Requirement;
+import eu.closedreq.bridge.models.json.RequirementPart;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,13 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import eu.openreq.mallikas.models.json.Project;
-import eu.openreq.mallikas.models.json.Requirement;
-import eu.openreq.mallikas.models.json.Requirement_status;
-import eu.openreq.mallikas.models.json.Requirement_type;
 import eu.openreq.mallikas.repositories.ProjectRepository;
 import eu.openreq.mallikas.repositories.RequirementRepository;
-import eu.openreq.mallikas.models.json.RequirementPart;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -67,8 +65,8 @@ public class RequirementRepositoryTest {
 		req1.setModified_at(2);
 		req1.setId("RE1");
 		req1.setProjectId("PRO");
-		req1.setStatus(Requirement_status.SUBMITTED);
-		req1.setRequirement_type(Requirement_type.BUG);
+		req1.setStatus("submitted");
+		req1.setRequirement_type("bug");
 
 		RequirementPart reqPart1 = new RequirementPart();
 		reqPart1.setId(req1.getId() + "_RESOLUTION");
@@ -86,8 +84,8 @@ public class RequirementRepositoryTest {
 		req2.setModified_at(1);
 		req2.setId("RE2");
 		req2.setProjectId("PRO");
-		req2.setStatus(Requirement_status.OPEN);
-		req2.setRequirement_type(Requirement_type.ISSUE);
+		req2.setStatus("open");
+		req2.setRequirement_type("issue");
 
 		RequirementPart reqPart2 = new RequirementPart();
 		reqPart2.setId(req2.getId() + "_RESOLUTION");
@@ -105,8 +103,8 @@ public class RequirementRepositoryTest {
 		req3.setModified_at(3);
 		req3.setId("RE3");
 		req3.setProjectId("PRO");
-		req3.setStatus(Requirement_status.OPEN);
-		req3.setRequirement_type(Requirement_type.REQUIREMENT);
+		req3.setStatus("open");
+		req3.setRequirement_type("requirement");
 	}
 
 	private void saveAllRequirements() {
@@ -198,7 +196,7 @@ public class RequirementRepositoryTest {
 	public void findByParamsWorksWhenRequirementTypeGiven() {
 		saveAllRequirements();
 
-		List<Requirement> requirements = reqRepository.findByParams(null, null, null, Requirement_type.REQUIREMENT,
+		List<Requirement> requirements = reqRepository.findByParams(null, null, null, "requirement",
 				null);
 		assertEquals(1, requirements.size());
 	}
@@ -207,7 +205,7 @@ public class RequirementRepositoryTest {
 	public void findByParamsWorksWhenRequirementStatusGiven() {
 		saveAllRequirements();
 
-		List<Requirement> requirements = reqRepository.findByParams(null, null, null, null, Requirement_status.OPEN);
+		List<Requirement> requirements = reqRepository.findByParams(null, null, null, null, "open");
 		assertEquals(2, requirements.size());
 	}
 
@@ -220,8 +218,8 @@ public class RequirementRepositoryTest {
 		reqIds.add("RE2");
 		reqIds.add("RE3");
 
-		List<Requirement> requirements = reqRepository.findByParams(reqIds, 0L, 2L, Requirement_type.REQUIREMENT,
-				Requirement_status.OPEN);
+		List<Requirement> requirements = reqRepository.findByParams(reqIds, 0L, 2L, "requirement",
+				"open");
 		assertEquals(1, requirements.size());
 		assertEquals("RE3", requirements.get(0).getId());
 	}
