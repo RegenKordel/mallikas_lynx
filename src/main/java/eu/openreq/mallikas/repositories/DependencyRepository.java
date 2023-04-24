@@ -40,7 +40,8 @@ public interface DependencyRepository extends JpaRepository<Dependency, String> 
 			+ "AND ((?4 is null OR ?4 is FALSE) OR (?4 is TRUE AND dep.status = 0)) "
 			+ "AND (((?5 is null OR ?5 is FALSE) AND (dep.status != 2)) OR (?5 is TRUE))"
 			+ "ORDER BY dep.dependency_score DESC")
-	List<Dependency> findByRequirementIdWithParams(Collection<String> ids, Double scoreTreshold, Boolean includeProposed, Boolean proposedOnly, 
+
+	List<Dependency> findByRequirementIdWithParams(Collection<String> ids, Double scoreTreshold, Boolean includeProposed, Boolean proposedOnly,
 			Boolean includeRejected, Pageable pageable);
 	
 	@Modifying
